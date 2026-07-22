@@ -7,7 +7,7 @@ import { ApiService } from '../../services/api.service';
   selector: 'app-appointments',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  template: `
+  template:`
     <div class="space-y-6">
       <div>
         <h2 class="text-2xl font-bold text-slate-800">Appointments</h2>
