@@ -1,0 +1,238 @@
+<div class="flex min-h-screen bg-gray-50">
+
+  <app-sidebar></app-sidebar>
+
+  <main class="ml-64 flex-1 p-6">
+
+    <div class="mb-6">
+      <h1 class="text-4xl font-semibold text-gray-800">
+        Appointments
+      </h1>
+
+      <p class="text-gray-500">
+        Book an appointment with a doctor
+      </p>
+    </div>
+
+    <!-- Appointment Card -->
+
+    <div class="bg-white border rounded-2xl p-6 mb-6">
+
+      <h2 class="text-2xl font-medium mb-5">
+        Book Appointment
+      </h2>
+
+      <form
+        [formGroup]="appointmentForm"
+        (ngSubmit)="bookAppointment()"
+        class="grid md:grid-cols-2 gap-5"
+      >
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Patient ID
+          </label>
+
+          <input
+            formControlName="patientId"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Doctor ID
+          </label>
+
+          <input
+            formControlName="doctorId"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Department ID
+          </label>
+
+          <input
+            formControlName="departmentId"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Scheduled Date & Time
+          </label>
+
+          <input
+            type="datetime-local"
+            formControlName="scheduledDateTime"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Type
+          </label>
+
+          <select
+            formControlName="type"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+            <option>Consultation</option>
+            <option>Follow Up</option>
+            <option>Emergency</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-2 text-sm">
+            Status
+          </label>
+
+          <select
+            formControlName="status"
+            class="w-full border rounded-lg px-4 py-3"
+          >
+            <option>Scheduled</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <button
+            type="submit"
+            class="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+          >
+            Book Appointment
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- Table Card -->
+
+    <div class="bg-white border rounded-2xl p-6">
+
+      <div class="flex justify-between items-center mb-5">
+
+        <h2 class="text-2xl font-medium">
+          All Appointments
+        </h2>
+
+        <button
+          (click)="refreshAppointments()"
+          class="border border-teal-500 text-teal-600 px-5 py-2 rounded-xl"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+          <thead>
+
+          <tr class="bg-gray-50 text-sm text-gray-600">
+
+            <th class="text-left p-3">
+              ID
+            </th>
+
+            <th class="text-left p-3">
+              PATIENT
+            </th>
+
+            <th class="text-left p-3">
+              DOCTOR
+            </th>
+
+            <th class="text-left p-3">
+              DATE/TIME
+            </th>
+
+            <th class="text-left p-3">
+              TYPE
+            </th>
+
+            <th class="text-left p-3">
+              STATUS
+            </th>
+
+            <th class="text-left p-3">
+              ACTIONS
+            </th>
+
+          </tr>
+
+          </thead>
+
+          <tbody>
+
+          @if (appointments.length === 0) {
+
+          <tr>
+            <td
+              colspan="7"
+              class="text-center py-6 text-gray-500"
+            >
+              No appointments yet.
+            </td>
+          </tr>
+
+          }
+
+          @for (appointment of appointments; track appointment.id) {
+
+          <tr class="border-t">
+
+            <td class="p-3">
+              {{appointment.id}}
+            </td>
+
+            <td class="p-3">
+              {{appointment.patientId}}
+            </td>
+
+            <td class="p-3">
+              {{appointment.doctorId}}
+            </td>
+
+            <td class="p-3">
+              {{appointment.scheduledDateTime}}
+            </td>
+
+            <td class="p-3">
+              {{appointment.type}}
+            </td>
+
+            <td class="p-3">
+              {{appointment.status}}
+            </td>
+
+            <td class="p-3">
+              Edit
+            </td>
+
+          </tr>
+
+          }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </main>
+</div>

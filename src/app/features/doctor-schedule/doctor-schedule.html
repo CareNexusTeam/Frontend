@@ -1,0 +1,234 @@
+<div class="flex min-h-screen bg-gray-50">
+
+  <app-sidebar></app-sidebar>
+
+  <main class="flex-1 ml-64 p-6">
+
+    <!-- Page Header -->
+
+    <div class="mb-6">
+      <h1 class="text-3xl font-semibold text-gray-800">
+        Doctor Schedules
+      </h1>
+
+      <p class="text-gray-500 mt-1">
+        Doctors can add their available time slots
+      </p>
+    </div>
+
+    <!-- Create Schedule Card -->
+
+    <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+
+      <h2 class="text-xl font-medium text-gray-800 mb-5">
+        Create Schedule
+      </h2>
+
+      <form
+        [formGroup]="scheduleForm"
+        (ngSubmit)="addSchedule()"
+        class="grid grid-cols-1 md:grid-cols-2 gap-5"
+      >
+
+        <!-- Doctor ID -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            Doctor ID
+          </label>
+
+          <input
+            type="text"
+            formControlName="doctorId"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Date -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            Date
+          </label>
+
+          <input
+            type="date"
+            formControlName="date"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Start Time -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            Start Time
+          </label>
+
+          <input
+            type="time"
+            formControlName="startTime"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- End Time -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            End Time
+          </label>
+
+          <input
+            type="time"
+            formControlName="endTime"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Slot Duration -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            Slot Duration (min)
+          </label>
+
+          <input
+            type="number"
+            formControlName="slotDuration"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Available Slots -->
+
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">
+            Available Slots
+          </label>
+
+          <input
+            type="number"
+            formControlName="availableSlots"
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Button -->
+
+        <div class="md:col-span-2">
+
+          <button
+            type="submit"
+            class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg shadow"
+          >
+            Add Schedule
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- Schedule Table -->
+
+    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+
+      <div class="flex justify-between items-center mb-5">
+
+        <h2 class="text-xl font-medium text-gray-800">
+          All Schedules
+        </h2>
+
+        <button
+          (click)="refreshSchedules()"
+          class="border border-teal-600 text-teal-600 px-5 py-2 rounded-xl hover:bg-teal-50 transition"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+          <thead>
+
+          <tr class="bg-gray-50 text-sm text-gray-600">
+
+            <th class="text-left p-3">ID</th>
+            <th class="text-left p-3">DOCTOR</th>
+            <th class="text-left p-3">DATE</th>
+            <th class="text-left p-3">START</th>
+            <th class="text-left p-3">END</th>
+            <th class="text-left p-3">SLOT(MIN)</th>
+            <th class="text-left p-3">AVAILABLE</th>
+
+          </tr>
+
+          </thead>
+
+          <tbody>
+
+          @if (schedules.length === 0) {
+
+          <tr>
+            <td
+              colspan="7"
+              class="text-center py-6 text-gray-500"
+            >
+              No schedules yet.
+            </td>
+          </tr>
+
+          }
+
+          @for (schedule of schedules; track schedule.id) {
+
+          <tr class="border-t">
+
+            <td class="p-3">
+              {{ schedule.id }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.doctorId }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.date }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.startTime }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.endTime }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.slotDuration }}
+            </td>
+
+            <td class="p-3">
+              {{ schedule.availableSlots }}
+            </td>
+
+          </tr>
+
+          }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
