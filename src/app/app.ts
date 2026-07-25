@@ -3,9 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppointmentsComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [RouterOutlet],
+  template: `  <router-outlet></router-outlet>  `
 })
 export class App {
   protected readonly title = signal('carenexus');
