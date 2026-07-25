@@ -11,16 +11,19 @@ export const routes: Routes = [
   {
     path: 'appointments',
     loadComponent: () =>
-      import('./features/appointments/appointments')
-        .then(m => m.AppointmentsComponent)
+      import('./features/appointments/pages/appointments.page')
+        .then(m => m.AppointmentsPageComponent)
   },
 
 
 {
   path: 'doctor-schedules',
   loadComponent: () =>
-    import('./features/doctor-schedule/doctor-schedule')
-      .then(m => m.DoctorScheduleComponent)
+    import(
+      './features/doctor-schedule/pages/doctor-schedule.page'
+    ).then(
+      m => m.DoctorSchedulePageComponent
+    )
 },
 
   {

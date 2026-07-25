@@ -1,8 +1,4 @@
-<div class="flex min-h-screen bg-gray-50">
-
-  <app-sidebar></app-sidebar>
-
-  <main class="ml-64 flex-1 p-6">
+<app-main-layout>
 
     <div class="mb-6">
       <h1 class="text-4xl font-semibold text-gray-800">
@@ -16,7 +12,7 @@
 
     <!-- Appointment Card -->
 
-    <div class="bg-white border rounded-2xl p-6 mb-6">
+    <div class="w-full bg-white border shadow-sm rounded-2xl p-6 mb-6">
 
       <h2 class="text-2xl font-medium mb-5">
         Book Appointment
@@ -177,45 +173,58 @@
 
           <tbody>
 
-          @if (appointments.length === 0) {
+          @if (loading) {
 
           <tr>
             <td
               colspan="7"
-              class="text-center py-6 text-gray-500"
-            >
-              No appointments yet.
+              class="text-center py-6 text-gray-500">
+              Loading appointments...
             </td>
           </tr>
 
           }
 
-          @for (appointment of appointments; track appointment.id) {
+          @else if (appointments.length === 0) {
+
+          <tr>
+            <td
+              colspan="7"
+              class="text-center py-6 text-gray-500">
+              No appointments found.
+            </td>
+          </tr>
+
+          }
+
+          @else {
+
+          @for (appointment of appointments; track appointment.appointmentId) {
 
           <tr class="border-t">
 
             <td class="p-3">
-              {{appointment.id}}
+              {{ appointment.appointmentId }}
             </td>
 
             <td class="p-3">
-              {{appointment.patientId}}
+              {{ appointment.patientId }}
             </td>
 
             <td class="p-3">
-              {{appointment.doctorId}}
+              {{ appointment.doctorId }}
             </td>
 
             <td class="p-3">
-              {{appointment.scheduledDateTime}}
+              {{ appointment.scheduledDateTime }}
             </td>
 
             <td class="p-3">
-              {{appointment.type}}
+              {{ appointment.type }}
             </td>
 
             <td class="p-3">
-              {{appointment.status}}
+              {{ appointment.status }}
             </td>
 
             <td class="p-3">
@@ -226,6 +235,8 @@
 
           }
 
+          }
+
           </tbody>
 
         </table>
@@ -233,6 +244,4 @@
       </div>
 
     </div>
-
-  </main>
-</div>
+</app-main-layout>

@@ -1,8 +1,4 @@
-<div class="flex min-h-screen bg-gray-50">
-
-  <app-sidebar></app-sidebar>
-
-  <main class="flex-1 ml-64 p-6">
+<app-main-layout>
 
     <!-- Page Header -->
 
@@ -95,7 +91,7 @@
 
           <input
             type="number"
-            formControlName="slotDuration"
+            formControlName="slotDurationMinutes"
             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
           />
         </div>
@@ -185,40 +181,34 @@
 
           }
 
-          @for (schedule of schedules; track schedule.id) {
-
+          @for(schedule of schedules; track schedule.scheduleId) {
           <tr class="border-t">
-
             <td class="p-3">
-              {{ schedule.id }}
+              {{ schedule.scheduleId }}
             </td>
-
             <td class="p-3">
               {{ schedule.doctorId }}
             </td>
-
             <td class="p-3">
               {{ schedule.date }}
             </td>
-
             <td class="p-3">
               {{ schedule.startTime }}
             </td>
-
-            <td class="p-3">
-              {{ schedule.endTime }}
+            <td class="p-3">{{ schedule.endTime }}</td>
+            <td class="p-3">{{ schedule.slotDurationMinutes }}
             </td>
-
-            <td class="p-3">
-              {{ schedule.slotDuration }}
-            </td>
-
             <td class="p-3">
               {{ schedule.availableSlots }}
             </td>
-
+            <td class="p-3">
+              <button class="text-red-600 hover:underline"
+                      (click)="deleteSchedule(schedule.scheduleId!)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
-
           }
 
           </tbody>
@@ -229,6 +219,4 @@
 
     </div>
 
-  </main>
-
-</div>
+</app-main-layout>

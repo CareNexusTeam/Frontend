@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-gray-50">
+
+  <app-header></app-header>
+
+  <div class="flex pt-16">
+
+    <app-sidebar></app-sidebar>
+
+    <div
+      class="flex-1 ml-64 flex flex-col min-h-[calc(100vh-64px)]">
+
+      <main
+        class="flex-1 p-6">
+
+        <ng-content></ng-content>
+
+      </main>
+
+      <app-footer></app-footer>
+
+    </div>
+
+  </div>
+
+</div>

@@ -9,6 +9,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SidebarComponent {
 
+  collapsed = false;
+
+  toggleSidebar(): void {
+    this.collapsed = !this.collapsed;
+  }
+
   menus = [
     {
       name: 'Patients',
@@ -23,7 +29,7 @@ export class SidebarComponent {
       route: '/appointments'
     },
     {
-      name: 'EMR (Consult / Rx / Referral)',
+      name: 'EMR',
       route: '/emr'
     },
     {
