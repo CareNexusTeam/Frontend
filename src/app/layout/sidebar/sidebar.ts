@@ -33,12 +33,20 @@ export class SidebarComponent {
       route: '/emr'
     },
     {
-      name: 'Pharmacy',
-      route: '/pharmacy'
+      name: 'Drug-inventory',
+      route: '/drug-inventory'
     },
     {
-      name: 'Billing',
-      route: '/billing'
+      name: 'Dispensation',
+      route: '/dispensation'
+    },
+      {
+      name: 'Invoice',
+      route: '/invoice'
+    },
+    {
+      name: 'Insurance',
+      route: '/insurance'
     },
     {
       name: 'Audit Logs',

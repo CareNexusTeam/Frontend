@@ -1,0 +1,96 @@
+<app-main-layout>
+
+
+       <div class="mb-6">
+      <h1 class="text-3xl font-semibold text-gray-800">
+        Dispensation
+      </h1>
+
+      <p class="text-gray-500 mt-1">
+        Dispense Drug 
+      </p>
+    </div>
+
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <form [formGroup]="dispenseForm" (ngSubmit)="dispenseDrug()">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Prescription ID</label>
+          <input type="number" formControlName="prescriptionId"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Dispensed By (User ID)</label>
+          <input type="number" formControlName="userId"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+      </div>
+      <button type="submit" class="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700">
+        Dispense
+      </button>
+      @if (resultMessage) {
+        <p class="mt-3 text-sm text-gray-700">{{ resultMessage }}</p>
+      }
+    </form>
+  </div>
+
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <div class="flex flex-wrap gap-3 items-end">
+      <button (click)="showAll()" class="border border-gray-300 px-4 py-3 rounded-lg hover:bg-gray-100">
+        All
+      </button>
+      <button (click)="showPending()" class="bg-amber-500 text-white px-4 py-3 rounded-lg hover:bg-amber-600">
+        Pending
+      </button>
+      <button (click)="showHistory()" class="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-800">
+        History
+      </button>
+
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Lookup by Prescription ID</label>
+        <input [(ngModel)]="lookupPrescriptionId" [ngModelOptions]="{standalone: true}"
+               class="border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 12" />
+      </div>
+      <button (click)="lookupByPrescription()" class="bg-teal-600 text-white px-4 py-3 rounded-lg hover:bg-teal-700">
+        Lookup
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white border rounded-2xl p-6">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="text-left p-3">Drug</th>
+            <th class="text-left p-3">Prescription</th>
+            <th class="text-left p-3">Qty Dispensed</th>
+            <th class="text-left p-3">Dispensed Date</th>
+            <th class="text-left p-3">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading) {
+            <tr>
+              <td colspan="5" class="text-center py-6 text-gray-500">Loading dispensations...</td>
+            </tr>
+          } @else if (dispensations.length === 0) {
+            <tr>
+              <td colspan="5" class="text-center py-6 text-gray-500">No dispensations found.</td>
+            </tr>
+          } @else {
+            @for (d of dispensations; track d.dispensationID) {
+              <tr>
+                <td class="p-3">{{ d.drugName }}</td>
+                <td class="p-3">{{ d.prescriptionId }}</td>
+                <td class="p-3">{{ d.quantityDispensed }}</td>
+                <td class="p-3">{{ d.dispensationDate }}</td>
+                <td class="p-3">{{ d.status }}</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-main-layout>
