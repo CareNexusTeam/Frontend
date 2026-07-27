@@ -26,6 +26,27 @@ export const routes: Routes = [
     )
 },
 
+{
+  path: 'consultation',
+  loadComponent: () =>
+    import('./features/emr/consultation/consultation.page')
+      .then(m => m.ConsultationPageComponent)
+},
+
+{
+  path: 'prescription',
+  loadComponent: () =>
+    import('./features/emr/prescription/prescription.page')
+      .then(m => m.PrescriptionPageComponent)
+},
+
+{
+  path: 'referral',
+  loadComponent: () =>
+    import('./features/emr/referral/referral.page')
+      .then(m => m.ReferralPageComponent)
+},
+
   {
     path: '**',
     redirectTo: 'appointments'

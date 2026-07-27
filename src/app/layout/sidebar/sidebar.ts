@@ -29,9 +29,9 @@ export class SidebarComponent {
       route: '/appointments'
     },
     {
-      name: 'EMR',
-      route: '/emr'
-    },
+     name: 'EMR',
+    route: '/consultation'
+},
     {
       name: 'Pharmacy',
       route: '/pharmacy'
