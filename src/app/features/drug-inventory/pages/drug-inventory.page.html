@@ -1,0 +1,163 @@
+<app-main-layout>
+
+
+     <div class="mb-6">
+      <h1 class="text-3xl font-semibold text-gray-800">
+       Drug Inventory
+      </h1>
+
+      <p class="text-gray-500 mt-1">
+        Add and Check drug status
+      </p>
+    </div>
+
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <form [formGroup]="drugForm" (ngSubmit)="addDrug()">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Drug Name</label>
+          <input formControlName="drugName"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Category</label>
+          <input formControlName="category"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Quantity In Stock</label>
+          <input type="number" formControlName="quantityInStock"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Reorder Level</label>
+          <input type="number" formControlName="reorderLevel"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Price Per Unit</label>
+          <input type="number" formControlName="pricePerUnit"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Expiry Date</label>
+          <input type="date" formControlName="expiryDate"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+      </div>
+      <button type="submit" class="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700">
+        Add Drug
+      </button>
+    </form>
+  </div>
+
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <div class="flex flex-wrap gap-3 items-end">
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Search (name/category)</label>
+        <input [(ngModel)]="searchKeyword" [ngModelOptions]="{standalone: true}"
+               class="border border-gray-300 rounded-lg px-1 py-2"  />
+      </div>
+      <button (click)="searchDrugs()" class="bg-teal-600 text-white px-1 py-2 rounded-lg hover:bg-teal-700">
+        Search
+      </button>
+
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Category</label>
+        <input [(ngModel)]="filterCategory" [ngModelOptions]="{standalone: true}"
+               class="border border-gray-300 rounded-lg px-1 py-2" placeholder="painkiller" />
+      </div>
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Status</label>
+        <select [(ngModel)]="filterStatus" [ngModelOptions]="{standalone: true}"
+                class="border border-gray-300 rounded-lg px-1 py-2">
+          <option value="">-- any --</option>
+          <option value="Available">Available</option>
+          <option value="OutOfStock">OutOfStock</option>
+        </select>
+      </div>
+      <button (click)="applyFilter()" class="bg-gray-700 text-white px-2 py-2 rounded-lg hover:bg-gray-800">
+        Filter
+      </button>
+     
+
+      <button (click)="showLowStock()" class="bg-amber-500 text-white px-1 py-2 rounded-lg hover:bg-amber-600">
+        Low Stock
+      </button>
+      <button (click)="showExpiring()" class="bg-red-500 text-white px-1 py-2 rounded-lg hover:bg-red-600">
+        Expiring Soon
+      </button>
+      <button (click)="showAll()" class="border border-gray-300 px-1 py-2 rounded-lg hover:bg-gray-100">
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white border rounded-2xl p-6">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="text-left p-3">Drug Name</th>
+            <th class="text-left p-3">Category</th>
+            <th class="text-left p-3">Stock</th>
+            <th class="text-left p-3">Reorder Level</th>
+            <th class="text-left p-3">Price</th>
+            <th class="text-left p-3">Expiry</th>
+            <th class="text-left p-3">Status</th>
+            <th class="text-left p-3">Update Stock</th>
+            <th class="text-left p-3">Change Status</th>
+            <th class="text-left p-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading) {
+            <tr><td colspan="10" class="text-center py-6 text-gray-500">Loading drugs...</td></tr>
+          }
+          @else if ( drugs.length===0) {
+            <tr><td colspan="10" class="text-center py-6 text-gray-500">No Drug Found</td></tr>
+          }
+          
+          @else{          
+             
+    
+          @for (drug of drugs; track drug.drugId) {
+  
+          
+            <tr>
+              
+              <td class="p-3">{{ drug.drugName }}</td>
+              <td class="p-3">{{ drug.category }}</td>
+              <td class="p-3">{{ drug.quantityInStock }}</td>
+              <td class="p-3">{{ drug.reorderLevel }}</td>
+              <td class="p-3">{{ drug.pricePerUnit }}</td>
+              <td class="p-3">{{ drug.expiryDate }}</td>
+              <td class="p-3">{{ drug.status }}</td>
+              <td class="p-3">
+                <div class="flex gap-2">
+                  <input type="number" [(ngModel)]="stockInputs[drug.drugId!]"
+                         [ngModelOptions]="{standalone: true}"
+                         class="w-20 border border-gray-300 rounded-lg px-2 py-2" placeholder="+/- qty" />
+                  <button (click)="updateStock(drug.drugId!)" class="text-teal-600 hover:underline">Update</button>
+                </div>
+              </td>
+              <td class="p-3">
+               <select
+               (change)="updateStatus(drug.drugId!,$any($event.target).value)"
+               class="border bg-gray-300 round px-2 py-2">
+               <option value="">--change--</option>
+               <option value="Available" [selected]="drug.status==='Available'">Available</option>
+               <option value="OutOfStock" [selected]="drug.status==='OutOfStock'">OutOfStock</option>
+            </select>
+
+              </td>
+              <td class="p-3">
+                <button class="text-red-600 hover:underline" (click)="deleteDrug(drug.drugId!)">Delete</button>
+              </td>
+            </tr>
+          }}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-main-layout>

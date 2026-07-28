@@ -2,24 +2,15 @@
 
   <app-header></app-header>
 
-  <div class="flex pt-16">
+  <app-sidebar></app-sidebar>
 
-    <app-sidebar></app-sidebar>
+  <main
+    class="ml-64 pt-20 px-6 pb-6 min-h-screen">
 
-    <div
-      class="flex-1 ml-64 flex flex-col min-h-[calc(100vh-64px)]">
+    <ng-content></ng-content>
 
-      <main
-        class="flex-1 p-6">
+  </main>
 
-        <ng-content></ng-content>
-
-      </main>
-
-      <app-footer></app-footer>
-
-    </div>
-
-  </div>
+  <app-footer></app-footer>
 
 </div>

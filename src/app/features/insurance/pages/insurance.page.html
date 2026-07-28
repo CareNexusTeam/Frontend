@@ -1,0 +1,123 @@
+<app-main-layout>
+
+   <div class="mb-6">
+      <h1 class="text-3xl font-semibold text-gray-800">
+       Insurance
+      </h1>
+
+      <p class="text-gray-500 mt-1">
+        Manage insurance claims for patients
+      </p>
+    </div>
+  <!-- Create claim form -->
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <form [formGroup]="claimForm" (ngSubmit)="createClaim()">
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Invoice ID</label>
+          <input type="number" formControlName="invoiceId"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Insurance Provider ID</label>
+          <input type="number" formControlName="insuranceProviderId"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-2">Claim Amount</label>
+          <input type="number" formControlName="claimAmount"
+                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
+        </div>
+      </div>
+      <button type="submit" class="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700">
+        Create Claim
+      </button>
+    </form>
+  </div>
+
+  <!-- Filter + lookup -->
+  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
+    <div class="flex flex-wrap gap-3 items-end">
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Status</label>
+        <select [(ngModel)]="filterStatus" [ngModelOptions]="{standalone: true}"
+                class="border border-gray-300 rounded-lg px-4 py-3">
+          <option value="">-- any --</option>
+          <option value="Pending">Pending</option>
+          <option value="Submitted">Submitted</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Settled">Settled</option>
+        </select>
+      </div>
+      <button (click)="applyStatusFilter()" class="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-800">
+        Filter
+      </button>
+
+      <div>
+        <label class="block text-sm text-gray-700 mb-2">Invoice ID</label>
+        <input [(ngModel)]="lookupInvoiceId" [ngModelOptions]="{standalone: true}"
+               class="border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 5" />
+      </div>
+      <button (click)="lookupByInvoice()" class="bg-teal-600 text-white px-4 py-3 rounded-lg hover:bg-teal-700">
+        Lookup by Invoice
+      </button>
+
+      <button (click)="showAll()" class="border border-gray-300 px-4 py-3 rounded-lg hover:bg-gray-100">
+        Show All
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white border rounded-2xl p-6">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="text-left p-3">Invoice</th>
+            <th class="text-left p-3">Provider</th>
+            <th class="text-left p-3">Amount</th>
+            <th class="text-left p-3">Submitted</th>
+            <th class="text-left p-3">Status</th>
+            <th class="text-left p-3">Change Status</th>
+            <th class="text-left p-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading) {
+            <tr><td colspan="7" class="text-center py-6 text-gray-500">Loading claims...</td></tr>
+          } @else if (claims.length === 0) {
+            <tr><td colspan="7" class="text-center py-6 text-gray-500">No claims found.</td></tr>
+          } @else {
+            @for (c of claims; track c.claimID) {
+              <tr>
+                <td class="p-3">{{ c.invoiceId }}</td>
+                <td class="p-3">{{ c.insuranceProviderId }}</td>
+                <td class="p-3">{{ c.claimAmount }}</td>
+                <td class="p-3">{{ c.submissionDate }}</td>
+                <td class="p-3">{{ c.status }}</td>
+
+                <td class="p-3">
+                  <select (change)="updateStatus(c.claimID!, $any($event.target).value)"
+                          class="border border-gray-300 rounded-lg px-2 py-2">
+                    <option value="">-- change --</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Settled">Settled</option>
+                  </select>
+                </td>
+
+                <td class="p-3">
+                  <button class="text-teal-600 hover:underline" (click)="submitClaim(c.claimID!)">
+                    Submit
+                  </button>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-main-layout>

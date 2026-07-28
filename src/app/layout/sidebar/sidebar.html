@@ -1,35 +1,23 @@
 <aside
-  [class.w-64]="!collapsed"
-  [class.w-20]="collapsed"
-  class="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white border-r transition-all duration-300 flex flex-col justify-between z-40">
+  class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-gradient-to-br from-[#EAE5C9] to-[#6CC6CB]
 
-  <div>
+  border-r z-40">
 
-    <!-- Logo Section -->
+  <nav class="p-4 flex flex-col gap-2">
 
-    <!-- Menu Section -->
+    @for(menu of menus; track menu.route) {
 
-    <nav class="p-3 flex flex-col gap-2">
+    <a
+      [routerLink]="menu.route"
+      routerLinkActive="bg-teal-50 text-teal-600"
+      class="px-4 py-3 rounded-lg hover:bg-gray-100">
 
-      @for(menu of menus; track menu.route){
+      {{ menu.name }}
 
-      <a
-        [routerLink]="menu.route"
-        routerLinkActive="bg-teal-50 text-teal-600"
-        class="rounded-lg px-4 py-3 hover:bg-gray-100 transition">
+    </a>
 
-        @if(!collapsed){
+    }
 
-        {{ menu.name }}
-
-        }
-
-      </a>
-
-      }
-
-    </nav>
-
-  </div>
+  </nav>
 
 </aside>
