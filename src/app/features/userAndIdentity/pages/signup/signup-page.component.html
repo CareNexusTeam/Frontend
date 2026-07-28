@@ -1,0 +1,92 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <h2>Create CareNexus Account</h2>
+    <p class="subtitle">Join our healthcare management portal</p>
+
+    <!-- Error Alert Box -->
+    <div *ngIf="errorMessage" class="error-alert">
+      ⚠️ {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input 
+          id="name" 
+          type="text" 
+          formControlName="name" 
+          placeholder="Enter your full name" 
+        />
+        <span class="field-error" *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid">
+          Name is required
+        </span>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          placeholder="name@example.com" 
+        />
+        <span class="field-error" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid">
+          Valid email is required
+        </span>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password" 
+          placeholder="Create password" 
+        />
+        <span class="field-error" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid">
+          Password is required
+        </span>
+      </div>
+
+      <!-- Phone Field -->
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input 
+          id="phone" 
+          type="text" 
+          formControlName="phone" 
+          placeholder="10-digit phone number" 
+        />
+        <span class="field-error" *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid">
+          Enter a valid 10-digit phone number
+        </span>
+      </div>
+
+      <!-- Role Selection Field -->
+      <div class="form-group">
+        <label for="role">Register As</label>
+        <select id="role" formControlName="role">
+          <option value="Patient">Patient</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Nurse">Nurse</option>
+          <option value="Admin">Admin</option>
+          <option value="Pharmacist">Pharmacist</option>
+          <option value="Billing">Billing Officer</option>
+          <option value="Compliance">Compliance / Auditor</option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid || isLoading" class="submit-btn">
+        {{ isLoading ? 'Registering...' : 'Sign Up' }}
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>

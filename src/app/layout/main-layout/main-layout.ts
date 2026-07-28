@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 
-import { SidebarComponent } from '../sidebar/sidebar';
-import { HeaderComponent } from '../header/header';
-import { FooterComponent } from '../footer/footer';
+import { HeaderComponent }
+from '../header/header';
 
+import { SidebarComponent }
+from '../sidebar/sidebar';
 
+import { FooterComponent }
+from '../footer/footer';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
   imports: [
-    SidebarComponent,
     HeaderComponent,
+    SidebarComponent,
     FooterComponent
   ],
   templateUrl: './main-layout.html'
