@@ -9,9 +9,9 @@
       <h1 class="text-4xl font-semibold text-gray-800">
         Consultation
       </h1>
- 
+
       <p class="text-gray-500">
-        Create and manage consultations
+        Create and Manage Consultations
       </p>
 
     </div>
@@ -19,7 +19,9 @@
     <div class="bg-white rounded-2xl border p-6">
 
       <h2 class="text-2xl mb-6">
-        Create Consultation
+
+        {{ isEditMode ? 'Update Consultation' : 'Create Consultation' }}
+
       </h2>
 
       <form
@@ -27,68 +29,50 @@
         (ngSubmit)="saveConsultation()"
         class="space-y-5">
 
-        <div
-          class="grid md:grid-cols-2 gap-5">
+        <div class="grid md:grid-cols-2 gap-5">
 
           <div>
-
-            <label
-              class="block mb-2">
-
+            <label class="block mb-2">
               Appointment ID
-
             </label>
 
             <input
+              type="number"
               formControlName="appointmentId"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label
-              class="block mb-2">
-
+            <label class="block mb-2">
               Patient ID
-
             </label>
 
             <input
+              type="number"
               formControlName="patientId"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label
-              class="block mb-2">
-
+            <label class="block mb-2">
               Doctor ID
-
             </label>
 
             <input
+              type="number"
               formControlName="doctorId"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label
-              class="block mb-2">
-
+            <label class="block mb-2">
               Consultation Date
-
             </label>
 
             <input
               type="datetime-local"
               formControlName="consultationDate"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
         </div>
@@ -99,11 +83,16 @@
             Symptoms
           </label>
 
-          <input type="text"
+          <input
+            type="text"
             formControlName="symptoms"
             class="w-full border rounded-lg px-4 py-3">
 
-            <label class="block mb-2">
+        </div>
+
+        <div>
+
+          <label class="block mb-2">
             Diagnosis
           </label>
 
@@ -113,7 +102,6 @@
           </textarea>
 
         </div>
-
 
         <div>
 
@@ -139,11 +127,11 @@
             formControlName="status"
             class="w-full border rounded-lg px-4 py-3">
 
-            <option>
+            <option value="InProgress">
               InProgress
             </option>
 
-            <option>
+            <option value="Completed">
               Completed
             </option>
 
@@ -155,13 +143,139 @@
           type="submit"
           class="bg-teal-600 text-white px-6 py-3 rounded-lg">
 
-          Save Consultation
+          {{ isEditMode ? 'Update Consultation' : 'Save Consultation' }}
 
         </button>
 
       </form>
 
     </div>
+
+    <div class="bg-white rounded-2xl border p-6 mt-8">
+
+  <div class="flex gap-3 mb-6">
+
+    <input
+      [(ngModel)]="searchId"
+      placeholder="Search Consultation By ID"
+      class="border rounded-lg px-4 py-2 w-80">
+
+    <button
+      type="button"
+      (click)="searchConsultation()"
+      class="bg-teal-500 text-white px-5 py-2 rounded-lg">
+
+      Search
+
+    </button>
+
+    <button
+      type="button"
+      (click)="refreshConsultations()"
+      class="bg-teal-600 text-white px-5 py-2 rounded-lg">
+
+      Refresh
+
+    </button>
+
+  </div>
+
+  <h2 class="text-2xl mb-5">
+    Consultation Records
+  </h2>
+
+  <div class="overflow-x-auto">
+
+    <table class="w-full border">
+
+      <thead>
+
+        <tr class="bg-gray-100">
+
+          <th class="border p-3">
+            ID
+          </th>
+
+          <th class="border p-3">
+            Appointment ID
+          </th>
+
+          <th class="border p-3">
+            Patient ID
+          </th>
+
+          <th class="border p-3">
+            Doctor ID
+          </th>
+
+          <th class="border p-3">
+            Status
+          </th>
+
+          <th class="border p-3">
+            Actions
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let consultation of consultations">
+
+          <td class="border p-3">
+            {{ consultation.consultationId }}
+          </td>
+
+          <td class="border p-3">
+            {{ consultation.appointmentId }}
+          </td>
+
+          <td class="border p-3">
+            {{ consultation.patientId }}
+          </td>
+
+          <td class="border p-3">
+            {{ consultation.doctorId }}
+          </td>
+
+          <td class="border p-3">
+            {{ consultation.status }}
+          </td>
+
+          <td class="border p-3">
+
+            <button
+              type="button"
+              (click)="editConsultation(consultation)"
+              class="bg-teal-500 text-white px-3 py-1 rounded mr-2">
+
+              Edit
+
+            </button>
+
+            <button
+              type="button"
+              (click)="deleteConsultation(consultation.consultationId!)"
+              class="bg-teal-600 text-white px-3 py-1 rounded">
+
+              Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
 
   </div>
 

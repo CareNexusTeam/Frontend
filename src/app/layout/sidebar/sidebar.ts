@@ -10,6 +10,8 @@ interface MenuItem {
 
   route: string;
 
+  icon?: string;
+
   roles: string[];
 
 }
@@ -41,8 +43,10 @@ export class SidebarComponent implements OnInit {
     const allMenus: MenuItem[] = [
 
       {
+        
         name: 'Patients',
         route: '/patients',
+         icon: './assets/icons/patients.png',
         roles: [
           'Admin',
           'Doctor',
@@ -54,6 +58,7 @@ export class SidebarComponent implements OnInit {
       {
         name: 'Doctor Schedules',
         route: '/doctor-schedules',
+        icon: './assets/icons/patient.png',
         roles: [
           'Admin',
           'Doctor',
@@ -64,6 +69,7 @@ export class SidebarComponent implements OnInit {
       {
         name: 'Appointments',
         route: '/appointments',
+        icon: './assets/icons/patient.png',
         roles: [
           'Admin',
           'Doctor',
@@ -75,6 +81,7 @@ export class SidebarComponent implements OnInit {
       {
         name: 'EMR',
         route: '/consultation',
+        icon: './assets/icons/patient.png',
         roles: [
           'Admin',
           'Doctor'
@@ -84,6 +91,7 @@ export class SidebarComponent implements OnInit {
      {
   name: 'Drug Inventory',
   route: '/drug-inventory',
+  icon: './assets/icons/patient.png',
   roles: [
     'Admin',
     'Pharmacist'

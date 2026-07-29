@@ -1,7 +1,5 @@
 <aside
-  class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-gradient-to-br from-[#EAE5C9] to-[#6CC6CB]
-
-  border-r z-40">
+  class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] 	bg-white text-black border-r z-40">
 
   <nav class="p-4 flex flex-col gap-2">
 
@@ -9,9 +7,9 @@
 
     <a
       [routerLink]="menu.route"
-      routerLinkActive="bg-teal-50 text-teal-600"
-      class="px-4 py-3 rounded-lg hover:bg-gray-100">
-
+      routerLinkActive="bg-blue text-black"
+      class="px-4 py-3 rounded-lg hover:bg-blue-900">
+      <img [src]="menu.icon" class="w-5 h-5 inline-block mr-2" />
       {{ menu.name }}
 
     </a>
