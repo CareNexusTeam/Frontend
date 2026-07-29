@@ -1,0 +1,176 @@
+/* CareNexus Analytics Vanilla CSS & Bootstrap Design System */
+
+.cn-analytics-wrapper {
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.cn-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cn-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.cn-page-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+}
+
+.btn-teal, .cn-btn-primary {
+  background-color: #0d9488;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.55rem 1.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-teal:hover, .cn-btn-primary:hover {
+  background-color: #0f766e;
+  color: #ffffff;
+}
+
+.btn-outline-teal {
+  border-color: #0d9488;
+  color: #0d9488;
+  border-radius: 0.5rem;
+}
+
+.btn-outline-teal:hover {
+  background-color: #0d9488;
+  color: #ffffff;
+}
+
+/* Filter Toolbar */
+.cn-filter-toolbar {
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.cn-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.35rem;
+}
+
+.cn-input, .cn-select {
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  border: 1px solid #cbd5e1;
+}
+
+.cn-input:focus, .cn-select:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 0.2rem rgba(13, 148, 136, 0.15);
+}
+
+/* Form Card */
+.cn-form-card {
+  border-radius: 1rem;
+  background: #ffffff;
+  border-left: 4px solid #0d9488 !important;
+}
+
+/* Executive KPI Cards */
+.cn-kpi-card {
+  border-radius: 1rem;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cn-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.cn-kpi-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.cn-kpi-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cn-kpi-trend {
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.cn-kpi-subtext {
+  font-size: 0.78rem;
+}
+
+.cn-kpi-icon-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.bg-light-teal { background-color: #ccfbf1; color: #0d9488; }
+.bg-light-primary { background-color: #e0f2fe; color: #0284c7; }
+.bg-light-purple { background-color: #f3e8ff; color: #7c3aed; }
+.bg-light-warning { background-color: #fef3c7; color: #d97706; }
+.bg-light-danger { background-color: #ffe4e6; color: #e11d48; }
+
+.text-teal { color: #0d9488 !important; }
+.text-purple { color: #7c3aed !important; }
+.bg-teal { background-color: #0d9488 !important; }
+
+/* Progress Bars */
+.cn-progress-sm {
+  height: 8px;
+  border-radius: 4px;
+  background-color: #e2e8f0;
+}
+
+.cn-progress-md {
+  height: 12px;
+  border-radius: 6px;
+  background-color: #e2e8f0;
+}
+
+/* Panel Cards & Tables */
+.cn-panel-card {
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.cn-stat-sm-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.cn-badge-scope {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.4rem;
+}

@@ -1,4 +1,3 @@
-/* Angular Host element ko poori width force karne ke liye */
 :host {
   display: block;
   width: 100% !important;
@@ -9,7 +8,7 @@
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box;
-  padding: 0px; /* Padding parent container se aayegi */
+  padding: 0px;
   background-color: transparent;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: #334155;
@@ -32,7 +31,7 @@
   margin: 4px 0 0 0;
 }
 
-/* Card General Styling (Full Width Enforced) */
+/* Card General Styling */
 .card {
   background: #ffffff;
   border-radius: 8px;
@@ -52,7 +51,7 @@
   color: #1e293b;
 }
 
-/* Form Grid Layout (Spans across entire available space) */
+/* Form Grid Layout */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -103,7 +102,7 @@
 }
 
 .btn-submit {
-  background-color: #0d9488; /* Exact CareNexus Teal Theme */
+  background-color: #0d9488;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -123,18 +122,42 @@
   cursor: not-allowed;
 }
 
-/* Table Card Section */
-.table-header {
+/* Table Header & Search */
+.flex-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
-.table-header h3 {
+.flex-header h3 {
   font-size: 16px;
   font-weight: 600;
   margin: 0;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  width: 240px;
+  background-color: #f8fafc;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #0d9488;
+  background-color: #ffffff;
 }
 
 .btn-refresh {
@@ -145,6 +168,7 @@
   font-size: 13px;
   color: #475569;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn-refresh:hover {
@@ -188,31 +212,142 @@
   color: #334155;
 }
 
+.font-mono {
+  font-family: monospace;
+  color: #64748b;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
 .no-records {
   text-align: center;
   color: #94a3b8;
   padding: 24px !important;
 }
 
+/* Status Badges */
 .status-badge {
-  background: #dcfce7;
-  color: #166534;
-  padding: 2px 8px;
+  padding: 3px 10px;
   border-radius: 12px;
   font-size: 11px;
   font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+/* Action Buttons */
+.action-cell {
+  display: flex;
+  gap: 8px;
 }
 
 .action-btn {
   background: transparent;
   border: 1px solid #cbd5e1;
-  color: #0f766e;
   padding: 4px 10px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+  transition: all 0.2s;
 }
 
-.action-btn:hover {
+.view-btn {
+  color: #0f766e;
+  border-color: #99f6e4;
+}
+
+.view-btn:hover {
   background: #f0fdf4;
+}
+
+.delete-btn {
+  color: #e11d48;
+  border-color: #fecdd3;
+}
+
+.delete-btn:hover {
+  background: #fff1f2;
+}
+
+/* MODAL STYLES */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background: #e2e8f0;
 }

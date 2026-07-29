@@ -1,73 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Patient } from '../models/patient.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
+  private apiUrl = 'http://localhost:8082/api/v1/patients';
 
-  private readonly baseUrl = 'http://localhost:8082/api/v1/patients';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  /**
-   * Fetch all patients
-   * GET /api/v1/patients/all
-   */
-  getAllPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.baseUrl}/all`);
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token') || localStorage.getItem('jwt_token') || '';
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
   }
 
-  /**
-   * Create/Register a new patient
-   * POST /api/v1/patients/create
-   */
-  createPatient(patientData: Patient): Observable<Patient> {
-    return this.http.post<Patient>(
-      `${this.baseUrl}/create`,
-      patientData
-    );
+  // GET ALL PATIENTS (/api/v1/patients/all)
+  getAllPatients(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/all`, { headers: this.getHeaders() });
   }
 
-  /**
-   * Get patient by ID
-   * GET /api/v1/patients/{patientId}
-   */
-  getPatientById(patientId: number): Observable<Patient> {
-    return this.http.get<Patient>(
-      `${this.baseUrl}/${patientId}`
-    );
+  // GET PATIENT BY ID (/api/v1/patients/{patientId})
+  getPatientById(id: number | string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
 
-  /**
-   * Update patient status
-   * PATCH /api/v1/patients/{patientId}/status
-   */
-  updatePatientStatus(
-    patientId: number,
-    status: string
-  ): Observable<Patient> {
-
-    const payload = {
-      status: status
-    };
-
-    return this.http.patch<Patient>(
-      `${this.baseUrl}/${patientId}/status`,
-      payload
-    );
+  // CREATE PATIENT (/api/v1/patients/create)
+  createPatient(patientDto: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create`, patientDto, { headers: this.getHeaders() });
   }
 
-  /**
-   * Delete patient permanently
-   * DELETE /api/v1/patients/{patientId}
-   */
-  deletePatient(patientId: number): Observable<string> {
-    return this.http.delete(
-      `${this.baseUrl}/${patientId}`,
-      { responseType: 'text' }
-    );
+  // UPDATE PATIENT STATUS/DETAILS (/api/v1/patients/{patientId}/status)
+  updatePatientStatus(id: number | string, patientDto: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${id}/status`, patientDto, { headers: this.getHeaders() });
+  }
+
+  // DELETE PATIENT (/api/v1/patients/{patientId})
+  deletePatient(id: number | string): Observable<any> {
+    const token = localStorage.getItem('token') || localStorage.getItem('jwt_token') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    });
+
+    return this.http.delete(`${this.apiUrl}/${id}`, { 
+      headers: headers, 
+      responseType: 'text' 
+    });
   }
 }

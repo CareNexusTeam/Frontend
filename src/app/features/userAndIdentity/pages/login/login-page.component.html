@@ -1,40 +1,115 @@
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <h1 class="brand-title">CareNexus</h1>
-    <p class="brand-subtitle">Sign in to your account</p>
+<div class="min-h-screen flex bg-slate-50">
 
-    <!-- Error Message Alert Box -->
-    <div *ngIf="errorMessage" class="error-alert">
-      ⚠️ {{ errorMessage }}
-    </div>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          formControlName="email" 
-          class="form-input" 
-        />
+  <!-- Left Side -->
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+
+    <div class="w-full max-w-md">
+
+      <!-- Logo -->
+      <div class="mb-8">
+
+        <h1 class="text-4xl font-bold text-blue-900">
+          CareNexus
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+          Sign in to access your healthcare dashboard
+        </p>
+
       </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          formControlName="password" 
-          class="form-input" 
-        />
+      <!-- Error -->
+      <div
+        *ngIf="errorMessage"
+        class="mb-5 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+
+        {{ errorMessage }}
+
       </div>
 
-      <button type="submit" class="submit-btn" [disabled]="loginForm.invalid">
-        Sign In
-      </button>
-    </form>
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()">
 
-    <div class="auth-footer">
-      Don't have an account? <a routerLink="/signup" class="auth-link">Sign up</a>
+        <div class="mb-5">
+
+          <label class="block text-sm font-medium text-gray-600 mb-2">
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email"
+            class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"/>
+
+        </div>
+
+        <div class="mb-6">
+
+          <label class="block text-sm font-medium text-gray-600 mb-2">
+            Password
+          </label>
+
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-800"/>
+
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="w-full bg-blue-900 hover:bg-blue-800 disabled:bg-slate-400 text-white font-medium py-3 rounded-lg transition">
+
+          Sign In
+
+        </button>
+
+      </form>
+
+      <div class="mt-6 text-center text-sm text-gray-500">
+
+        Don't have an account?
+
+        <a
+          routerLink="/signup"
+          class="text-blue-900 font-medium hover:underline">
+
+          Sign Up
+
+        </a>
+
+      </div>
+
     </div>
+
   </div>
+
+  <!-- Right Side -->
+  <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-800 via-blue-700 to-indigo-900">
+
+    <div class="absolute inset-0 bg-black/10"></div>
+
+    <div class="relative z-10 flex flex-col justify-center items-center text-center px-12">
+      <img src="../../../../../../assets/icons/Gemini_Generated_Image_hc7ew6hc7ew6hc7e.png" alt="CareNexus" class="w-32 h-32">
+
+      <h2 class="text-4xl font-bold text-white mt-8">
+        CareNexus
+      </h2>
+
+      <p class="text-blue-100 text-lg mt-4 max-w-md">
+        Connecting Patients, Doctors and Healthcare Services through one intelligent healthcare platform.
+      </p>
+
+    </div>
+
+    <!-- Background Pattern -->
+    <div class="absolute top-20 left-20 w-72 h-72 bg-white/5 rounded-full"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/5 rounded-full"></div>
+
+  </div>
+
 </div>

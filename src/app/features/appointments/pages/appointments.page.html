@@ -1,132 +1,155 @@
 <app-main-layout>
 
-    <div class="mb-6">
-      <h1 class="text-4xl font-semibold text-gray-800">
-        Appointments
-      </h1>
+  <div class="min-h-screen bg-slate-50 p-6">
 
-      <p class="text-gray-500">
-        Book an appointment with a doctor
-      </p>
+    <!-- Header -->
+    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+
+      <div class="flex items-center gap-3">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             height="24"
+             width="24"
+             viewBox="0 -960 960 960"
+             fill="white">
+          <path d="M420-340h120v-100h100v-120H540v-100H420v100H320v120h100v100Zm60 260q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5t127 85.5q54 54 85.5 127T880-480q0 82-31.5 155T763-197q-54 54-127 85.5T480-80Z"/>
+        </svg>
+
+        <div>
+          <h1 class="text-xl font-semibold">
+            Appointments
+          </h1>
+
+          <p class="text-sm text-blue-100 mt-1">
+            Book and manage patient appointments
+          </p>
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- Appointment Card -->
+    <!-- Book Appointment Form -->
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-    <div class="w-full bg-white border shadow-sm rounded-2xl p-6 mb-6">
-
-      <h2 class="text-2xl font-medium mb-5">
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
         Book Appointment
       </h2>
 
       <form
         [formGroup]="appointmentForm"
-        (ngSubmit)="bookAppointment()"
-        class="grid md:grid-cols-2 gap-5"
-      >
+        (ngSubmit)="bookAppointment()">
 
-        <div>
-          <label class="block mb-2 text-sm">
-            Patient ID
-          </label>
+        <div class="grid md:grid-cols-2 gap-5">
 
-          <input
-            formControlName="patientId"
-            class="w-full border rounded-lg px-4 py-3"
-          >
+          <!-- Patient ID -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Patient ID
+            </label>
+
+            <input
+              formControlName="patientId"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+          </div>
+
+          <!-- Doctor ID -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Doctor ID
+            </label>
+
+            <input
+              formControlName="doctorId"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+          </div>
+
+          <!-- Department ID -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Department ID
+            </label>
+
+            <input
+              formControlName="departmentId"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+          </div>
+
+          <!-- Date & Time -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Scheduled Date & Time
+            </label>
+
+            <input
+              type="datetime-local"
+              formControlName="scheduledDateTime"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+          </div>
+
+          <!-- Type -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Type
+            </label>
+
+            <select
+              formControlName="type"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
+
+              <option>Consultation</option>
+              <option>Follow Up</option>
+              <option>Emergency</option>
+
+            </select>
+          </div>
+
+          <!-- Status -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Status
+            </label>
+
+            <select
+              formControlName="status"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
+
+              <option>Scheduled</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+
+            </select>
+          </div>
+
         </div>
 
-        <div>
-          <label class="block mb-2 text-sm">
-            Doctor ID
-          </label>
+        <button
+          type="submit"
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
 
-          <input
-            formControlName="doctorId"
-            class="w-full border rounded-lg px-4 py-3"
-          >
-        </div>
+          Book Appointment
 
-        <div>
-          <label class="block mb-2 text-sm">
-            Department ID
-          </label>
-
-          <input
-            formControlName="departmentId"
-            class="w-full border rounded-lg px-4 py-3"
-          >
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm">
-            Scheduled Date & Time
-          </label>
-
-          <input
-            type="datetime-local"
-            formControlName="scheduledDateTime"
-            class="w-full border rounded-lg px-4 py-3"
-          >
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm">
-            Type
-          </label>
-
-          <select
-            formControlName="type"
-            class="w-full border rounded-lg px-4 py-3"
-          >
-            <option>Consultation</option>
-            <option>Follow Up</option>
-            <option>Emergency</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block mb-2 text-sm">
-            Status
-          </label>
-
-          <select
-            formControlName="status"
-            class="w-full border rounded-lg px-4 py-3"
-          >
-            <option>Scheduled</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
-        </div>
-
-        <div class="md:col-span-2">
-          <button
-            type="submit"
-            class="px-6 py-3 bg-blue-800 text-white rounded-lg hover:bg-blue-700"
-          >
-            Book Appointment
-          </button>
-        </div>
+        </button>
 
       </form>
 
     </div>
 
-    <!-- Table Card -->
+    <!-- Appointment Records -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-    <div class="bg-white border rounded-2xl p-6">
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
 
-      <div class="flex justify-between items-center mb-5">
-
-        <h2 class="text-2xl font-medium">
-          All Appointments
+        <h2 class="text-lg font-semibold">
+          Appointment Records
         </h2>
 
         <button
           (click)="refreshAppointments()"
-          class="border border-blue-800 text-blue-800 px-5 py-2 rounded-xl"
-        >
+          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+
           Refresh
+
         </button>
 
       </div>
@@ -137,105 +160,110 @@
 
           <thead>
 
-          <tr class="bg-gray-50 text-sm text-gray-600">
+            <tr class="bg-gray-50">
 
-            <th class="text-left p-3">
-              ID
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                ID
+              </th>
 
-            <th class="text-left p-3">
-              PATIENT
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Patient
+              </th>
 
-            <th class="text-left p-3">
-              DOCTOR
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Doctor
+              </th>
 
-            <th class="text-left p-3">
-              DATE/TIME
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Date & Time
+              </th>
 
-            <th class="text-left p-3">
-              TYPE
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Type
+              </th>
 
-            <th class="text-left p-3">
-              STATUS
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Status
+              </th>
 
-            <th class="text-left p-3">
-              ACTIONS
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Actions
+              </th>
 
-          </tr>
+            </tr>
 
           </thead>
 
           <tbody>
 
-          @if (loading) {
+            @if (loading) {
 
-          <tr>
-            <td
-              colspan="7"
-              class="text-center py-6 text-gray-500">
-              Loading appointments...
-            </td>
-          </tr>
+              <tr>
+                <td colspan="7"
+                    class="text-center py-10 text-sm text-gray-500">
+                  Loading appointments...
+                </td>
+              </tr>
 
-          }
+            }
 
-          @else if (appointments.length === 0) {
+            @else if (appointments.length === 0) {
 
-          <tr>
-            <td
-              colspan="7"
-              class="text-center py-6 text-gray-500">
-              No appointments found.
-            </td>
-          </tr>
+              <tr>
+                <td colspan="7"
+                    class="text-center py-10 text-sm text-gray-500">
+                  No appointments found
+                </td>
+              </tr>
 
-          }
+            }
 
-          @else {
+            @else {
 
-          @for (appointment of appointments; track appointment.appointmentId) {
+              @for (appointment of appointments; track appointment.appointmentId) {
 
-          <tr class="border-t">
+                <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
 
-            <td class="p-3">
-              {{ appointment.appointmentId }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.appointmentId }}
+                  </td>
 
-            <td class="p-3">
-              {{ appointment.patientId }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.patientId }}
+                  </td>
 
-            <td class="p-3">
-              {{ appointment.doctorId }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.doctorId }}
+                  </td>
 
-            <td class="p-3">
-              {{ appointment.scheduledDateTime }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.scheduledDateTime }}
+                  </td>
 
-            <td class="p-3">
-              {{ appointment.type }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.type }}
+                  </td>
 
-            <td class="p-3">
-              {{ appointment.status }}
-            </td>
+                  <td class="px-4 py-4 text-sm text-gray-700">
+                    {{ appointment.status }}
+                  </td>
 
-            <td class="p-3">
-              Edit
-            </td>
+                  <td class="px-4 py-4">
 
-          </tr>
+                    <button
+                      class="text-blue-900 text-sm hover:underline">
 
-          }
+                      Edit
 
-          }
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            }
 
           </tbody>
 
@@ -244,4 +272,7 @@
       </div>
 
     </div>
+
+  </div>
+
 </app-main-layout>

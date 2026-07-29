@@ -1,150 +1,148 @@
 <app-main-layout>
 
-    <!-- Page Header -->
+  <div class="min-h-screen bg-slate-50 p-6">
 
-    <div class="mb-6">
-      <div class="flex">
-      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#00008b"><path d="M540-80q-108 0-184-76t-76-184v-23q-86-14-143-80.5T80-600v-240h120v-40h80v160h-80v-40h-40v160q0 66 47 113t113 47q66 0 113-47t47-113v-160h-40v40h-80v-160h80v40h120v240q0 90-57 156.5T360-363v23q0 75 52.5 127.5T540-160q75 0 127.5-52.5T720-340v-67q-35-12-57.5-43T640-520q0-50 35-85t85-35q50 0 85 35t35 85q0 39-22.5 70T800-407v67q0 108-76 184T540-80Zm248.5-411.5Q800-503 800-520t-11.5-28.5Q777-560 760-560t-28.5 11.5Q720-537 720-520t11.5 28.5Q743-480 760-480t28.5-11.5ZM760-520Z"/></svg>
-      <h1 class="text-3xl font-semibold text-gray-800">
-        Doctor Schedules
-      </h1>
+    <!-- Header -->
+    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+
+      <div class="flex items-center gap-3">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             height="24"
+             width="24"
+             viewBox="0 -960 960 960"
+             fill="white">
+          <path d="M540-80q-108 0-184-76t-76-184v-23q-86-14-143-80.5T80-600v-240h120v-40h80v160h-80v-40h-40v160q0 66 47 113t113 47q66 0 113-47t47-113v-160h-40v40h-80v-160h80v40h120v240q0 90-57 156.5T360-363v23q0 75 52.5 127.5T540-160q75 0 127.5-52.5T720-340v-67q-35-12-57.5-43T640-520q0-50 35-85t85-35q50 0 85 35t35 85q0 39-22.5 70T800-407v67q0 108-76 184T540-80Z"/>
+        </svg>
+
+        <div>
+          <h1 class="text-xl font-semibold">
+            Doctor Schedules
+          </h1>
+
+          <p class="text-sm text-blue-100 mt-1">
+            Doctors can add and manage available time slots
+          </p>
+        </div>
+
       </div>
 
-      <p class="text-gray-500 mt-1">
-        Doctors can add their available time slots
-      </p>
     </div>
 
-    <!-- Create Schedule Card -->
+    <!-- Create Schedule Form -->
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-    <div class="bg-white border-gray-200 rounded-xl p-3 shadow-sm mb-6" >
-     <div class="flex"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#255290"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v200h-80v-40H200v400h280v80H200Zm0-560h560v-80H200v80Zm0 0v-80 80ZM560-80v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T903-300L683-80H560Zm300-263-37-37 37 37ZM620-140h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
-      <h2 class="text-xl font-medium text-gray-800 mb-5">
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
         Create Schedule
-      </h2></div>
+      </h2>
 
       <form
         [formGroup]="scheduleForm"
-        (ngSubmit)="addSchedule()"
-        class="grid grid-cols-1 md:grid-cols-2 gap-5"
-      >
+        (ngSubmit)="addSchedule()">
 
-        <!-- Doctor ID -->
+        <div class="grid md:grid-cols-2 gap-5">
 
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            Doctor ID
-          </label>
+          <!-- Doctor ID -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Doctor ID
+            </label>
 
-          <input
-            type="text"
-            formControlName="doctorId"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
+            <input
+              type="text"
+              formControlName="doctorId"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
-        <!-- Date -->
+          <!-- Date -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Date
+            </label>
 
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            Date
-          </label>
+            <input
+              type="date"
+              formControlName="date"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
-          <input
-            type="date"
-            formControlName="date"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
+          <!-- Start Time -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Start Time
+            </label>
 
-        <!-- Start Time -->
+            <input
+              type="time"
+              formControlName="startTime"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            Start Time
-          </label>
+          <!-- End Time -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              End Time
+            </label>
 
-          <input
-            type="time"
-            formControlName="startTime"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
+            <input
+              type="time"
+              formControlName="endTime"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
-        <!-- End Time -->
+          <!-- Slot Duration -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Slot Duration (Min)
+            </label>
 
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            End Time
-          </label>
+            <input
+              type="number"
+              formControlName="slotDurationMinutes"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
-          <input
-            type="time"
-            formControlName="endTime"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
+          <!-- Available Slots -->
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Available Slots
+            </label>
 
-        <!-- Slot Duration -->
-
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            Slot Duration (min)
-          </label>
-
-          <input
-            type="number"
-            formControlName="slotDurationMinutes"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
-
-        <!-- Available Slots -->
-
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">
-            Available Slots
-          </label>
-
-          <input
-            type="number"
-            formControlName="availableSlots"
-            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          />
-        </div>
-
-        <!-- Button -->
-
-        <div class="md:col-span-2">
-
-          <button
-            type="submit"
-            class="bg-blue-800 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow"
-          >
-            Add Schedule
-          </button>
+            <input
+              type="number"
+              formControlName="availableSlots"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
 
         </div>
+
+        <button
+          type="submit"
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+
+          Add Schedule
+
+        </button>
 
       </form>
 
     </div>
 
-    <!-- Schedule Table -->
+    <!-- Schedule List -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-    <div class="bg-white border rounded-2xl p-6 shadow-sm">
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
 
-      <div class="flex justify-between items-center mb-5">
-
-        <h2 class="text-xl font-medium text-gray-800">
-          All Schedules
+        <h2 class="text-lg font-semibold">
+          Schedule Records
         </h2>
 
         <button
           (click)="refreshSchedules()"
-          class="border border-blue-800 text-blue-800 px-5 py-2 rounded-xl hover:bg-blue-100 transition"
-        >
+          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+
           Refresh
+
         </button>
 
       </div>
@@ -155,15 +153,39 @@
 
           <thead>
 
-          <tr class="bg-gray-50 text-sm text-gray-600">
+          <tr class="bg-gray-50">
 
-            <th class="text-left p-3">ID</th>
-            <th class="text-left p-3">DOCTOR</th>
-            <th class="text-left p-3">DATE</th>
-            <th class="text-left p-3">START</th>
-            <th class="text-left p-3">END</th>
-            <th class="text-left p-3">SLOT(MIN)</th>
-            <th class="text-left p-3">AVAILABLE</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              ID
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Doctor ID
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Date
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Start Time
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              End Time
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Slot Duration
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Available Slots
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Actions
+            </th>
 
           </tr>
 
@@ -173,45 +195,61 @@
 
           @if (schedules.length === 0) {
 
-          <tr>
-            <td
-              colspan="7"
-              class="text-center py-6 text-gray-500"
-            >
-              No schedules yet.
-            </td>
-          </tr>
+            <tr>
+              <td colspan="8"
+                  class="text-center py-10 text-sm text-gray-500">
+                No schedules found
+              </td>
+            </tr>
 
           }
 
           @for(schedule of schedules; track schedule.scheduleId) {
-          <tr class="border-t">
-            <td class="p-3">
-              {{ schedule.scheduleId }}
-            </td>
-            <td class="p-3">
-              {{ schedule.doctorId }}
-            </td>
-            <td class="p-3">
-              {{ schedule.date }}
-            </td>
-            <td class="p-3">
-              {{ schedule.startTime }}
-            </td>
-            <td class="p-3">{{ schedule.endTime }}</td>
-            <td class="p-3">{{ schedule.slotDurationMinutes }}
-            </td>
-            <td class="p-3">
-              {{ schedule.availableSlots }}
-            </td>
-            <td class="p-3">
-              <button class="text-red-600 hover:underline"
-                      (click)="deleteSchedule(schedule.scheduleId!)"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
+
+            <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.scheduleId }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.doctorId }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.date }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.startTime }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.endTime }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.slotDurationMinutes }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ schedule.availableSlots }}
+              </td>
+
+              <td class="px-4 py-4">
+
+                <button
+                  class="text-blue-900 text-sm hover:underline"
+                  (click)="deleteSchedule(schedule.scheduleId!)">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
           }
 
           </tbody>
@@ -221,5 +259,7 @@
       </div>
 
     </div>
+
+  </div>
 
 </app-main-layout>
