@@ -1,0 +1,187 @@
+<app-main-layout>
+  <div class="cn-notifications-wrapper">
+
+    <!-- Header Section -->
+    <div class="cn-header-section mb-4">
+      <div>
+        <h1 class="cn-page-title">Notifications & Clinical Alerts</h1>
+        <p class="cn-page-subtitle">Real-time alerts for appointments, billing notices, pharmacy stock, and clinical updates.</p>
+      </div>
+      <button (click)="markAllAsRead()" class="btn cn-btn-primary">
+        <i class="bi bi-check2-all me-1"></i> Mark All as Read
+      </button>
+    </div>
+
+    <!-- Summary Metrics Grid (Forces 4 Cards Side-by-Side) -->
+    <div class="cn-metrics-grid mb-4">
+      <div class="cn-summary-card">
+        <div class="cn-card-content">
+          <span class="cn-stat-label">Total Notifications</span>
+          <h3 class="cn-stat-value text-dark">{{ summary.total }}</h3>
+        </div>
+        <div class="cn-icon-avatar bg-light-primary text-primary">
+          <i class="bi bi-bell-fill"></i>
+        </div>
+      </div>
+
+      <div class="cn-summary-card">
+        <div class="cn-card-content">
+          <span class="cn-stat-label">Unread Alerts</span>
+          <h3 class="cn-stat-value text-teal">{{ summary.unread }}</h3>
+        </div>
+        <div class="cn-icon-avatar bg-light-teal text-teal">
+          <i class="bi bi-envelope-fill"></i>
+        </div>
+      </div>
+
+      <div class="cn-summary-card">
+        <div class="cn-card-content">
+          <span class="cn-stat-label">Read Notifications</span>
+          <h3 class="cn-stat-value text-secondary">{{ summary.read }}</h3>
+        </div>
+        <div class="cn-icon-avatar bg-light-secondary text-secondary">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+      </div>
+
+      <div class="cn-summary-card">
+        <div class="cn-card-content">
+          <span class="cn-stat-label">High Priority</span>
+          <h3 class="cn-stat-value text-danger">{{ summary.critical }}</h3>
+        </div>
+        <div class="cn-icon-avatar bg-light-danger text-danger">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="cn-toolbar-card card border-0 shadow-sm p-3 mb-4">
+      <div class="row g-3 align-items-center justify-content-between">
+        <div class="col-lg-7 col-md-12">
+          <div class="cn-category-pills d-flex flex-wrap gap-2">
+            @for (cat of categories; track cat) {
+              <button
+                (click)="setCategory(cat)"
+                class="cn-pill-btn"
+                [class.active]="activeCategory === cat">
+                {{ cat }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="col-lg-5 col-md-12">
+          <div class="d-flex gap-2">
+            <div class="input-group search-group">
+              <span class="input-group-text bg-white border-end-0 ps-3">
+                <i class="bi bi-search text-muted"></i>
+              </span>
+              <input
+                type="text"
+                [(ngModel)]="searchQuery"
+                placeholder="Search notifications..."
+                class="form-control border-start-0 ps-0 cn-search-input">
+            </div>
+            
+            <select
+              [(ngModel)]="activeStatus"
+              (change)="setStatusFilter(activeStatus)"
+              class="form-select cn-status-select w-auto">
+              <option value="All">All Status</option>
+              <option value="Unread">Unread Only</option>
+              <option value="Read">Read Only</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compact Horizontal Notification Feed -->
+    <div class="cn-feed-container">
+      @if (filteredNotifications.length === 0) {
+        <div class="cn-empty-card card border-0 shadow-sm p-5 text-center">
+          <div class="cn-empty-icon mb-3">
+            <i class="bi bi-inbox fs-1 text-muted"></i>
+          </div>
+          <h5 class="text-dark fw-semibold mb-1">No notifications found</h5>
+          <p class="text-muted small mb-0">Try adjusting your filters or search query.</p>
+        </div>
+      } @else {
+        <div class="d-flex flex-column gap-2">
+          @for (item of filteredNotifications; track item.notificationId) {
+            <div
+              class="cn-horizontal-card card border-0 shadow-sm p-2 px-3"
+              [class.cn-unread-row]="item.status === 'Unread'">
+              
+              <div class="d-flex align-items-center justify-content-between gap-3">
+                
+                <!-- Left Section: Category, Badges & Message in One Line -->
+                <div class="d-flex align-items-center gap-3 overflow-hidden">
+                  
+                  <div class="cn-category-badge-avatar" [attr.data-category]="item.category">
+                    @if (item.category === 'Appointment') { 📅 }
+                    @else if (item.category === 'Pharmacy') { 💊 }
+                    @else if (item.category === 'Billing') { 💳 }
+                    @else if (item.category === 'Clinical') { 🩺 }
+                    @else { 📋 }
+                  </div>
+
+                  <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <span class="cn-badge-cat" [attr.data-category]="item.category">
+                      {{ item.category }}
+                    </span>
+
+                    @if (item.priority === 'High') {
+                      <span class="cn-badge-priority" title="High Priority">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                      </span>
+                    }
+
+                    @if (item.status === 'Unread') {
+                      <span class="cn-unread-dot" title="Unread"></span>
+                    }
+                  </div>
+
+                  <p class="cn-item-message mb-0 text-truncate">
+                    {{ item.message }}
+                  </p>
+                </div>
+
+                <!-- Right Section: Date & Actions -->
+                <div class="d-flex align-items-center gap-3 flex-shrink-0 ms-auto">
+                  
+                  <span class="cn-item-date text-muted d-none d-md-inline">
+                    <i class="bi bi-clock me-1"></i>{{ item.createdDate }}
+                  </span>
+
+                  <div class="d-flex align-items-center gap-1">
+                    @if (item.status === 'Unread') {
+                      <button
+                        (click)="markAsRead(item.notificationId)"
+                        class="btn btn-sm cn-btn-read-compact"
+                        title="Mark as Read">
+                        <i class="bi bi-check2"></i>
+                        <span class="d-none d-lg-inline ms-1">Read</span>
+                      </button>
+                    }
+                    <button
+                      (click)="dismissNotification(item.notificationId)"
+                      class="btn btn-sm cn-btn-dismiss-compact"
+                      title="Dismiss">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+</app-main-layout>
