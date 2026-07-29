@@ -21,16 +21,14 @@ export class InvoiceService {
     return this.http.post<Invoice>(`${this.API_URL}/invoices`, invoice);
   }
 
-  getByStatus(status: string): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(`${this.API_URL}/invoices/status/${status}`);
-  }
+ 
 
   getInvoicesByPatient(patientId: number): Observable<Invoice[]> {
     return this.http.get<Invoice[]>(`${this.API_URL}/invoices/patient/${patientId}`);
   }
 
   updatePayment(invoiceID: number, amount: number): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.API_URL}/invoices/${invoiceID}/payment?amount=${amount}`, {});
+    return this.http.put<Invoice>(`${this.API_URL}/invoices/${invoiceID}/?amount=${amount}`, {});
   }
 
   cancelInvoice(id: number): Observable<string> {
