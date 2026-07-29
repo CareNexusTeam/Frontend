@@ -35,13 +35,14 @@ export const routes: Routes = [
       import('./features/dashboard/pages/dashboard-page.component')
         .then(m => m.DashboardPageComponent)
   },
-{
-  path: 'drug-inventory',
 
-  canActivate: [
-    authGuard,
-    roleGuard
-  ],
+  {
+    path: 'drug-inventory',
+
+    canActivate: [
+      authGuard,
+      roleGuard
+    ],
 
   data: {
     roles: [
@@ -181,7 +182,8 @@ export const routes: Routes = [
     data: {
       roles: [
         'Admin',
-        'Doctor'
+        'Doctor',
+        'Patient'
       ]
     },
     loadComponent: () =>
@@ -195,7 +197,8 @@ export const routes: Routes = [
     data: {
       roles: [
         'Admin',
-        'Doctor'
+        'Doctor',
+        'Patient'
       ]
     },
     loadComponent: () =>
@@ -209,7 +212,8 @@ export const routes: Routes = [
     data: {
       roles: [
         'Admin',
-        'Doctor'
+        'Doctor',
+        'Patient'
       ]
     },
     loadComponent: () =>

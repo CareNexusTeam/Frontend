@@ -1,14 +1,17 @@
 <app-main-layout>
+
   <app-emr-tabs></app-emr-tabs>
 
   <div class="w-full">
 
-    <!-- Create Prescription -->
-
     <div class="bg-white border rounded-2xl p-6 mb-8">
 
       <h2 class="text-3xl font-medium mb-6">
-        Create Prescription
+
+        {{ isEditMode
+        ? 'Update Prescription'
+        : 'Create Prescription' }}
+
       </h2>
 
       <form
@@ -19,80 +22,70 @@
         <div class="grid md:grid-cols-2 gap-5">
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block mb-2">
               Consultation ID
             </label>
 
             <input
+              type="number"
               formControlName="consultationId"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block mb-2">
               Patient ID
             </label>
 
             <input
+              type="number"
               formControlName="patientId"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block mb-2">
               Medication Name
             </label>
 
             <input
               formControlName="medicationName"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block mb-2">
               Dosage
             </label>
 
             <input
               formControlName="dosage"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
-              Frequency (per day)
+            <label class="block mb-2">
+              Frequency
             </label>
 
             <input
               formControlName="frequency"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
-              Duration (days)
+            <label class="block mb-2">
+              Duration Days
             </label>
 
             <input
+              type="number"
               formControlName="durationDays"
               class="w-full border rounded-lg px-4 py-3">
-
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block mb-2">
               Status
             </label>
 
@@ -100,8 +93,13 @@
               formControlName="status"
               class="w-full border rounded-lg px-4 py-3">
 
-              <option>Issued</option>
-              <option>Completed</option>
+              <option value="Issued">
+                Issued
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
 
             </select>
 
@@ -111,9 +109,11 @@
 
         <button
           type="submit"
-          class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg">
+          class="bg-teal-600 text-white px-6 py-3 rounded-lg">
 
-          Save Prescription
+          {{ isEditMode
+          ? 'Update Prescription'
+          : 'Save Prescription' }}
 
         </button>
 
@@ -121,9 +121,34 @@
 
     </div>
 
-    <!-- Prescriptions Table -->
-
     <div class="bg-white border rounded-2xl p-6">
+
+      <div class="flex gap-3 mb-6">
+
+        <input
+          [(ngModel)]="searchId"
+          placeholder="Search Prescription By ID"
+          class="border rounded-lg px-4 py-2 w-80">
+
+        <button
+          type="button"
+          (click)="searchPrescription()"
+          class="bg-teal-500 text-white px-5 py-2 rounded-lg">
+
+          Search
+
+        </button>
+
+        <button
+          type="button"
+          (click)="refreshPrescriptions()"
+          class="bg-teal-600 text-white px-5 py-2 rounded-lg">
+
+          Refresh
+
+        </button>
+
+      </div>
 
       <h2 class="text-2xl font-medium mb-5">
         All Prescriptions
@@ -131,40 +156,116 @@
 
       <div class="overflow-x-auto">
 
-        <table class="w-full">
+        <table class="w-full border">
 
           <thead>
 
-          <tr class="bg-gray-50 text-sm text-gray-600">
+            <tr class="bg-gray-100">
 
-            <th class="text-left p-3">
-              ID
-            </th>
+              <th class="p-3 border">
+                ID
+              </th>
 
-            <th class="text-left p-3">
-              MEDICATION
-            </th>
+              <th class="p-3 border">
+                Consultation ID
+              </th>
 
-            <th class="text-left p-3">
-              DOSAGE
-            </th>
+              <th class="p-3 border">
+                Patient ID
+              </th>
 
-            <th class="text-left p-3">
-              FREQ
-            </th>
+              <th class="p-3 border">
+                Medication
+              </th>
 
-            <th class="text-left p-3">
-              DURATION
-            </th>
+              <th class="p-3 border">
+                Dosage
+              </th>
 
-            <th class="text-left p-3">
-              STATUS
-            </th>
+              <th class="p-3 border">
+                Frequency
+              </th>
 
-          </tr>
+              <th class="p-3 border">
+                Duration
+              </th>
+
+              <th class="p-3 border">
+                Status
+              </th>
+
+              <th class="p-3 border">
+                Actions
+              </th>
+
+            </tr>
 
           </thead>
 
+          <tbody>
+
+            <tr
+              *ngFor="
+              let prescription
+              of prescriptions">
+
+              <td class="border p-3">
+                {{ prescription.prescriptionId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.consultationId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.patientId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.medicationName }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.dosage }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.frequency }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.durationDays }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.status }}
+              </td>
+
+              <td class="border p-3">
+
+                <button
+                  type="button"
+                  (click)="editPrescription(prescription)"
+                  class="bg-teal-500 text-white px-3 py-1 rounded mr-2">
+
+                  Edit
+
+                </button>
+
+                <button
+                  type="button"
+                  (click)="deletePrescription(prescription.prescriptionId!)"
+                  class="bg-teal-600 text-white px-3 py-1 rounded">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
 
         </table>
 
