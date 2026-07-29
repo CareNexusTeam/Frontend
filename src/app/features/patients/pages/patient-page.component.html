@@ -1,138 +1,361 @@
 <app-main-layout>
 
-<div class="patient-page-container">
-  <!-- Top Header -->
-  <header class="page-header">
+<div class="min-h-screen bg-slate-50 p-6">
 
-    <div class="flex">
-    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#00008b"><path d="M480-560q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-720q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720q0 33 23.5 56.5T480-640ZM160-80v-271q0-34 17-62.5t47-44.5q51-26 115.5-44T480-520q76 0 140.5 18T736-458q30 16 47 44.5t17 62.5v191q0 33-23.5 56.5T720-80H390q-46 0-78-32t-32-78q0-46 32-78t78-32h113l62-132q-20-4-41-6t-44-2q-72 0-128 17.5T261-386q-10 5-15.5 14.5T240-351v271h-80Zm230-80h48l28-60h-76q-12 0-21 9t-9 21q0 12 9 21t21 9Zm136 0h194v-191q0-11-5.5-20.5T700-386q-12-6-26-12.5T644-411L526-160Zm-46-560Zm0 426Z"/></svg>
-    <h2> Patients</h2>
-   </div>
+  <!-- Header -->
+  <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
 
-    <p>Register and manage patient records</p>
-  </header>
+    <div class="flex items-center gap-3">
 
-  <!-- Register Patient Form Card -->
-  <section class="card form-card">
-    <h3 class="card-title">Register Patient</h3>
+   <svg xmlns="http://www.w3.org/2000/svg"    height="35"   width="35"    viewBox="0 -960 960 960"     fill="white">  <path d="M480-480q66 0 113-47t47-113q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47Zm-240 320v-56q0-34 17.5-63.5T306-326q51-26 84.5-37t89.5-11q56 0 89.5 11t84.5 37q31 17 48.5 46.5T720-216v56H240Zm470-370v-80h-80v-60h80v-80h60v80h80v60h-80v80h-60Z"/>7</svg>
+
+      <div>
+        <h1 class="text-xl font-semibold">Patients</h1>
+        <p class="text-sm text-blue-100 mt-1">
+          Register and manage patient records
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Register Patient -->
+  <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+    <h2 class="text-lg font-semibold text-blue-900 mb-5">
+      Register Patient
+    </h2>
 
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
-      <div class="form-grid">
-        
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" formControlName="name" />
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Name
+          </label>
+
+          <input
+            type="text"
+            formControlName="name"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date" formControlName="dob" />
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Date of Birth
+          </label>
+
+          <input
+            type="date"
+            formControlName="dob"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group">
-          <label>Gender</label>
-          <select formControlName="gender">
-            <option value="" disabled selected>Select Gender</option>
-            <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Gender
+          </label>
+
+          <select
+            formControlName="gender"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
+
+            <option value="">Select Gender</option>
+
+            <option
+              *ngFor="let g of genderOptions"
+              [value]="g">
+              {{ g }}
+            </option>
+
           </select>
         </div>
 
-        <div class="form-group">
-          <label>Blood Group</label>
-          <select formControlName="bloodGroup">
-            <option value="" disabled selected>Select Blood Group</option>
-            <option *ngFor="let bg of bloodGroupOptions" [value]="bg">{{ bg }}</option>
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Blood Group
+          </label>
+
+          <select
+            formControlName="bloodGroup"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
+
+            <option value="">Select Blood Group</option>
+
+            <option
+              *ngFor="let bg of bloodGroupOptions"
+              [value]="bg">
+              {{ bg }}
+            </option>
+
           </select>
         </div>
 
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="text" formControlName="phone" />
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Phone
+          </label>
+
+          <input
+            type="text"
+            formControlName="phone"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" formControlName="email" />
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Email
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group full-width">
-          <label>Address</label>
-          <textarea formControlName="address" rows="3"></textarea>
+        <div class="md:col-span-2">
+          <label class="block text-sm text-gray-600 mb-2">
+            Address
+          </label>
+
+          <textarea
+            rows="3"
+            formControlName="address"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"></textarea>
         </div>
 
-        <div class="form-group">
-          <label>Emergency Contact</label>
-          <input type="text" formControlName="emergencyContact" />
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Emergency Contact
+          </label>
+
+          <input
+            type="text"
+            formControlName="emergencyContact"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group">
-          <label>Insurance Provider ID</label>
-          <input type="text" formControlName="insuranceProviderId" />
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Insurance Provider ID
+          </label>
+
+          <input
+            type="text"
+            formControlName="insuranceProviderId"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
         </div>
 
-        <div class="form-group">
-          <label>Status</label>
-          <select formControlName="status">
-            <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">
+            Status
+          </label>
+
+          <select
+            formControlName="status"
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
+
+            <option
+              *ngFor="let s of statusOptions"
+              [value]="s">
+              {{ s }}
+            </option>
+
           </select>
         </div>
 
       </div>
 
-      <div class="form-actions">
-        <button type="submit" class="btn-submit" [disabled]="patientForm.invalid || isLoading">
-          {{ isLoading ? 'Registering...' : 'Register Patient' }}
-        </button>
-      </div>
-    </form>
-  </section>
+      <button
+        type="submit"
+        [disabled]="patientForm.invalid || isLoading"
+        class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
 
-  <!-- All Patients Table Card (Hidden for 'Patient' role) -->
-  <section class="card table-card" *ngIf="userRole !== 'Patient'">
-    <div class="table-header">
-      <h3>All Patients</h3>
-      <button class="btn-refresh" (click)="fetchPatients()" [disabled]="isLoading">
-        {{ isLoading ? 'Loading...' : 'Refresh' }}
+        {{ isLoading ? 'Registering...' : 'Register Patient' }}
+
       </button>
+
+    </form>
+
+  </div>
+
+  <!-- Patient Records -->
+  <div
+    *ngIf="userRole !== 'Patient'"
+    class="bg-white rounded-xl shadow-sm overflow-hidden">
+
+    <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+
+      <h2 class="text-lg font-semibold">
+        Patient Records
+      </h2>
+
+      <div class="flex items-center gap-3">
+
+        <input
+          type="number"
+          [value]="searchTerm"
+          (input)="onSearchChange($event)"
+          placeholder="Search Patient ID"
+          class="bg-white text-gray-700 rounded-lg px-4 py-2 w-56">
+
+        <button
+          (click)="fetchPatients()"
+          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
+
+          Refresh
+
+        </button>
+
+      </div>
+
     </div>
 
-    <!-- Error Banner -->
-    <div *ngIf="errorMessage" class="error-banner">
-      {{ errorMessage }}
-    </div>
+    <div class="overflow-x-auto">
 
-    <div class="table-responsive">
-      <table class="patients-table">
+      <table class="w-full">
+
         <thead>
-          <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>GENDER</th>
-            <th>PHONE</th>
-            <th>EMAIL</th>
-            <th>STATUS</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let p of patientsList">
-            <td>{{ p.id }}</td>
-            <td>{{ p.name }}</td>
-            <td>{{ p.gender }}</td>
-            <td>{{ p.phone }}</td>
-            <td>{{ p.email }}</td>
-            <td><span class="status-badge">{{ p.status }}</span></td>
-            <td>
-              <button class="action-btn">View</button>
-            </td>
+
+          <tr class="bg-gray-50">
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">ID</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">NAME</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">GENDER</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">PHONE</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">EMAIL</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">STATUS</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">ACTIONS</th>
+
           </tr>
 
-          <tr *ngIf="patientsList.length === 0 && !isLoading">
-            <td colspan="7" class="no-records">No patients yet.</td>
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let p of filteredPatientsList"
+            class="border-t border-gray-100 hover:bg-gray-50">
+
+            <td class="px-4 py-4">#{{ p.id }}</td>
+            <td class="px-4 py-4 font-medium">{{ p.name }}</td>
+            <td class="px-4 py-4">{{ p.gender }}</td>
+            <td class="px-4 py-4">{{ p.phone }}</td>
+            <td class="px-4 py-4">{{ p.email }}</td>
+
+            <td class="px-4 py-4">
+
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                [ngClass]="
+                  p.status === 'Active' || p.status === 'ACTIVE'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                ">
+
+                {{ p.status }}
+
+              </span>
+
+            </td>
+
+            <td class="px-4 py-4 flex gap-3">
+
+              <button
+                (click)="openEditModal(p)"
+                class="text-blue-900 text-sm hover:underline">
+                Edit
+              </button>
+
+              <button
+                (click)="onDeletePatient(p)"
+                class="text-red-600 text-sm hover:underline">
+                Delete
+              </button>
+
+            </td>
+
           </tr>
+
+          <tr *ngIf="filteredPatientsList.length === 0">
+
+            <td
+              colspan="7"
+              class="text-center py-10 text-gray-500">
+
+              No Patient Records Found
+
+            </td>
+
+          </tr>
+
         </tbody>
+
       </table>
+
     </div>
-  </section>
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div
+    *ngIf="isEditModalOpen"
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl p-6">
+
+      <div class="flex justify-between items-center mb-5">
+
+        <h3 class="text-lg font-semibold text-blue-900">
+          Edit Patient (#{{ selectedPatient?.id }})
+        </h3>
+
+        <button
+          (click)="closeEditModal()"
+          class="text-2xl text-gray-500 hover:text-gray-700">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <form
+        [formGroup]="editPatientForm"
+        (ngSubmit)="onUpdatePatient()">
+
+        <!-- Copy same form fields here as Register Form -->
+
+        <div class="flex justify-end gap-3 mt-6">
+
+          <button
+            type="button"
+            (click)="closeEditModal()"
+            class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-lg">
+
+            Cancel
+
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="editPatientForm.invalid || isUpdating"
+            class="bg-blue-900 text-white px-5 py-2.5 rounded-lg">
+
+            {{ isUpdating ? 'Updating...' : 'Save Changes' }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
 </div>
+
 </app-main-layout>
