@@ -3,9 +3,12 @@
     <!-- Page Header -->
 
     <div class="mb-6">
+      <div class="flex">
+      <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#00008b"><path d="M540-80q-108 0-184-76t-76-184v-23q-86-14-143-80.5T80-600v-240h120v-40h80v160h-80v-40h-40v160q0 66 47 113t113 47q66 0 113-47t47-113v-160h-40v40h-80v-160h80v40h120v240q0 90-57 156.5T360-363v23q0 75 52.5 127.5T540-160q75 0 127.5-52.5T720-340v-67q-35-12-57.5-43T640-520q0-50 35-85t85-35q50 0 85 35t35 85q0 39-22.5 70T800-407v67q0 108-76 184T540-80Zm248.5-411.5Q800-503 800-520t-11.5-28.5Q777-560 760-560t-28.5 11.5Q720-537 720-520t11.5 28.5Q743-480 760-480t28.5-11.5ZM760-520Z"/></svg>
       <h1 class="text-3xl font-semibold text-gray-800">
         Doctor Schedules
       </h1>
+      </div>
 
       <p class="text-gray-500 mt-1">
         Doctors can add their available time slots
@@ -14,11 +17,11 @@
 
     <!-- Create Schedule Card -->
 
-    <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
-
+    <div class="bg-white border-gray-200 rounded-xl p-3 shadow-sm mb-6" >
+     <div class="flex"> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#255290"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v200h-80v-40H200v400h280v80H200Zm0-560h560v-80H200v80Zm0 0v-80 80ZM560-80v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T903-300L683-80H560Zm300-263-37-37 37 37ZM620-140h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
       <h2 class="text-xl font-medium text-gray-800 mb-5">
         Create Schedule
-      </h2>
+      </h2></div>
 
       <form
         [formGroup]="scheduleForm"
@@ -116,7 +119,7 @@
 
           <button
             type="submit"
-            class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg shadow"
+            class="bg-blue-800 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow"
           >
             Add Schedule
           </button>
@@ -139,7 +142,7 @@
 
         <button
           (click)="refreshSchedules()"
-          class="border border-teal-600 text-teal-600 px-5 py-2 rounded-xl hover:bg-teal-50 transition"
+          class="border border-blue-800 text-blue-800 px-5 py-2 rounded-xl hover:bg-blue-100 transition"
         >
           Refresh
         </button>

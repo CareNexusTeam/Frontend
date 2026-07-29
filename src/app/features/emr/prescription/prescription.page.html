@@ -1,0 +1,278 @@
+<app-main-layout>
+
+  <app-emr-tabs></app-emr-tabs>
+
+  <div class="w-full">
+
+    <div class="bg-white border rounded-2xl p-6 mb-8">
+
+      <h2 class="text-3xl font-medium mb-6">
+
+        {{ isEditMode
+        ? 'Update Prescription'
+        : 'Create Prescription' }}
+
+      </h2>
+
+      <form
+        [formGroup]="prescriptionForm"
+        (ngSubmit)="savePrescription()"
+        class="space-y-5">
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <div>
+            <label class="block mb-2">
+              Consultation ID
+            </label>
+
+            <input
+              type="number"
+              formControlName="consultationId"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Patient ID
+            </label>
+
+            <input
+              type="number"
+              formControlName="patientId"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Medication Name
+            </label>
+
+            <input
+              formControlName="medicationName"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Dosage
+            </label>
+
+            <input
+              formControlName="dosage"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Frequency
+            </label>
+
+            <input
+              formControlName="frequency"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Duration Days
+            </label>
+
+            <input
+              type="number"
+              formControlName="durationDays"
+              class="w-full border rounded-lg px-4 py-3">
+          </div>
+
+          <div>
+            <label class="block mb-2">
+              Status
+            </label>
+
+            <select
+              formControlName="status"
+              class="w-full border rounded-lg px-4 py-3">
+
+              <option value="Issued">
+                Issued
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <button
+          type="submit"
+          class="bg-teal-600 text-white px-6 py-3 rounded-lg">
+
+          {{ isEditMode
+          ? 'Update Prescription'
+          : 'Save Prescription' }}
+
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="bg-white border rounded-2xl p-6">
+
+      <div class="flex gap-3 mb-6">
+
+        <input
+          [(ngModel)]="searchId"
+          placeholder="Search Prescription By ID"
+          class="border rounded-lg px-4 py-2 w-80">
+
+        <button
+          type="button"
+          (click)="searchPrescription()"
+          class="bg-teal-500 text-white px-5 py-2 rounded-lg">
+
+          Search
+
+        </button>
+
+        <button
+          type="button"
+          (click)="refreshPrescriptions()"
+          class="bg-teal-600 text-white px-5 py-2 rounded-lg">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      <h2 class="text-2xl font-medium mb-5">
+        All Prescriptions
+      </h2>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full border">
+
+          <thead>
+
+            <tr class="bg-gray-100">
+
+              <th class="p-3 border">
+                ID
+              </th>
+
+              <th class="p-3 border">
+                Consultation ID
+              </th>
+
+              <th class="p-3 border">
+                Patient ID
+              </th>
+
+              <th class="p-3 border">
+                Medication
+              </th>
+
+              <th class="p-3 border">
+                Dosage
+              </th>
+
+              <th class="p-3 border">
+                Frequency
+              </th>
+
+              <th class="p-3 border">
+                Duration
+              </th>
+
+              <th class="p-3 border">
+                Status
+              </th>
+
+              <th class="p-3 border">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr
+              *ngFor="
+              let prescription
+              of prescriptions">
+
+              <td class="border p-3">
+                {{ prescription.prescriptionId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.consultationId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.patientId }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.medicationName }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.dosage }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.frequency }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.durationDays }}
+              </td>
+
+              <td class="border p-3">
+                {{ prescription.status }}
+              </td>
+
+              <td class="border p-3">
+
+                <button
+                  type="button"
+                  (click)="editPrescription(prescription)"
+                  class="bg-teal-500 text-white px-3 py-1 rounded mr-2">
+
+                  Edit
+
+                </button>
+
+                <button
+                  type="button"
+                  (click)="deletePrescription(prescription.prescriptionId!)"
+                  class="bg-teal-600 text-white px-3 py-1 rounded">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</app-main-layout>
