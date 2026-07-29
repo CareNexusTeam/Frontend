@@ -9,7 +9,6 @@ import { AuthService } from '../../../../core/auth/auth-service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup-page.component.html',
-  styleUrls: ['./signup-page.component.css']
 })
 export class SignupPageComponent {
   signupForm: FormGroup;

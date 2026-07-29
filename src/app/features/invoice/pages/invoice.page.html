@@ -1,130 +1,339 @@
 <app-main-layout>
 
+  <div class="min-h-screen bg-slate-50 p-6">
 
-   <div class="mb-6">
-      <h1 class="text-3xl font-semibold text-gray-800">
-        Invoice
-      </h1>
+    <!-- Header -->
+    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
 
-      <p class="text-gray-500 mt-1">
-        Generate and manage invoices for patients
-      </p>
+      <div class="flex items-center gap-3">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             height="24"
+             width="24"
+             viewBox="0 -960 960 960"
+             fill="white">
+          <path d="M480-80q-73 0-136.5-27.5T232-184q-48-49-75-112T130-432q0-75 27-138t75-110q49-48 112-74t136-26q74 0 137 26t111 74q48 47 75 110t27 138q0 73-27 136t-75 112q-48 49-111 76.5T480-80Zm0-80q40 0 75-10v-132h105q9-18 15.5-37.5T686-380H555v-60h146q-1-21-7.5-40.5T678-520H555v-132q-35-10-75-10t-75 10v132H282q-9 19-15.5 39T259-440h146v60H259q1 21 7.5 40.5T282-300h123v132q35 10 75 10Z"/>
+        </svg>
+
+        <div>
+          <h1 class="text-xl font-semibold">
+            Invoice Management
+          </h1>
+
+          <p class="text-sm text-blue-100 mt-1">
+            Generate and manage patient invoices
+          </p>
+        </div>
+
+      </div>
+
     </div>
 
-  <!-- Create invoice form -->
-  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
-    <form [formGroup]="invoiceForm" (ngSubmit)="createInvoice()">
-      <div class="grid grid-cols-3 gap-4">
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">Patient ID</label>
-          <input type="number" formControlName="patientId"
-                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
-        </div>
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">Consultation ID</label>
-          <input type="number" formControlName="consultationId"
-                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
-        </div>
-        <div>
-          <label class="block text-sm text-gray-700 mb-2">Paid Amount</label>
-          <input type="number" formControlName="paidAmount"
-                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-teal-500" />
-        </div>
-      </div>
-      <button type="submit" class="mt-4 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700">
+    <!-- Create Invoice -->
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
         Create Invoice
-      </button>
-    </form>
-  </div>
+      </h2>
 
-  <!-- Filter + lookup -->
-  <div class="bg-white border rounded-2xl p-6 shadow-sm mb-6">
-    <div class="flex flex-wrap gap-3 items-end">
-      <div>
-        <label class="block text-sm text-gray-700 mb-2">Status</label>
-        <select [(ngModel)]="filterStatus" [ngModelOptions]="{standalone: true}"
-                class="border border-gray-300 rounded-lg px-4 py-3">
-          <option value="">-- any --</option>
-          <option value="Pending">Pending</option>
-          <option value="PartiallyPaid">PartiallyPaid</option>
-          <option value="Paid">Paid</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
-      </div>
-      <button (click)="applyStatusFilter()" class="bg-gray-700 text-white px-4 py-3 rounded-lg hover:bg-gray-800">
-        Filter
-      </button>
+      <form [formGroup]="invoiceForm" (ngSubmit)="createInvoice()">
 
-      <div>
-        <label class="block text-sm text-gray-700 mb-2">Patient ID</label>
-        <input [(ngModel)]="lookupPatientId" [ngModelOptions]="{standalone: true}"
-               class="border border-gray-300 rounded-lg px-4 py-3" placeholder="e.g. 5" />
-      </div>
-      <button (click)="lookupByPatient()" class="bg-teal-600 text-white px-4 py-3 rounded-lg hover:bg-teal-700">
-        Lookup Patient Invoices
-      </button>
+        <div class="grid md:grid-cols-3 gap-5">
 
-      <button (click)="showAll()" class="border border-gray-300 px-4 py-3 rounded-lg hover:bg-gray-100">
-        Show All
-      </button>
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Patient ID
+            </label>
+
+            <input
+              type="number"
+              formControlName="patientId"
+              placeholder="Enter Patient ID"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Consultation ID
+            </label>
+
+            <input
+              type="number"
+              formControlName="consultationId"
+              placeholder="Enter Consultation ID"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Paid Amount
+            </label>
+
+            <input
+              type="number"
+              formControlName="paidAmount"
+              placeholder="Enter Amount"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          </div>
+
+        </div>
+
+        <button
+          type="submit"
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+
+          Create Invoice
+
+        </button>
+
+      </form>
+
     </div>
-  </div>
 
-  <!-- Table -->
-  <div class="bg-white border rounded-2xl p-6">
-    <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr>
-            <th class="text-left p-3">Patient</th>
-            <th class="text-left p-3">Total</th>
-            <th class="text-left p-3">Paid</th>
-            <th class="text-left p-3">Outstanding</th>
-            <th class="text-left p-3">Date</th>
-            <th class="text-left p-3">Status</th>
-            <th class="text-left p-3">Add Payment</th>
-            <th class="text-left p-3">Actions</th>
+    <!-- Filters -->
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+      <div class="flex flex-wrap gap-3 items-end">
+
+        <div>
+
+          <label class="block text-sm text-gray-600 mb-2">
+            Status
+          </label>
+
+          <select
+            [(ngModel)]="filterStatus"
+            [ngModelOptions]="{standalone:true}"
+            class="bg-gray-50 rounded-lg px-4 py-2.5">
+
+            <option value="">Any</option>
+            <option value="Pending">Pending</option>
+            <option value="PartiallyPaid">Partially Paid</option>
+            <option value="Paid">Paid</option>
+            <option value="Cancelled">Cancelled</option>
+
+          </select>
+
+        </div>
+
+        <button
+          type="button"
+          (click)="applyStatusFilter()"
+          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200">
+
+          Filter
+
+        </button>
+
+        <div>
+
+          <label class="block text-sm text-gray-600 mb-2">
+            Patient ID
+          </label>
+
+          <input
+            [(ngModel)]="lookupPatientId"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Enter Patient ID"
+            class="w-48 bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+
+        </div>
+
+        <button
+          type="button"
+          (click)="lookupByPatient()"
+          class="bg-blue-50 text-blue-900 px-5 py-2.5 rounded-lg hover:bg-blue-100">
+
+          Lookup Invoices
+
+        </button>
+
+        <button
+          type="button"
+          (click)="showAll()"
+          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200">
+
+          Refresh
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Invoice Table -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+
+      <div class="bg-blue-900 px-6 py-4 text-white">
+
+        <h2 class="text-lg font-semibold">
+          Invoice Records
+        </h2>
+
+      </div>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+          <thead>
+
+          <tr class="bg-gray-50">
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Patient
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Total
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Paid
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Outstanding
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Invoice Date
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Status
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Payment
+            </th>
+
+            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              Actions
+            </th>
+
           </tr>
-        </thead>
-        <tbody>
+
+          </thead>
+
+          <tbody>
+
           @if (loading) {
-            <tr><td colspan="8" class="text-center py-6 text-gray-500">Loading invoices...</td></tr>
-          } @else if (invoices.length === 0) {
-            <tr><td colspan="8" class="text-center py-6 text-gray-500">No invoices found.</td></tr>
-          } @else {
-            @for (inv of invoices; track inv.invoiceID) {
-              <tr>
-                <td class="p-3">{{ inv.patientId }}</td>
-                <td class="p-3">{{ inv.totalAmount }}</td>
-                <td class="p-3">{{ inv.paidAmount }}</td>
-                <td class="p-3">{{ inv.outstandingAmount }}</td>
-                <td class="p-3">{{ inv.invoiceDate }}</td>
-                <td class="p-3">{{ inv.status }}</td>
 
-                <td class="p-3">
-                  <div class="flex gap-2">
-                    <input type="number" [(ngModel)]="paymentInputs[inv.invoiceID!]"
-                           [ngModelOptions]="{standalone: true}"
-                           class="w-20 border border-gray-300 rounded-lg px-2 py-2" placeholder="amount" />
-                    <button (click)="updatePayment(inv.invoiceID!)" class="text-teal-600 hover:underline">Pay</button>
-                  </div>
-                </td>
+          <tr>
 
-                <td class="p-3">
-                  <div class="flex gap-3">
-                    <button class="text-blue-600 hover:underline" (click)="printInvoice(inv)">
-                      Print
-                    </button>
-                    <button class="text-red-600 hover:underline" (click)="cancelInvoice(inv.invoiceID!)">
-                      Cancel
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            }
+            <td colspan="8"
+                class="text-center py-10 text-sm text-gray-500">
+
+              Loading invoices...
+
+            </td>
+
+          </tr>
+
           }
-        </tbody>
-      </table>
+
+          @else if (invoices.length === 0) {
+
+          <tr>
+
+            <td colspan="8"
+                class="text-center py-10 text-sm text-gray-500">
+
+              No invoices found.
+
+            </td>
+
+          </tr>
+
+          }
+
+          @else {
+
+          @for (inv of invoices; track inv.invoiceID) {
+
+          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+            <td class="px-4 py-4 text-sm text-gray-800">
+              {{ inv.patientId }}
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-600">
+              {{ inv.totalAmount }}
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-600">
+              {{ inv.paidAmount }}
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-600">
+              {{ inv.outstandingAmount }}
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-600">
+              {{ inv.invoiceDate }}
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-600">
+              {{ inv.status }}
+            </td>
+
+            <td class="px-4 py-4">
+
+              <div class="flex items-center gap-2">
+
+                <input
+                  type="number"
+                  [(ngModel)]="paymentInputs[inv.invoiceID!]"
+                  [ngModelOptions]="{standalone:true}"
+                  placeholder="Amount"
+                  class="w-24 bg-gray-50 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+
+                <button
+                  type="button"
+                  (click)="updatePayment(inv.invoiceID!)"
+                  class="text-blue-900 text-sm hover:underline">
+
+                  Pay
+
+                </button>
+
+              </div>
+
+            </td>
+
+            <td class="px-4 py-4">
+
+              <div class="flex gap-4">
+
+
+                <button
+                  type="button"
+                  (click)="cancelInvoice(inv.invoiceID!)"
+                  class="text-blue-900 text-sm hover:underline">
+
+                  Cancel
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+          }
+
+          }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
     </div>
+
   </div>
+
 </app-main-layout>

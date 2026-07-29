@@ -9,7 +9,6 @@ import { AuthService } from '../../../../core/auth/auth-service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
@@ -31,7 +30,7 @@ export class LoginPageComponent {
     if (this.loginForm.invalid) return;
 
     this.isLoading = true;
-    this.errorMessage = ''; // Pehle wala error clear karo
+    this.errorMessage = ''; 
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
@@ -41,13 +40,11 @@ export class LoginPageComponent {
       error: (err) => {
         this.isLoading = false;
 
-        // Backend se aaye specific status codes ke according dynamic messages
         if (err.status === 401 || err.status === 400) {
           this.errorMessage = 'Wrong password or invalid credentials!';
         } else if (err.status === 404) {
           this.errorMessage = 'User not registered. Please sign up first!';
         } else if (err.error && typeof err.error.message === 'string') {
-          // Agar backend custom { "message": "..." } bhej raha hai
           this.errorMessage = err.error.message;
         } else {
           this.errorMessage = 'Something went wrong. Please try again later.';
