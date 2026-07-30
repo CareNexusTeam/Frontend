@@ -95,35 +95,9 @@
 
       <div class="flex flex-wrap gap-3 items-end">
 
-        <div>
 
-          <label class="block text-sm text-gray-600 mb-2">
-            Status
-          </label>
 
-          <select
-            [(ngModel)]="filterStatus"
-            [ngModelOptions]="{standalone:true}"
-            class="bg-gray-50 rounded-lg px-4 py-2.5">
 
-            <option value="">Any</option>
-            <option value="Pending">Pending</option>
-            <option value="PartiallyPaid">Partially Paid</option>
-            <option value="Paid">Paid</option>
-            <option value="Cancelled">Cancelled</option>
-
-          </select>
-
-        </div>
-
-        <button
-          type="button"
-          (click)="applyStatusFilter()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200">
-
-          Filter
-
-        </button>
 
         <div>
 
@@ -337,3 +311,4 @@
   </div>
 
 </app-main-layout>
+ 

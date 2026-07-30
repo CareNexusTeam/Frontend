@@ -12,7 +12,7 @@ export interface Prescription {
 
   frequency: string;
 
-  durationDays: number;
+  duration: number;
 
   status: string;
 
