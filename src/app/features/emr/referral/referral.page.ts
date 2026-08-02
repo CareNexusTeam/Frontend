@@ -1,20 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators
-  ReactiveFormsModule,
-  Validators
 } from '@angular/forms';
 
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
-import { EmrTabsComponent } from '../components/emr-tabs';
-
-import { ReferralService } from '../referral/services/referral.service';
-import { Referral } from '../referral/models/referral.model';
 import { EmrTabsComponent } from '../components/emr-tabs';
 
 import { ReferralService } from '../referral/services/referral.service';
@@ -28,25 +21,11 @@ import { Referral } from '../referral/models/referral.model';
     ReactiveFormsModule,
     MainLayoutComponent,
     EmrTabsComponent
-    CommonModule,
-    ReactiveFormsModule,
-    MainLayoutComponent,
-    EmrTabsComponent
   ],
   templateUrl: './referral.page.html'
 })
 export class ReferralPageComponent implements OnInit {
-export class ReferralPageComponent implements OnInit {
 
-  referralForm!: FormGroup;
-
-  referrals: Referral[] = [];
-
-  isEditMode = false;
-
-  selectedReferralId: number | null = null;
-
-  loading = false;
   referralForm!: FormGroup;
 
   referrals: Referral[] = [];
@@ -71,19 +50,6 @@ export class ReferralPageComponent implements OnInit {
   }
 
   private initializeForm(): void {
-    private fb: FormBuilder,
-    private referralService: ReferralService
-  ) {}
-
-  ngOnInit(): void {
-
-    this.initializeForm();
-
-    this.loadReferrals();
-
-  }
-
-  private initializeForm(): void {
 
     this.referralForm = this.fb.group({
 
@@ -92,41 +58,11 @@ export class ReferralPageComponent implements OnInit {
       referredToDepartment: ['', Validators.required],
 
       reason: ['', Validators.required],
-      reason: ['', Validators.required],
 
       priority: ['Routine'],
 
       status: ['Pending']
 
-    });
-
-  }
-
-  loadReferrals(): void {
-
-    this.loading = true;
-
-    this.referralService
-      .getAllReferrals()
-      .subscribe({
-
-        next: (data: Referral[]) => {
-
-          this.referrals = data;
-
-          this.loading = false;
-
-        },
-
-        error: (err: any) => {
-
-          console.error(err);
-
-          this.loading = false;
-
-        }
-
-      });
     });
 
   }
@@ -237,47 +173,6 @@ export class ReferralPageComponent implements OnInit {
     });
 
   }
-
-  deleteReferral(id: number): void {
-
-    if (!confirm('Delete referral?')) {
-      return;
-    }
-
-    this.referralService
-      .deleteReferral(id)
-      .subscribe({
-
-        next: () => {
-
-          this.loadReferrals();
-
-        },
-
-        error: (err: any) =>
-          console.error(err)
-
-      });
-
-  }
-
-  private resetForm(): void {
-
-    this.referralForm.reset({
-
-      priority: 'Routine',
-
-      status: 'Pending'
-
-    });
-
-    this.isEditMode = false;
-
-    this.selectedReferralId = null;
-
-  }
-
-}
 
   deleteReferral(id: number): void {
 
