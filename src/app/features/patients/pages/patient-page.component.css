@@ -1,14 +1,9 @@
 /* Container Layout */
-/* Container Layout */
 .patient-page-container {
-  padding: 16px;
-  background-color: #f4f6f9;
   padding: 16px;
   background-color: #f4f6f9;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
- 
-/* 1. Header Banner (Dark Blue) */
  
 /* 1. Header Banner (Dark Blue) */
 .page-header {
@@ -19,25 +14,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: #1a3b8b;
-  color: #ffffff;
-  padding: 16px 20px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
   margin-bottom: 20px;
 }
- 
-.header-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
- 
-.header-text h2 {
-  margin: 0;
-  font-size: 18px;
  
 .header-icon {
   display: flex;
@@ -57,20 +35,10 @@
   opacity: 0.85;
 }
  
-.header-text p {
-  margin: 2px 0 0 0;
-  font-size: 12px;
-  opacity: 0.85;
-}
- 
-/* Cards Design */
- 
 /* Cards Design */
 .card {
   background-color: #ffffff;
-  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
   overflow: hidden;
@@ -78,16 +46,9 @@
  
 .form-card {
   padding: 20px 24px;
-  overflow: hidden;
 }
- 
-.form-card {
-  padding: 20px 24px;
-}
- 
  
 .card-title {
-  color: #1a3b8b;
   color: #1a3b8b;
   font-size: 16px;
   font-weight: 600;
@@ -96,36 +57,27 @@
 }
  
 /* Form Grid System */
- 
-/* Form Grid System */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px 24px;
 }
  
- 
 .form-group {
   display: flex;
   flex-direction: column;
 }
  
- 
 .form-group.full-width {
   grid-column: span 2;
 }
  
- 
 .form-group label {
   font-size: 12px;
   color: #555555;
-  color: #555555;
   margin-bottom: 6px;
   font-weight: 500;
-  font-weight: 500;
 }
- 
-/* Form Controls Styling */
  
 /* Form Controls Styling */
 .form-group input,
@@ -134,75 +86,47 @@
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #e2e8f0;
-  border: 1px solid #e2e8f0;
   border-radius: 6px;
   background-color: #f8fafc;
-  font-size: 13px;
-  color: #333;
   font-size: 13px;
   color: #333;
   outline: none;
   transition: all 0.2s ease;
   box-sizing: border-box;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
 }
- 
  
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: #1a3b8b;
-  border-color: #1a3b8b;
   background-color: #ffffff;
 }
- 
  
 .form-actions {
   margin-top: 20px;
 }
  
 /* Submit Button */
- 
-/* Submit Button */
 .btn-submit {
-  background-color: #1a3b8b;
   background-color: #1a3b8b;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 6px;
   font-size: 13px;
-  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
-  transition: background-color 0.2s;
 }
  
 .btn-submit:hover:not(:disabled) {
   background-color: #122a66;
- 
-.btn-submit:hover:not(:disabled) {
-  background-color: #122a66;
 }
- 
  
 .btn-submit:disabled {
   opacity: 0.6;
-  opacity: 0.6;
   cursor: not-allowed;
 }
- 
-/* 2. Table Section Header Banner */
-.table-card {
-  padding: 0;
-}
- 
-.flex-header {
-  background-color: #1a3b8b;
-  color: #ffffff;
-  padding: 12px 20px;
  
 /* 2. Table Section Header Banner */
 .table-card {
@@ -218,12 +142,7 @@
   align-items: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
- 
-.flex-header h3 {
-  margin: 0;
  
 .flex-header h3 {
   margin: 0;
@@ -282,67 +201,8 @@
 .search-input::-webkit-outer-spin-button,
 .search-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  letter-spacing: 0.2px;
-}
- 
-/* Filter Controls Wrapper */
-.filter-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
- 
-/* Search Box Container with Icon */
-.search-box-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
- 
-.search-icon {
-  position: absolute;
-  left: 12px;
-  color: #94a3b8;
-  pointer-events: none;
-}
- 
-/* Search Input Styling */
-.search-input {
-  padding: 8px 12px 8px 34px !important;
-  border-radius: 6px !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  background-color: #ffffff !important;
-  font-size: 13px !important;
-  color: #1e293b !important;
-  outline: none !important;
-  width: 220px !important;
-  height: 36px !important;
-  box-sizing: border-box !important;
-  transition: all 0.2s ease-in-out !important;
-}
- 
-.search-input::placeholder {
-  color: #94a3b8;
-  font-size: 12.5px;
-}
- 
-.search-input:focus {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25) !important;
-}
- 
-/* Hide Number Arrow Spinners */
-.search-input::-webkit-outer-spin-button,
-.search-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
   margin: 0;
 }
- 
-.search-input[type=number] {
-  -moz-appearance: textfield;
-}
- 
-/* Styled Refresh Button */
  
 .search-input[type=number] {
   -moz-appearance: textfield;
@@ -358,50 +218,16 @@
   border: none;
   padding: 0 16px;
   height: 36px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #ffffff;
-  color: #1a3b8b;
-  border: none;
-  padding: 0 16px;
-  height: 36px;
   border-radius: 6px;
   font-size: 13px;
-  font-weight: 600;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
- 
-.btn-refresh:hover:not(:disabled) {
  
 .btn-refresh:hover:not(:disabled) {
   background-color: #f1f5f9;
-  color: #122a66;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-}
- 
-.btn-refresh:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
- 
-/* Refresh Loading Spinner Animation */
-.refresh-icon.spin {
-  animation: spin 1s linear infinite;
-}
- 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
- 
-/* Table Design */
   color: #122a66;
   transform: translateY(-1px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
@@ -428,21 +254,15 @@
   overflow-x: auto;
 }
  
- 
 .patients-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
 }
  
- 
 .patients-table th {
   background-color: #f8fafc;
-  background-color: #f8fafc;
   color: #64748b;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 12px 20px;
   font-size: 11px;
   font-weight: 700;
   padding: 12px 20px;
@@ -450,11 +270,7 @@
   text-transform: uppercase;
 }
  
- 
 .patients-table td {
-  padding: 14px 20px;
-  font-size: 13px;
-  color: #334155;
   padding: 14px 20px;
   font-size: 13px;
   color: #334155;
@@ -465,20 +281,6 @@
   background-color: #f8fafc;
 }
  
-.patients-table tbody tr:hover {
-  background-color: #f8fafc;
-}
- 
-.font-mono {
-  font-family: monospace;
-  color: #000;
-  font-weight: 600;
-}
- 
-.font-bold {
-  font-weight: 600;
-  color: #0f172a;
- 
 .font-mono {
   font-family: monospace;
   color: #000;
@@ -489,12 +291,9 @@
   font-weight: 600;
   color: #0f172a;
 }
- 
-/* Status Badges */
  
 /* Status Badges */
 .status-badge {
-  padding: 4px 12px;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 11px;
