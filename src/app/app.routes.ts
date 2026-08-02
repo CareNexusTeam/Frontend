@@ -102,7 +102,7 @@ export const routes: Routes = [
       import('./features/invoice/pages/invoice.page')
         .then(m => m.InvoicesPageComponent)
   },
-
+  // 🔽 NEWLY ADDED INSURANCE ROUTE 🔽
   {
     path: 'insurance',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'BILLING', 'PATIENT'])],
@@ -110,8 +110,17 @@ export const routes: Routes = [
       import('./features/insurance/pages/insurance.page')
         .then(m => m.InsuranceClaimsPageComponent)
   },
+  // 🔽 ANALYTICS & REPORTING ROUTE 🔽
+  {
+    path: 'analytics',
+    canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'BILLING', 'COMPLIANCE'])],
+    loadComponent: () =>
+      import('./features/analytics/pages/analytics.page')
+        .then(m => m.AnalyticsPageComponent)
+  },
 
   // 6. Wildcard / Fallback Route
+
   {
     path: '**',
     redirectTo: 'login'

@@ -1,78 +1,84 @@
 <app-main-layout>
 
-  <app-emr-tabs></app-emr-tabs>
-  <div class="w-full">
+  <div class="min-h-screen bg-slate-50 p-6">
 
-    
+    <app-emr-tabs></app-emr-tabs>
+
     <!-- Create Referral -->
-    <div class="bg-white border rounded-2xl p-6 mb-8">
 
-      <h2 class="text-3xl font-medium mb-6">
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
         Create Referral
       </h2>
 
       <form
         [formGroup]="referralForm"
-        (ngSubmit)="saveReferral()"
-        class="space-y-5">
+        (ngSubmit)="saveReferral()">
 
         <div class="grid md:grid-cols-2 gap-5">
 
           <div>
-
-            <label class="block mb-2 text-sm">
+            <label class="block text-sm text-gray-600 mb-2">
               Consultation ID
             </label>
 
             <input
-              formControlName="consultationId"
-              class="w-full border rounded-lg px-4 py-3">
-
+              type="number"
+              formControlName="consultationID"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-
-            <label class="block mb-2 text-sm">
-              Referred To Department
+            <label class="block text-sm text-gray-600 mb-2">
+              Referred Department
             </label>
 
             <input
-              formControlName="referredDepartment"
-              class="w-full border rounded-lg px-4 py-3">
-
+              type="text"
+              formControlName="referredToDepartment"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
         </div>
 
-        <div>
+        <div class="mt-5">
 
-          <label class="block mb-2 text-sm">
+          <label class="block text-sm text-gray-600 mb-2">
             Reason
           </label>
 
           <textarea
             rows="4"
             formControlName="reason"
-            class="w-full border rounded-lg px-4 py-3">
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </textarea>
 
         </div>
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="grid md:grid-cols-2 gap-5 mt-5">
 
           <div>
 
-            <label class="block mb-2 text-sm">
+            <label class="block text-sm text-gray-600 mb-2">
               Priority
             </label>
 
             <select
               formControlName="priority"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
 
-              <option>Routine</option>
-              <option>Urgent</option>
-              <option>Emergency</option>
+              <option value="Routine">
+                Routine
+              </option>
+
+              <option value="Urgent">
+                Urgent
+              </option>
+
+              <option value="Emergency">
+                Emergency
+              </option>
 
             </select>
 
@@ -80,13 +86,14 @@
 
           <div>
 
-            <label class="block mb-2 text-sm">
+            <label class="block text-sm text-gray-600 mb-2">
               Status
             </label>
 
             <input
+              type="text"
               formControlName="status"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
 
           </div>
 
@@ -94,7 +101,7 @@
 
         <button
           type="submit"
-          class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg">
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
 
           Save Referral
 
@@ -104,13 +111,26 @@
 
     </div>
 
-    <!-- Referrals Table -->
+    <!-- Referral Records -->
 
-    <div class="bg-white border rounded-2xl p-6">
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-      <h2 class="text-2xl font-medium mb-5">
-        All Referrals
-      </h2>
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+
+        <h2 class="text-lg font-semibold">
+          Referral Records
+        </h2>
+
+        <button
+          type="button"
+          (click)="loadReferrals()"
+          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+
+          Refresh
+
+        </button>
+
+      </div>
 
       <div class="overflow-x-auto">
 
@@ -118,32 +138,129 @@
 
           <thead>
 
-          <tr class="bg-gray-50 text-sm text-gray-600">
+            <tr class="bg-gray-50">
 
-            <th class="text-left p-3">
-              ID
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                ID
+              </th>
 
-            <th class="text-left p-3">
-              CONSULTATION
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Consultation
+              </th>
 
-            <th class="text-left p-3">
-              DEPARTMENT
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Department
+              </th>
 
-            <th class="text-left p-3">
-              PRIORITY
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Reason
+              </th>
 
-            <th class="text-left p-3">
-              STATUS
-            </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Priority
+              </th>
 
-          </tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Status
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Actions
+              </th>
+
+            </tr>
 
           </thead>
 
+          <tbody>
+
+            <tr
+              *ngFor="let referral of referrals"
+              class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ referral.referralId }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ referral.consultationID }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ referral.referredToDepartment }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ referral.reason }}
+              </td>
+
+              <td class="px-4 py-4">
+
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="{
+                    'bg-green-100 text-green-700': referral.priority === 'Routine',
+                    'bg-yellow-100 text-yellow-700': referral.priority === 'Urgent',
+                    'bg-red-100 text-red-700': referral.priority === 'Emergency'
+                  }">
+
+                  {{ referral.priority }}
+
+                </span>
+
+              </td>
+
+              <td class="px-4 py-4">
+
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="referral.status === 'Completed'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-blue-100 text-blue-700'">
+
+                  {{ referral.status }}
+
+                </span>
+
+              </td>
+
+              <td class="px-4 py-4 flex gap-4">
+
+                <button
+                  type="button"
+                  (click)="editReferral(referral)"
+                  class="text-blue-900 text-sm hover:underline">
+
+                  Edit
+
+                </button>
+
+                <button
+                  type="button"
+                  (click)="deleteReferral(referral.referralId!)"
+                  class="text-red-600 text-sm hover:underline">
+
+                  Delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
+            <tr *ngIf="referrals.length === 0">
+
+              <td
+                colspan="7"
+                class="text-center py-10 text-sm text-gray-500">
+
+                No referrals found
+
+              </td>
+
+            </tr>
+
+          </tbody>
 
         </table>
 

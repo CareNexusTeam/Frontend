@@ -16,7 +16,7 @@ export class LoginPageComponent {
   isLoading: boolean = false;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
@@ -30,7 +30,7 @@ export class LoginPageComponent {
     if (this.loginForm.invalid) return;
 
     this.isLoading = true;
-    this.errorMessage = ''; 
+    this.errorMessage = '';
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {

@@ -1,97 +1,101 @@
 <app-main-layout>
 
-  <app-emr-tabs></app-emr-tabs>
+  <div class="min-h-screen bg-slate-50 p-6">
 
-  <div class="w-full">
+    <app-emr-tabs></app-emr-tabs>
 
-    <div class="bg-white border rounded-2xl p-6 mb-8">
+    <!-- Create Prescription -->
 
-      <h2 class="text-3xl font-medium mb-6">
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-        {{ isEditMode
-        ? 'Update Prescription'
-        : 'Create Prescription' }}
-
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
+        {{ isEditMode ? 'Update Prescription' : 'Create Prescription' }}
       </h2>
 
       <form
         [formGroup]="prescriptionForm"
-        (ngSubmit)="savePrescription()"
-        class="space-y-5">
+        (ngSubmit)="savePrescription()">
 
         <div class="grid md:grid-cols-2 gap-5">
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Consultation ID
             </label>
 
             <input
               type="number"
               formControlName="consultationId"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Patient ID
             </label>
 
             <input
               type="number"
               formControlName="patientId"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Medication Name
             </label>
 
             <input
+              type="text"
               formControlName="medicationName"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Dosage
             </label>
 
             <input
+              type="text"
               formControlName="dosage"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Frequency
             </label>
 
             <input
+              type="text"
               formControlName="frequency"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Duration Days
             </label>
 
             <input
               type="number"
               formControlName="duration"
+<<<<<<< HEAD
               class="w-full border rounded-lg px-4 py-3">
+=======
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+>>>>>>> 927269ee0fdaa3598ce800c8ce6bdaf2a66b6e73
           </div>
 
           <div>
-            <label class="block mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Status
             </label>
 
             <select
               formControlName="status"
-              class="w-full border rounded-lg px-4 py-3">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
 
               <option value="Issued">
                 Issued
@@ -109,11 +113,9 @@
 
         <button
           type="submit"
-          class="bg-teal-600 text-white px-6 py-3 rounded-lg">
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
 
-          {{ isEditMode
-          ? 'Update Prescription'
-          : 'Save Prescription' }}
+          {{ isEditMode ? 'Update Prescription' : 'Save Prescription' }}
 
         </button>
 
@@ -121,80 +123,87 @@
 
     </div>
 
-    <div class="bg-white border rounded-2xl p-6">
+    <!-- Prescription Records -->
 
-      <div class="flex gap-3 mb-6">
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-        <input
-          [(ngModel)]="searchId"
-          placeholder="Search Prescription By ID"
-          class="border rounded-lg px-4 py-2 w-80">
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
 
-        <button
-          type="button"
-          (click)="searchPrescription()"
-          class="bg-teal-500 text-white px-5 py-2 rounded-lg">
+        <h2 class="text-lg font-semibold">
+          Prescription Records
+        </h2>
 
-          Search
+        <div class="flex gap-3">
 
-        </button>
+          <input
+            [(ngModel)]="searchId"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Search Prescription ID"
+            class="bg-white text-gray-700 rounded-lg px-4 py-2 w-64">
 
-        <button
-          type="button"
-          (click)="refreshPrescriptions()"
-          class="bg-teal-600 text-white px-5 py-2 rounded-lg">
+          <button
+            type="button"
+            (click)="searchPrescription()"
+            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
 
-          Refresh
+            Search
 
-        </button>
+          </button>
+
+          <button
+            type="button"
+            (click)="refreshPrescriptions()"
+            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
+
+            Refresh
+
+          </button>
+
+        </div>
 
       </div>
 
-      <h2 class="text-2xl font-medium mb-5">
-        All Prescriptions
-      </h2>
-
       <div class="overflow-x-auto">
 
-        <table class="w-full border">
+        <table class="w-full">
 
           <thead>
 
-            <tr class="bg-gray-100">
+            <tr class="bg-gray-50">
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 ID
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Consultation ID
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Patient ID
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Medication
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Dosage
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Frequency
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Duration
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Status
               </th>
 
-              <th class="p-3 border">
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Actions
               </th>
 
@@ -205,48 +214,61 @@
           <tbody>
 
             <tr
-              *ngFor="
-              let prescription
-              of prescriptions">
+              *ngFor="let prescription of prescriptions"
+              class="border-t border-gray-100 hover:bg-gray-50 transition">
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.prescriptionId }}
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.consultationId }}
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.patientId }}
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.medicationName }}
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.dosage }}
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 text-sm text-gray-700">
                 {{ prescription.frequency }}
               </td>
 
+<<<<<<< HEAD
               <td class="border p-3">
+=======
+              <td class="px-4 py-4 text-sm text-gray-700">
+>>>>>>> 927269ee0fdaa3598ce800c8ce6bdaf2a66b6e73
                 {{ prescription.duration }}
               </td>
 
-              <td class="border p-3">
-                {{ prescription.status }}
+              <td class="px-4 py-4">
+
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="prescription.status === 'Completed'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-blue-100 text-blue-700'">
+
+                  {{ prescription.status }}
+
+                </span>
+
               </td>
 
-              <td class="border p-3">
+              <td class="px-4 py-4 flex gap-4">
 
                 <button
                   type="button"
                   (click)="editPrescription(prescription)"
-                  class="bg-teal-500 text-white px-3 py-1 rounded mr-2">
+                  class="text-blue-900 text-sm hover:underline">
 
                   Edit
 
@@ -255,11 +277,23 @@
                 <button
                   type="button"
                   (click)="deletePrescription(prescription.prescriptionId!)"
-                  class="bg-teal-600 text-white px-3 py-1 rounded">
+                  class="text-red-600 text-sm hover:underline">
 
                   Delete
 
                 </button>
+
+              </td>
+
+            </tr>
+
+            <tr *ngIf="prescriptions.length === 0">
+
+              <td
+                colspan="9"
+                class="text-center py-10 text-sm text-gray-500">
+
+                No prescriptions found
 
               </td>
 

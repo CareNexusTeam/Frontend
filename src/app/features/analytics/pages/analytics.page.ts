@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
-import { ClinicalReport, RevenueMetrics, AppointmentStats, PrescriptionMetric, DepartmentPerformanceMetric } from '../models/analytics.model';
+import { ClinicalReport, RevenueMetrics, AppointmentStats, PrescriptionMetric, DepartmentPerformanceMetric, AnalyticsSummary } from '../models/analytics.model';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'app-analytics-page',
@@ -18,84 +19,134 @@ import { ClinicalReport, RevenueMetrics, AppointmentStats, PrescriptionMetric, D
 })
 export class AnalyticsPageComponent implements OnInit {
 
-  startDate: string = '2026-07-01';
-  endDate: string = '2026-07-26';
+  startDate: string = '';
+  endDate: string = '';
   selectedScope: string = 'Period';
+  isLoading: boolean = false;
 
-  patientVolume: number = 148;
+  patientVolume: number = 0;
+  avgConsultationTime: number = 0;
+  bedOccupancy: number = 0;
 
   revenueMetrics: RevenueMetrics = {
-    totalBilled: 45000.0,
-    totalCollected: 38500.0,
-    totalOutstanding: 6500.0
+    totalBilled: 0.0,
+    totalCollected: 0.0,
+    totalOutstanding: 0.0
   };
 
   appointmentStats: AppointmentStats = {
-    total: 120,
-    completed: 92,
-    cancelled: 18,
-    noShow: 10
+    total: 0,
+    completed: 0,
+    cancelled: 0,
+    noShow: 0
   };
 
-  prescriptions: PrescriptionMetric[] = [
-    { medicationName: 'Amoxicillin 500mg', count: 45, percentage: 32 },
-    { medicationName: 'Ibuprofen 400mg', count: 32, percentage: 23 },
-    { medicationName: 'Paracetamol 650mg', count: 28, percentage: 20 },
-    { medicationName: 'Metformin 500mg', count: 20, percentage: 14 },
-    { medicationName: 'Atorvastatin 10mg', count: 15, percentage: 11 }
-  ];
-
-  departmentPerformance: DepartmentPerformanceMetric[] = [
-    { departmentId: 101, departmentName: 'Cardiology', patientCount: 54, revenue: 16200.0 },
-    { departmentId: 102, departmentName: 'Orthopedics', patientCount: 38, revenue: 11400.0 },
-    { departmentId: 103, departmentName: 'Pediatrics', patientCount: 32, revenue: 6800.0 },
-    { departmentId: 104, departmentName: 'Neurology', patientCount: 24, revenue: 4100.0 }
-  ];
-
-  reports: ClinicalReport[] = [
-    {
-      reportId: 1,
-      scope: 'Period',
-      patientCount: 148,
-      bedOccupancy: 82,
-      avgConsultationTime: 18.5,
-      revenueCollected: 38500.0,
-      generatedDate: '2026-07-26 08:00 AM'
-    },
-    {
-      reportId: 2,
-      scope: 'Department',
-      patientCount: 54,
-      bedOccupancy: 90,
-      avgConsultationTime: 22.0,
-      revenueCollected: 16200.0,
-      generatedDate: '2026-07-25 05:30 PM'
-    },
-    {
-      reportId: 3,
-      scope: 'Doctor',
-      patientCount: 38,
-      bedOccupancy: 75,
-      avgConsultationTime: 15.0,
-      revenueCollected: 11400.0,
-      generatedDate: '2026-07-24 01:15 PM'
-    }
-  ];
+  prescriptions: PrescriptionMetric[] = [];
+  departmentPerformance: DepartmentPerformanceMetric[] = [];
+  reports: ClinicalReport[] = [];
 
   reportForm: FormGroup;
   showForm: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private analyticsService: AnalyticsService
+  ) {
     this.reportForm = this.fb.group({
-      scope: ['Period'],
-      patientCount: [150],
-      bedOccupancy: [80],
-      avgConsultationTime: [18.0],
-      revenueCollected: [35000.0]
+      scope: ['Period', Validators.required],
+      startDate: [''],
+      endDate: ['']
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadAllAnalytics();
+  }
+
+  loadAllAnalytics(): void {
+    this.isLoading = true;
+
+    // Fetch primary KPI Summary directly from DB API
+    this.analyticsService.getAnalyticsSummary(this.startDate, this.endDate).subscribe({
+      next: (summary: AnalyticsSummary) => {
+        if (summary) {
+          this.patientVolume = summary.patientVolume || 0;
+          this.revenueMetrics = summary.revenueMetrics || { totalBilled: 0, totalCollected: 0, totalOutstanding: 0 };
+          this.appointmentStats = summary.appointmentStats || { total: 0, completed: 0, cancelled: 0, noShow: 0 };
+          this.avgConsultationTime = summary.avgConsultationTime || 0;
+          this.bedOccupancy = summary.bedOccupancy || 0;
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching analytics summary:', err);
+        // Fallback individual metric calls
+        this.fetchIndividualMetrics();
+      }
+    });
+
+    // Fetch live Top Prescribed Medications
+    this.analyticsService.getPrescriptions(10).subscribe({
+      next: (res) => {
+        if (res && res.length > 0) {
+          const maxCount = Math.max(...res.map(p => p.count), 1);
+          this.prescriptions = res.map(p => ({
+            ...p,
+            percentage: Math.round((p.count / maxCount) * 100)
+          }));
+        } else {
+          this.prescriptions = [];
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching prescriptions metrics:', err);
+        this.prescriptions = [];
+      }
+    });
+
+    // Fetch live Department Performance
+    this.analyticsService.getDepartmentPerformance(this.startDate, this.endDate).subscribe({
+      next: (res) => {
+        this.departmentPerformance = res || [];
+      },
+      error: (err) => {
+        console.error('Error fetching department performance:', err);
+        this.departmentPerformance = [];
+      }
+    });
+
+    this.loadReports();
+  }
+
+  private fetchIndividualMetrics(): void {
+    this.analyticsService.getPatientVolume(this.startDate, this.endDate).subscribe({
+      next: (res) => this.patientVolume = res?.patientCount || 0,
+      error: () => this.patientVolume = 0
+    });
+
+    this.analyticsService.getRevenueMetrics(this.startDate, this.endDate).subscribe({
+      next: (res) => this.revenueMetrics = res || { totalBilled: 0, totalCollected: 0, totalOutstanding: 0 },
+      error: () => this.revenueMetrics = { totalBilled: 0, totalCollected: 0, totalOutstanding: 0 }
+    });
+
+    this.analyticsService.getAppointmentStats(this.startDate, this.endDate).subscribe({
+      next: (res) => this.appointmentStats = res || { total: 0, completed: 0, cancelled: 0, noShow: 0 },
+      error: () => this.appointmentStats = { total: 0, completed: 0, cancelled: 0, noShow: 0 }
+    });
+  }
+
+  loadReports(): void {
+    this.analyticsService.getAllReports().subscribe({
+      next: (res) => {
+        this.reports = res || [];
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching clinical reports:', err);
+        this.reports = [];
+        this.isLoading = false;
+      }
+    });
+  }
 
   toggleReportForm(): void {
     this.showForm = !this.showForm;
@@ -103,21 +154,30 @@ export class AnalyticsPageComponent implements OnInit {
 
   generateReport(): void {
     const val = this.reportForm.value;
-    const newReport: ClinicalReport = {
-      reportId: this.reports.length + 1,
-      scope: val.scope || 'Period',
-      patientCount: val.patientCount || 0,
-      bedOccupancy: val.bedOccupancy || 0,
-      avgConsultationTime: val.avgConsultationTime || 0,
-      revenueCollected: val.revenueCollected || 0,
-      generatedDate: new Date().toLocaleString()
-    };
-    this.reports.unshift(newReport);
-    this.showForm = false;
+    const scope = val.scope || 'Period';
+    const sDate = val.startDate || this.startDate;
+    const eDate = val.endDate || this.endDate;
+
+    this.isLoading = true;
+    this.analyticsService.generateReport(scope, sDate, eDate).subscribe({
+      next: (newReport) => {
+        if (newReport) {
+          this.reports.unshift(newReport);
+        }
+        this.showForm = false;
+        this.isLoading = false;
+        alert('Clinical Report generated successfully from live DB metrics!');
+      },
+      error: (err) => {
+        console.error('Error generating report:', err);
+        this.showForm = false;
+        this.isLoading = false;
+        alert('Failed to generate report. Please verify database connectivity.');
+      }
+    });
   }
 
   applyFilters(): void {
-    // Refresh metric visualizations based on date filter range
-    this.patientVolume = Math.floor(120 + Math.random() * 50);
+    this.loadAllAnalytics();
   }
 }

@@ -32,7 +32,6 @@ export class DispensationPageComponent implements OnInit {
   }
 
   loadDispensations(): void {
-    this.loading = true;
     this.dispensationService.getAllDispensations().subscribe({
       next: (data) => { this.dispensations = data; this.loading = false; },
       error: (error) => { console.error('Error loading dispensations', error); this.loading = false; }

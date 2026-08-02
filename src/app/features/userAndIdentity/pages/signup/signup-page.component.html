@@ -1,100 +1,231 @@
-<div class="flex justify-center items-center min-h-screen bg-[#f4f6f8] font-sans antialiased p-5">
-  <div class="bg-white rounded-lg p-8 w-full max-w-[440px] shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
-    <h2 class="m-0 mb-1.5 text-[#0b7a75] text-2xl font-bold">Create CareNexus Account</h2>
-    <p class="text-slate-500 text-sm mb-5 mt-0">Join our healthcare management portal</p>
+<style>
+  @keyframes signupFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 
-    <!-- Error Alert Box -->
-    <div *ngIf="errorMessage" class="bg-red-50 text-red-600 border border-red-200 px-[14px] py-2.5 rounded-md text-xs mb-4">
-      ⚠️ {{ errorMessage }}
+  .signup-card-anim {
+    animation: signupFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .signup-glass-panel {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 
+                0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  }
+
+  .signup-glass-hero {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 58, 138, 0.82) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .signup-custom-input {
+    background-color: rgba(248, 250, 252, 0.85);
+    border: 1.5px solid #cbd5e1;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .signup-custom-input:focus {
+    background-color: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    outline: none;
+  }
+
+  .signup-btn-gradient {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px 0 rgba(30, 58, 138, 0.35);
+  }
+
+  .signup-btn-gradient:hover:not(:disabled) {
+    background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #2563eb 100%);
+    transform: translateY(-1.5px);
+    box-shadow: 0 8px 20px 0 rgba(30, 58, 138, 0.45);
+  }
+
+  .signup-btn-gradient:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px 0 rgba(30, 58, 138, 0.3);
+  }
+</style>
+
+<div class="relative min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8 bg-cover bg-center bg-no-repeat bg-fixed"
+  style="background-image: url('BGImg.jpg');">
+  <!-- Subtle Dark/Navy Backdrop Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-blue-950/60 to-slate-900/75 backdrop-blur-[3px]"></div>
+
+  <!-- Main Card with Glassmorphism & Entrance Animation -->
+  <div class="relative z-10 w-full max-w-4xl signup-glass-panel rounded-3xl overflow-hidden shadow-2xl grid md:grid-cols-12 signup-card-anim border border-white/40">
+
+    <!-- LEFT SECTION (Hero Branding) - 5 columns on desktop -->
+    <div class="hidden md:flex md:col-span-5 relative flex-col justify-between p-8 signup-glass-hero text-white overflow-hidden bg-cover bg-center"
+      style="background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 58, 138, 0.88) 100%), url('BGImg.jpg');">
+      
+      <!-- Brand Logo / Badge -->
+      <div class="relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold uppercase tracking-wider text-blue-200 mb-6">
+          <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Healthcare System
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white mb-3">
+          CareNexus
+        </h1>
+        <p class="text-sm leading-relaxed text-blue-100/90 font-normal">
+          Connecting patients, doctors, nurses, pharmacists, and administrators through one unified portal.
+        </p>
+      </div>
+
+      <!-- Feature Bullets -->
+      <div class="relative z-10 my-8 space-y-3">
+        <div class="flex items-center gap-3 text-xs text-blue-100/90">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">✓</span>
+          <span>Encrypted Patient Records</span>
+        </div>
+        <div class="flex items-center gap-3 text-xs text-blue-100/90">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">✓</span>
+          <span>Real-time Clinical Access</span>
+        </div>
+        <div class="flex items-center gap-3 text-xs text-blue-100/90">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">✓</span>
+          <span>Seamless Department Portal</span>
+        </div>
+      </div>
+
+      <!-- Footer indicator -->
+      <div class="relative z-10 pt-4 border-t border-white/10 text-xs text-blue-200/70">
+        CareNexus Portal &copy; 2026
+      </div>
     </div>
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <!-- RIGHT SECTION (Form) - 7 columns on desktop -->
+    <div class="md:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-center bg-white/75 backdrop-blur-md">
 
-      <!-- Name Field -->
-      <div class="mb-4 flex flex-col">
-        <label for="name" class="text-xs font-semibold text-slate-600 mb-1.5">Full Name</label>
-        <input 
-          id="name" 
-          type="text" 
-          formControlName="name" 
-          placeholder="Enter your full name" 
-          class="px-3 py-2.5 text-sm border border-slate-300 rounded-md outline-none transition-colors duration-200 focus:border-[#0b7a75]"
-        />
-        <span class="text-red-600 text-[11px] mt-1" *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid">
-          Name is required
-        </span>
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">
+          Create Account
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+          Join our healthcare management portal to get started
+        </p>
       </div>
 
-      <!-- Email Field -->
-      <div class="mb-4 flex flex-col">
-        <label for="email" class="text-xs font-semibold text-slate-600 mb-1.5">Email</label>
-        <input 
-          id="email" 
-          type="email" 
-          formControlName="email" 
-          placeholder="name@example.com" 
-          class="px-3 py-2.5 text-sm border border-slate-300 rounded-md outline-none transition-colors duration-200 focus:border-[#0b7a75]"
-        />
-        <span class="text-red-600 text-[11px] mt-1" *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid">
-          Valid email is required
-        </span>
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="mb-5 rounded-xl border border-red-200/80 bg-red-50/90 p-3.5 text-xs text-red-700 flex items-start gap-2.5 shadow-sm">
+        <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div>{{ errorMessage }}</div>
       </div>
 
-      <!-- Password Field -->
-      <div class="mb-4 flex flex-col">
-        <label for="password" class="text-xs font-semibold text-slate-600 mb-1.5">Password</label>
-        <input 
-          id="password" 
-          type="password" 
-          formControlName="password" 
-          placeholder="Create password" 
-          class="px-3 py-2.5 text-sm border border-slate-300 rounded-md outline-none transition-colors duration-200 focus:border-[#0b7a75]"
-        />
-        <span class="text-red-600 text-[11px] mt-1" *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid">
-          Password is required
-        </span>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            Full Name
+          </label>
+
+          <input id="name" type="text" formControlName="name" placeholder="Enter your full name"
+            class="w-full rounded-xl px-3.5 py-2.5 text-sm signup-custom-input text-slate-800 placeholder-slate-400" />
+
+          <span *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid"
+            class="mt-1.5 block text-xs font-medium text-red-500">
+            Full Name is required
+          </span>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            Email Address
+          </label>
+
+          <input id="email" type="email" formControlName="email" placeholder="name@example.com"
+            class="w-full rounded-xl px-3.5 py-2.5 text-sm signup-custom-input text-slate-800 placeholder-slate-400" />
+
+          <span *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid"
+            class="mt-1.5 block text-xs font-medium text-red-500">
+            Please enter a valid email address
+          </span>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            Password
+          </label>
+
+          <input id="password" type="password" formControlName="password" placeholder="Create password"
+            class="w-full rounded-xl px-3.5 py-2.5 text-sm signup-custom-input text-slate-800 placeholder-slate-400" />
+
+          <span *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid"
+            class="mt-1.5 block text-xs font-medium text-red-500">
+            Password is required
+          </span>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            Phone Number
+          </label>
+
+          <input id="phone" type="text" formControlName="phone" placeholder="10-digit phone number"
+            class="w-full rounded-xl px-3.5 py-2.5 text-sm signup-custom-input text-slate-800 placeholder-slate-400" />
+
+          <span *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid"
+            class="mt-1.5 block text-xs font-medium text-red-500">
+            Valid 10-digit phone number required
+          </span>
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label for="role" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            Register As
+          </label>
+
+          <select id="role" formControlName="role"
+            class="w-full rounded-xl px-3.5 py-2.5 text-sm signup-custom-input text-slate-800 cursor-pointer">
+            <option value="Patient">Patient</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Admin">Admin</option>
+            <option value="Pharmacist">Pharmacist</option>
+            <option value="Billing">Billing Officer</option>
+            <option value="Compliance">Compliance / Auditor</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="signupForm.invalid || isLoading"
+          class="w-full rounded-xl py-3 text-sm font-semibold text-white signup-btn-gradient disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none mt-2">
+          {{ isLoading ? 'Registering...' : 'Create Account' }}
+        </button>
+
+      </form>
+
+      <div class="mt-6 text-center text-xs sm:text-sm text-slate-600">
+        Already have an account?
+        <a routerLink="/login" class="font-semibold text-blue-700 hover:text-blue-900 hover:underline transition">
+          Sign In
+        </a>
       </div>
 
-      <!-- Phone Field -->
-      <div class="mb-4 flex flex-col">
-        <label for="phone" class="text-xs font-semibold text-slate-600 mb-1.5">Phone Number</label>
-        <input 
-          id="phone" 
-          type="text" 
-          formControlName="phone" 
-          placeholder="10-digit phone number" 
-          class="px-3 py-2.5 text-sm border border-slate-300 rounded-md outline-none transition-colors duration-200 focus:border-[#0b7a75]"
-        />
-        <span class="text-red-600 text-[11px] mt-1" *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid">
-          Enter a valid 10-digit phone number
-        </span>
-      </div>
-
-      <!-- Role Selection Field -->
-      <div class="mb-4 flex flex-col">
-        <label for="role" class="text-xs font-semibold text-slate-600 mb-1.5">Register As</label>
-        <select id="role" formControlName="role" class="px-3 py-2.5 text-sm border border-slate-300 rounded-md outline-none transition-colors duration-200 focus:border-[#0b7a75] bg-white">
-          <option value="Patient">Patient</option>
-          <option value="Doctor">Doctor</option>
-          <option value="Nurse">Nurse</option>
-          <option value="Admin">Admin</option>
-          <option value="Pharmacist">Pharmacist</option>
-          <option value="Billing">Billing Officer</option>
-          <option value="Compliance">Compliance / Auditor</option>
-        </select>
-      </div>
-
-      <button 
-        type="submit" 
-        [disabled]="signupForm.invalid || isLoading" 
-        class="w-full p-3 bg-[#0b7a75] hover:bg-[#085f5b] disabled:bg-slate-300 disabled:cursor-not-allowed text-white border-none rounded-md text-3 font-semibold cursor-pointer mt-2 transition-colors duration-200"
-      >
-        {{ isLoading ? 'Registering...' : 'Sign Up' }}
-      </button>
-    </form>
-
-    <div class="text-center mt-5 text-xs text-slate-500">
-      Already have an account? <a routerLink="/login" class="text-[#0b7a75] no-underline font-semibold hover:underline">Login here</a>
     </div>
   </div>
 </div>
