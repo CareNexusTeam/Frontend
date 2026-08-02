@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/auth/auth-service';
+import { AuthService } from '../../core/auth/auth-service';
 
 interface MenuItem {
   name: string;
   route: string;
+  iconSvg: string;
   iconSvg: string;
   roles: string[];
 }
@@ -30,11 +32,20 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
 
     const userRole = (this.authService.getRole() || '').toLowerCase().replace('role_', '');
+    const userRole = (this.authService.getRole() || '').toLowerCase().replace('role_', '');
 
     const allMenus: MenuItem[] = [
       {
         name: 'Patients',
         route: '/patients',
+        iconSvg: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+        roles: ['Admin', 'Doctor', 'Nurse', 'Patient', 'Receptionist']
+      },
+      {
+        name: 'Medical History',
+        route: '/medical-history',
+        iconSvg: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+        roles: ['Admin', 'Doctor']
         iconSvg: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
         roles: ['Admin', 'Doctor', 'Nurse', 'Patient', 'Receptionist']
       },
@@ -49,16 +60,22 @@ export class SidebarComponent implements OnInit {
         route: '/doctor-schedules',
         iconSvg: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
         roles: ['Admin', 'Doctor', 'Nurse', 'Receptionist', 'Patient']
+        iconSvg: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+        roles: ['Admin', 'Doctor', 'Nurse', 'Receptionist', 'Patient']
       },
       {
         name: 'Appointments',
         route: '/appointments',
         iconSvg: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
         roles: ['Admin', 'Doctor', 'Nurse', 'Patient', 'Receptionist']
+        iconSvg: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+        roles: ['Admin', 'Doctor', 'Nurse', 'Patient', 'Receptionist']
       },
       {
         name: 'EMR',
         route: '/consultation',
+        iconSvg: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+        roles: ['Admin', 'Doctor']
         iconSvg: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
         roles: ['Admin', 'Doctor']
       },

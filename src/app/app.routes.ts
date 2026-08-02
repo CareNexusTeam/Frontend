@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { RoleGuard } from './core/guards/role.guard';
+import { RoleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   // 1. Default & Auth Routes
@@ -12,13 +13,13 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./features/userAndIdentity/pages/login/login-page.component')
-        .then(m => m.LoginPageComponent)
+        .then(m => m.LoginPageComponent) 
   },
   {
     path: 'signup',
     loadComponent: () =>
       import('./features/userAndIdentity/pages/signup/signup-page.component')
-        .then(m => m.SignupPageComponent)
+        .then(m => m.SignupPageComponent) 
   },
 
   // 2. Main Dashboard & Patient Management
@@ -26,13 +27,13 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () =>
       import('./features/dashboard/pages/dashboard-page.component')
-        .then(m => m.DashboardPageComponent)
+        .then(m => m.DashboardPageComponent) 
   },
   {
     path: 'patients',
     loadComponent: () =>
       import('./features/patients/pages/patient-page.component')
-        .then(m => m.PatientManagementPageComponent)
+        .then(m => m.PatientManagementPageComponent) 
   },
 
   // 3. EMR & Medical History Sub-routes
@@ -48,21 +49,21 @@ export const routes: Routes = [
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
     loadComponent: () =>
       import('./features/emr/consultation/consultation.page')
-        .then(m => m.ConsultationPageComponent)
+        .then(m => m.ConsultationPageComponent) 
   },
   {
     path: 'prescription',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
     loadComponent: () =>
       import('./features/emr/prescription/prescription.page')
-        .then(m => m.PrescriptionPageComponent)
+        .then(m => m.PrescriptionPageComponent) 
   },
   {
     path: 'referral',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
     loadComponent: () =>
       import('./features/emr/referral/referral.page')
-        .then(m => m.ReferralPageComponent)
+        .then(m => m.ReferralPageComponent) 
   },
 
   // 4. Scheduling & Appointments
