@@ -2,12 +2,19 @@
 
   <div class="min-h-screen bg-slate-50 p-6">
 
+  <div class="min-h-screen bg-slate-50 p-6">
+
+    <app-emr-tabs></app-emr-tabs>
+
     <app-emr-tabs></app-emr-tabs>
 
     <!-- Create Referral -->
 
     <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
       <h2 class="text-lg font-semibold text-blue-900 mb-5">
         Create Referral
       </h2>
@@ -15,35 +22,41 @@
       <form
         [formGroup]="referralForm"
         (ngSubmit)="saveReferral()">
+        (ngSubmit)="saveReferral()">
 
         <div class="grid md:grid-cols-2 gap-5">
 
           <div>
+            <label class="block text-sm text-gray-600 mb-2">
             <label class="block text-sm text-gray-600 mb-2">
               Consultation ID
             </label>
 
             <input
               type="number"
-              formControlName="consultationId"
+              formControlName="consultationID"
               class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
           <div>
             <label class="block text-sm text-gray-600 mb-2">
               Referred Department
+            <label class="block text-sm text-gray-600 mb-2">
+              Referred Department
             </label>
 
             <input
               type="text"
-              formControlName="referredDepartment"
+              formControlName="referredToDepartment"
               class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </div>
 
         </div>
 
         <div class="mt-5">
+        <div class="mt-5">
 
+          <label class="block text-sm text-gray-600 mb-2">
           <label class="block text-sm text-gray-600 mb-2">
             Reason
           </label>
@@ -52,14 +65,17 @@
             rows="4"
             formControlName="reason"
             class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
           </textarea>
 
         </div>
 
         <div class="grid md:grid-cols-2 gap-5 mt-5">
+        <div class="grid md:grid-cols-2 gap-5 mt-5">
 
           <div>
 
+            <label class="block text-sm text-gray-600 mb-2">
             <label class="block text-sm text-gray-600 mb-2">
               Priority
             </label>
@@ -67,7 +83,19 @@
             <select
               formControlName="priority"
               class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
 
+              <option value="Routine">
+                Routine
+              </option>
+
+              <option value="Urgent">
+                Urgent
+              </option>
+
+              <option value="Emergency">
+                Emergency
+              </option>
               <option value="Routine">
                 Routine
               </option>
@@ -87,12 +115,15 @@
           <div>
 
             <label class="block text-sm text-gray-600 mb-2">
+            <label class="block text-sm text-gray-600 mb-2">
               Status
             </label>
 
             <input
               type="text"
+              type="text"
               formControlName="status"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
               class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
 
           </div>
@@ -101,6 +132,7 @@
 
         <button
           type="submit"
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
           class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
 
           Save Referral
@@ -114,9 +146,27 @@
     <!-- Referral Records -->
 
     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <!-- Referral Records -->
+
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
       <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
 
+        <h2 class="text-lg font-semibold">
+          Referral Records
+        </h2>
+
+        <button
+          type="button"
+          (click)="loadReferrals()"
+          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+
+          Refresh
+
+        </button>
+
+      </div>
         <h2 class="text-lg font-semibold">
           Referral Records
         </h2>
@@ -139,7 +189,11 @@
           <thead>
 
             <tr class="bg-gray-50">
+            <tr class="bg-gray-50">
 
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                ID
+              </th>
               <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 ID
               </th>
@@ -155,7 +209,21 @@
               <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Reason
               </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Consultation
+              </th>
 
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Department
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Reason
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Priority
+              </th>
               <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Priority
               </th>
@@ -163,11 +231,18 @@
               <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Status
               </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Status
+              </th>
 
               <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
                 Actions
               </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Actions
+              </th>
 
+            </tr>
             </tr>
 
           </thead>
@@ -183,11 +258,11 @@
               </td>
 
               <td class="px-4 py-4 text-sm text-gray-700">
-                {{ referral.consultationId }}
+                {{ referral.consultationID }}
               </td>
 
               <td class="px-4 py-4 text-sm text-gray-700">
-                {{ referral.referredDepartment }}
+                {{ referral.referredToDepartment }}
               </td>
 
               <td class="px-4 py-4 text-sm text-gray-700">

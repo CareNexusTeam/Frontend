@@ -1,323 +1,264 @@
 <app-main-layout>
-  <div class="cn-analytics-wrapper">
+  <div class="analytics-page-container">
 
-    <!-- Header Banner -->
-    <div class="cn-header-section mb-4">
-      <div>
-        <h1 class="cn-page-title">Analytics & Clinical Reporting</h1>
-        <p class="cn-page-subtitle">Hospital metrics, revenue tracking, bed occupancy rates, and department performance dashboards.</p>
+    <!-- Top Dark Blue Page Header Bar -->
+    <header class="page-header">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+          </svg>
+        </div>
+        <div class="header-text">
+          <h2>Analytics & Clinical Reporting</h2>
+          <p>Real-time analytics, revenue metrics, patient volume, and automated clinical reports</p>
+        </div>
       </div>
-      <button (click)="toggleReportForm()" class="btn btn-teal cn-btn-primary">
-        <i class="bi bi-file-earmark-plus me-1"></i> Generate Clinical Report
+
+      <button class="btn-header-action" (click)="toggleReportForm()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>Generate Report</span>
       </button>
-    </div>
+    </header>
 
-    <!-- Date Range & Scope Filter Toolbar -->
-    <div class="cn-filter-toolbar card border-0 shadow-sm p-3 mb-4">
-      <div class="row g-3 align-items-center">
-        <div class="col-md-3 col-sm-6">
-          <label class="form-label cn-label">Start Date</label>
-          <input type="date" [(ngModel)]="startDate" class="form-control cn-input">
+    <!-- Filter & Scope Controls Card -->
+    <section class="card form-card">
+      <h3 class="card-title">Filter Analytics Dashboard</h3>
+      <div class="form-grid filter-grid">
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" [(ngModel)]="startDate" />
         </div>
 
-        <div class="col-md-3 col-sm-6">
-          <label class="form-label cn-label">End Date</label>
-          <input type="date" [(ngModel)]="endDate" class="form-control cn-input">
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="date" [(ngModel)]="endDate" />
         </div>
 
-        <div class="col-md-3 col-sm-6">
-          <label class="form-label cn-label">Report Scope</label>
-          <select [(ngModel)]="selectedScope" class="form-select cn-select">
+        <div class="form-group">
+          <label>Report Scope</label>
+          <select [(ngModel)]="selectedScope">
             <option value="Period">Period (Time Range)</option>
             <option value="Department">Department Scope</option>
             <option value="Doctor">Doctor Scope</option>
           </select>
         </div>
 
-        <div class="col-md-3 col-sm-6 d-flex align-items-end">
-          <button (click)="applyFilters()" class="btn btn-outline-teal w-100 cn-btn-filter">
-            <i class="bi bi-funnel me-1"></i> Apply Filters
+        <div class="form-group action-group">
+          <button class="btn-submit" (click)="applyFilters()" [disabled]="isLoading">
+            {{ isLoading ? 'Filtering...' : 'Apply Filters' }}
           </button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Generate Clinical Report Form Card -->
-    @if (showForm) {
-      <div class="cn-form-card card border-0 shadow-sm p-4 mb-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="fw-bold text-dark m-0">Generate New Clinical Report</h5>
-          <button (click)="toggleReportForm()" class="btn-close"></button>
+    <!-- KPI Metric Cards Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">PATIENT VOLUME</span>
+          <span class="kpi-icon">📊</span>
         </div>
-
-        <form [formGroup]="reportForm" (ngSubmit)="generateReport()" class="row g-3">
-          <div class="col-md-4">
-            <label class="form-label cn-label">Scope</label>
-            <select formControlName="scope" class="form-select cn-select">
-              <option value="Period">Period</option>
-              <option value="Department">Department</option>
-              <option value="Doctor">Doctor</option>
-            </select>
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label cn-label">Patient Count</label>
-            <input type="number" formControlName="patientCount" class="form-control cn-input">
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label cn-label">Bed Occupancy (%)</label>
-            <input type="number" formControlName="bedOccupancy" class="form-control cn-input">
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label cn-label">Avg Consultation Time (mins)</label>
-            <input type="number" formControlName="avgConsultationTime" class="form-control cn-input">
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label cn-label">Revenue Collected ($)</label>
-            <input type="number" formControlName="revenueCollected" class="form-control cn-input">
-          </div>
-
-          <div class="col-md-4 d-flex align-items-end">
-            <button type="submit" class="btn btn-teal w-100 cn-btn-primary">
-              Submit & Save Report
-            </button>
-          </div>
-        </form>
-      </div>
-    }
-
-    <!-- Executive KPI Metric Cards -->
-    <div class="row g-3 mb-4">
-      <!-- Patient Volume KPI -->
-      <div class="col-lg-3 col-md-6">
-        <div class="cn-kpi-card card border-0 shadow-sm p-3">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <span class="cn-kpi-label">Patient Volume</span>
-              <h2 class="cn-kpi-value text-teal mt-1">{{ patientVolume }}</h2>
-              <span class="cn-kpi-trend text-success">
-                <i class="bi bi-arrow-up-right me-1"></i> +12% from last period
-              </span>
-            </div>
-            <div class="cn-kpi-icon-avatar bg-light-teal text-teal">
-              📊
-            </div>
-          </div>
+        <div class="kpi-body">
+          <h2 class="kpi-value">{{ patientVolume }}</h2>
+          <span class="status-badge active">Live System Count</span>
         </div>
       </div>
 
-      <!-- Total Revenue Collected KPI -->
-      <div class="col-lg-3 col-md-6">
-        <div class="cn-kpi-card card border-0 shadow-sm p-3">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <span class="cn-kpi-label">Revenue Collected</span>
-              <h2 class="cn-kpi-value text-dark mt-1">${{ revenueMetrics.totalCollected | number:'1.0-0' }}</h2>
-              <span class="cn-kpi-subtext text-muted">
-                Billed: ${{ revenueMetrics.totalBilled | number:'1.0-0' }}
-              </span>
-            </div>
-            <div class="cn-kpi-icon-avatar bg-light-primary text-primary">
-              💳
-            </div>
-          </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">REVENUE COLLECTED</span>
+          <span class="kpi-icon">💳</span>
+        </div>
+        <div class="kpi-body">
+          <h2 class="kpi-value">${{ revenueMetrics.totalCollected | number:'1.2-2' }}</h2>
+          <span class="kpi-subtext">Billed: ${{ revenueMetrics.totalBilled | number:'1.0-0' }} | Outstanding: ${{ revenueMetrics.totalOutstanding | number:'1.0-0' }}</span>
         </div>
       </div>
 
-      <!-- Avg Consultation Duration KPI -->
-      <div class="col-lg-3 col-md-6">
-        <div class="cn-kpi-card card border-0 shadow-sm p-3">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <span class="cn-kpi-label">Avg Consultation Time</span>
-              <h2 class="cn-kpi-value text-dark mt-1">18.5 mins</h2>
-              <span class="cn-kpi-trend text-muted">
-                Target: 15-20 mins
-              </span>
-            </div>
-            <div class="cn-kpi-icon-avatar bg-light-purple text-purple">
-              ⏱️
-            </div>
-          </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">AVG CONSULTATION TIME</span>
+          <span class="kpi-icon">⏱️</span>
+        </div>
+        <div class="kpi-body">
+          <h2 class="kpi-value">{{ avgConsultationTime | number:'1.0-1' }} mins</h2>
+          <span class="kpi-subtext">Calculated from Live Consultations</span>
         </div>
       </div>
 
-      <!-- Bed Occupancy Rate KPI -->
-      <div class="col-lg-3 col-md-6">
-        <div class="cn-kpi-card card border-0 shadow-sm p-3">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <span class="cn-kpi-label">Bed Occupancy Rate</span>
-              <h2 class="cn-kpi-value text-dark mt-1">82%</h2>
-              <div class="progress mt-2 cn-progress-sm">
-                <div class="progress-bar bg-teal" style="width: 82%"></div>
-              </div>
-            </div>
-            <div class="cn-kpi-icon-avatar bg-light-warning text-warning">
-              🏥
-            </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-label">BED OCCUPANCY RATE</span>
+          <span class="kpi-icon">🏥</span>
+        </div>
+        <div class="kpi-body">
+          <h2 class="kpi-value">{{ bedOccupancy }}%</h2>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" [style.width.%]="bedOccupancy"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Analytics Charts & Performance Grids -->
-    <div class="row g-3 mb-4">
-      <!-- Financial Breakdown Card -->
-      <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100 cn-panel-card">
-          <h5 class="fw-bold text-dark mb-3">Revenue & Billing Overview</h5>
-
-          <div class="d-flex flex-column gap-3">
-            <div>
-              <div class="d-flex justify-content-between text-sm mb-1">
-                <span class="fw-medium text-secondary">Collected Revenue</span>
-                <span class="fw-bold text-teal">${{ revenueMetrics.totalCollected | number:'1.2-2' }}</span>
-              </div>
-              <div class="progress cn-progress-md">
-                <div class="progress-bar bg-teal" style="width: 85%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="d-flex justify-content-between text-sm mb-1">
-                <span class="fw-medium text-secondary">Outstanding Balances</span>
-                <span class="fw-bold text-danger">${{ revenueMetrics.totalOutstanding | number:'1.2-2' }}</span>
-              </div>
-              <div class="progress cn-progress-md">
-                <div class="progress-bar bg-danger" style="width: 15%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Appointment Status Distribution Card -->
-      <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100 cn-panel-card">
-          <h5 class="fw-bold text-dark mb-3">Appointment Status Distribution</h5>
-
-          <div class="row text-center g-2 mt-2">
-            <div class="col-4">
-              <div class="p-3 rounded-3 bg-light-teal">
-                <span class="cn-stat-sm-label">Completed</span>
-                <h3 class="fw-bold text-teal m-0 mt-1">{{ appointmentStats.completed }}</h3>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="p-3 rounded-3 bg-light-warning">
-                <span class="cn-stat-sm-label">Cancelled</span>
-                <h3 class="fw-bold text-warning m-0 mt-1">{{ appointmentStats.cancelled }}</h3>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="col-12 p-3 rounded-3 bg-light-danger">
-                <span class="cn-stat-sm-label">No-Show</span>
-                <h3 class="fw-bold text-danger m-0 mt-1">{{ appointmentStats.noShow }}</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Prescriptions Ranking & Department Performance -->
-    <div class="row g-3 mb-4">
+    <!-- Analytics Data Grids (2 Columns) -->
+    <div class="grid-2-col">
       <!-- Top Prescribed Medications -->
-      <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100 cn-panel-card">
-          <h5 class="fw-bold text-dark mb-3">Top Prescribed Medications</h5>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th>Medication</th>
-                  <th class="text-end">Prescriptions</th>
-                  <th class="text-end">Frequency</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (item of prescriptions; track item.medicationName) {
-                  <tr>
-                    <td class="fw-medium text-dark">{{ item.medicationName }}</td>
-                    <td class="text-end font-bold">{{ item.count }}</td>
-                    <td class="text-end" style="width: 35%;">
-                      <div class="progress cn-progress-sm">
-                        <div class="progress-bar bg-teal" [style.width.%]="item.percentage"></div>
-                      </div>
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+      <section class="card table-card">
+        <div class="table-header flex-header">
+          <h3>Top Prescribed Medications</h3>
         </div>
-      </div>
+        <div class="table-responsive">
+          <table class="patients-table">
+            <thead>
+              <tr>
+                <th>MEDICATION</th>
+                <th>COUNT</th>
+                <th>FREQUENCY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of prescriptions">
+                <td class="font-bold">{{ item.medicationName }}</td>
+                <td class="font-mono">{{ item.count }}</td>
+                <td>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-fill" [style.width.%]="item.percentage || 0"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="prescriptions.length === 0">
+                <td colspan="3" style="text-align: center; color: #6b7280; padding: 1.5rem;">
+                  No prescription records found in database.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <!-- Department Performance -->
-      <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100 cn-panel-card">
-          <h5 class="fw-bold text-dark mb-3">Department Performance</h5>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th>Department</th>
-                  <th class="text-center">Patients</th>
-                  <th class="text-end">Revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (dept of departmentPerformance; track dept.departmentId) {
-                  <tr>
-                    <td class="fw-medium text-dark">{{ dept.departmentName }}</td>
-                    <td class="text-center"><span class="badge bg-light text-dark border">{{ dept.patientCount }}</span></td>
-                    <td class="text-end fw-bold text-teal">${{ dept.revenue | number:'1.0-0' }}</td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+      <section class="card table-card">
+        <div class="table-header flex-header">
+          <h3>Department Performance</h3>
         </div>
-      </div>
+        <div class="table-responsive">
+          <table class="patients-table">
+            <thead>
+              <tr>
+                <th>DEPARTMENT</th>
+                <th>PATIENTS</th>
+                <th>REVENUE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let dept of departmentPerformance">
+                <td class="font-bold">{{ dept.departmentName || ('Department #' + dept.departmentId) }}</td>
+                <td><span class="status-badge active">{{ dept.patientCount }} Patients</span></td>
+                <td class="font-mono text-primary">${{ dept.revenue | number:'1.2-2' }}</td>
+              </tr>
+              <tr *ngIf="departmentPerformance.length === 0">
+                <td colspan="3" style="text-align: center; color: #6b7280; padding: 1.5rem;">
+                  No department performance records found in database.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
 
     <!-- Generated Clinical Reports Table Card -->
-    <div class="card border-0 shadow-sm p-4 cn-panel-card">
-      <h5 class="fw-bold text-dark mb-3">Historical Clinical Reports</h5>
+    <section class="card table-card">
+      <div class="table-header flex-header">
+        <h3>Historical Clinical Reports</h3>
+        <button class="btn-refresh" (click)="loadReports()" [disabled]="isLoading">
+          <svg class="refresh-icon" [class.spin]="isLoading" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>{{ isLoading ? 'Loading...' : 'Refresh' }}</span>
+        </button>
+      </div>
 
       <div class="table-responsive">
-        <table class="table table-hover align-middle">
-          <thead class="table-light">
+        <table class="patients-table">
+          <thead>
             <tr>
-              <th>ID</th>
-              <th>Scope</th>
-              <th>Patient Count</th>
-              <th>Bed Occupancy</th>
-              <th>Avg Consultation</th>
-              <th>Revenue Collected</th>
-              <th>Generated Date</th>
+              <th>REPORT ID</th>
+              <th>SCOPE</th>
+              <th>PATIENTS</th>
+              <th>BED OCCUPANCY</th>
+              <th>AVG CONSULTATION</th>
+              <th>REVENUE COLLECTED</th>
+              <th>GENERATED DATE</th>
             </tr>
           </thead>
           <tbody>
-            @for (report of reports; track report.reportId) {
-              <tr>
-                <td class="fw-bold text-secondary">#{{ report.reportId }}</td>
-                <td><span class="cn-badge-scope">{{ report.scope }}</span></td>
-                <td class="fw-semibold">{{ report.patientCount }}</td>
-                <td>{{ report.bedOccupancy }}%</td>
-                <td>{{ report.avgConsultationTime }} mins</td>
-                <td class="fw-bold text-teal">${{ report.revenueCollected | number:'1.2-2' }}</td>
-                <td class="text-muted small">{{ report.generatedDate }}</td>
-              </tr>
-            }
+            <tr *ngFor="let report of reports">
+              <td class="font-mono">#{{ report.reportId }}</td>
+              <td><span class="status-badge active">{{ report.scope }}</span></td>
+              <td class="font-bold">{{ report.patientCount }}</td>
+              <td>{{ report.bedOccupancy }}%</td>
+              <td>{{ report.avgConsultationTime | number:'1.0-1' }} mins</td>
+              <td class="font-bold font-mono text-primary">${{ report.revenueCollected | number:'1.2-2' }}</td>
+              <td class="text-secondary">{{ report.generatedDate }}</td>
+            </tr>
+            <tr *ngIf="reports.length === 0">
+              <td colspan="7" style="text-align: center; color: #6b7280; padding: 1.5rem;">
+                No historical clinical reports found in database. Click 'Generate Report' to auto-calculate from live system data.
+              </td>
+            </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- GENERATE REPORT MODAL POPUP -->
+    <div class="modal-overlay" *ngIf="showForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Generate New Clinical Report</h3>
+          <button class="close-btn" (click)="toggleReportForm()">&times;</button>
+        </div>
+
+        <form [formGroup]="reportForm" (ngSubmit)="generateReport()">
+          <div class="modal-body form-grid">
+            <p style="grid-column: 1 / -1; color: #4b5563; font-size: 0.9rem; margin-bottom: 0.5rem;">
+              Reports are generated automatically by aggregating live patient volume, revenue, bed occupancy, and consultation metrics from the database.
+            </p>
+
+            <div class="form-group full-width">
+              <label>Report Scope</label>
+              <select formControlName="scope">
+                <option value="Period">Period (Time Range)</option>
+                <option value="Department">Department</option>
+                <option value="Doctor">Doctor</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Start Date (Optional)</label>
+              <input type="date" formControlName="startDate" />
+            </div>
+
+            <div class="form-group">
+              <label>End Date (Optional)</label>
+              <input type="date" formControlName="endDate" />
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" (click)="toggleReportForm()">Cancel</button>
+            <button type="submit" class="btn-submit" [disabled]="reportForm.invalid || isLoading">
+              {{ isLoading ? 'Generating...' : 'Generate & Save Report' }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 

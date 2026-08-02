@@ -3,31 +3,31 @@ import {
 } from '@angular/common/http';
 
 export const jwtInterceptor:
-HttpInterceptorFn = (
-  req,
-  next
-) => {
+  HttpInterceptorFn = (
+    req,
+    next
+  ) => {
 
-  const token =
-    localStorage.getItem(
-      'auth_token'
-    );
+    const token =
+      localStorage.getItem(
+        'auth_token'
+      );
 
-  if (token) {
+    if (token) {
 
-    req = req.clone({
+      req = req.clone({
 
-      setHeaders: {
+        setHeaders: {
 
-        Authorization:
-          `Bearer ${token}`
+          Authorization:
+            `Bearer ${token}`
 
-      }
+        }
 
-    });
+      });
 
-  }
+    }
 
-  return next(req);
+    return next(req);
 
-};
+  };

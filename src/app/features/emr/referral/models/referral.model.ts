@@ -2,9 +2,9 @@ export interface Referral {
 
   referralId?: number;
 
-  consultationId: number;
+  consultationID: number;
 
-  referredDepartment: string;
+  referredToDepartment: string;
 
   reason: string;
 

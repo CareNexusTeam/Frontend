@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
   login(
     credentials: LoginRequest
@@ -38,6 +38,11 @@ export class AuthService {
           localStorage.setItem(
             'auth_token',
             response.token
+          );
+
+          localStorage.setItem(
+            'user_id',
+            response.userId.toString()
           );
 
           localStorage.setItem(

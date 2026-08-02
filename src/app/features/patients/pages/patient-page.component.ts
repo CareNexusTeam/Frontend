@@ -131,7 +131,8 @@ export class PatientManagementPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.patientForm.invalid) return;
+
+    // if (this.patientForm.invalid) return;
 
     this.isLoading = true;
     this.cdr.detectChanges(); // Fixes NG0100: ExpressionChangedAfterItHasBeenCheckedError
@@ -153,6 +154,7 @@ export class PatientManagementPageComponent implements OnInit {
 
     this.patientService.createPatient(payload).subscribe({
       next: () => {
+        
         this.patientForm.reset({ status: 'Active' });
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -160,6 +162,7 @@ export class PatientManagementPageComponent implements OnInit {
         this.fetchPatients();
       },
       error: (err) => {
+        alert("Error");
         console.error('Error saving patient:', err);
         alert('Failed to register patient!');
         this.isLoading = false;
