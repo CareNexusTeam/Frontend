@@ -53,8 +53,5 @@ export class InvoiceService {
   }
 
 
-<<<<<<< HEAD
-  }
-=======
->>>>>>> 927269ee0fdaa3598ce800c8ce6bdaf2a66b6e73
+
 }
