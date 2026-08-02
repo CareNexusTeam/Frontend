@@ -33,3 +33,11 @@ export interface DepartmentPerformanceMetric {
   patientCount: number;
   revenue: number;
 }
+
+export interface AnalyticsSummary {
+  patientVolume: number;
+  revenueMetrics: RevenueMetrics;
+  appointmentStats: AppointmentStats;
+  avgConsultationTime: number;
+  bedOccupancy: number;
+}

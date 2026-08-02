@@ -34,15 +34,15 @@ export class DrugInventoryPageComponent implements OnInit {
   filterStatus = '';
   stockInputs: { [drugId: number]: number } = {};
 
-  
- 
+
+
 
   ngOnInit(): void {
     this.loadDrugs();
   }
 
   loadDrugs(): void {
-  this.loading = true;
+  //this.loading = true;
   //console.log('Before API:', this.loading);
 
   this.drugService.getAllDrugs().subscribe({

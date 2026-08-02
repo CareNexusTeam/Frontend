@@ -98,7 +98,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 260px); /* Ensures main area expands properly */
+  width: calc(100% - 260px);
+  /* Ensures main area expands properly */
   overflow-y: auto;
 }
 
@@ -158,7 +159,7 @@
 }
 
 /* Angular Child Component Host Full Width Expansion */
-app-patient-management-page, 
+app-patient-management-page,
 app-patient-page {
   display: block;
   width: 100%;
@@ -172,7 +173,8 @@ app-patient-page {
   padding: 48px;
   text-align: center;
   max-width: 600px;
-  margin: 40px auto; /* Centered in page body */
+  margin: 40px auto;
+  /* Centered in page body */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 

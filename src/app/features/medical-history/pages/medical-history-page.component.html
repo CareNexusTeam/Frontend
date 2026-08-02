@@ -1,0 +1,346 @@
+<app-main-layout>
+
+  <div class="min-h-screen bg-slate-50 p-6">
+
+    <!-- Header -->
+    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+
+      <div class="flex items-center gap-3">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             height="24"
+             width="24"
+             viewBox="0 -960 960 960"
+             fill="white">
+          <path d="M200-80q-33 0-56.5-23.5T120-160v-640q0-33 23.5-56.5T200-880h400l240 240v480q0 33-23.5 56.5T760-80H200Zm360-520v-200H200v640h560v-440H560ZM320-240h320v-80H320v80Zm0-160h320v-80H320v80Zm0-160h200v-80H320v80Z"/>
+        </svg>
+
+        <div>
+          <h1 class="text-xl font-semibold">
+            Medical History
+          </h1>
+
+          <p class="text-sm text-blue-100 mt-1">
+            Create and manage patient medical history records
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Add Medical History -->
+    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+
+      <h2 class="text-lg font-semibold text-blue-900 mb-5">
+        Add Medical History Record
+      </h2>
+
+      <form
+        [formGroup]="medicalHistoryForm"
+        (ngSubmit)="onSubmit()">
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Patient ID
+            </label>
+
+            <input
+              type="number"
+              formControlName="patientId"
+              placeholder="Enter Patient ID"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Medical Condition
+            </label>
+
+            <input
+              type="text"
+              formControlName="condition"
+              placeholder="Enter Medical Condition"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Diagnosed Date
+            </label>
+
+            <input
+              type="date"
+              formControlName="diagnosedDate"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Status
+            </label>
+
+            <select
+              formControlName="status"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+
+              <option
+                *ngFor="let st of statusOptions"
+                [value]="st">
+                {{ st }}
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="medicalHistoryForm.invalid || isSaving"
+          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+
+          {{ isSaving ? 'Saving...' : 'Add History Record' }}
+
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Records Table -->
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+
+      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+
+        <h2 class="text-lg font-semibold">
+          Medical Records Log
+        </h2>
+
+        <input
+          type="number"
+          [value]="searchPatientId ?? ''"
+          (input)="onSearchInputChange($event)"
+          placeholder="Search Patient ID"
+          class="bg-white text-gray-700 rounded-lg px-4 py-2 w-56">
+
+      </div>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+          <thead>
+
+            <tr class="bg-gray-50">
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                History ID
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Patient Name
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Condition
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Diagnosed Date
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Status
+              </th>
+
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr
+              *ngFor="let item of medicalHistoryList"
+              class="border-t border-gray-100 hover:bg-gray-50 transition">
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                #{{ item.historyId }}
+              </td>
+
+              <td class="px-4 py-4 text-sm font-medium text-gray-800">
+                {{ currentPatientName }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ item.condition }}
+              </td>
+
+              <td class="px-4 py-4 text-sm text-gray-700">
+                {{ item.diagnosedDate }}
+              </td>
+
+              <td class="px-4 py-4">
+
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  [ngClass]="
+                    item.status === 'Active' || item.status === 'ACTIVE'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-gray-100 text-gray-600'
+                  ">
+
+                  {{ item.status }}
+
+                </span>
+
+              </td>
+
+              <td class="px-4 py-4">
+
+                <button
+                  (click)="openEditModal(item)"
+                  class="text-blue-900 text-sm hover:underline">
+
+                  Edit
+
+                </button>
+
+              </td>
+
+            </tr>
+
+            <tr *ngIf="medicalHistoryList.length === 0">
+
+              <td
+                colspan="6"
+                class="text-center py-10 text-sm text-gray-500">
+
+                <span *ngIf="searchPatientId">
+                  No medical history records found for Patient ID #{{ searchPatientId }}
+                </span>
+
+                <span *ngIf="!searchPatientId">
+                  Please search using a Patient ID.
+                </span>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div
+    *ngIf="isEditModalOpen"
+    class="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
+
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6">
+
+      <div class="flex justify-between items-center mb-5">
+
+        <h3 class="text-lg font-semibold text-blue-900">
+          Edit Medical Record
+        </h3>
+
+        <button
+          (click)="closeEditModal()"
+          class="text-2xl text-gray-500 hover:text-gray-700">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <form
+        [formGroup]="editForm"
+        (ngSubmit)="onUpdateRecord()">
+
+        <div class="space-y-4">
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Patient Name
+            </label>
+
+            <input
+              [value]="currentPatientName"
+              disabled
+              class="w-full bg-gray-100 rounded-lg px-4 py-2.5 text-gray-600">
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Medical Condition
+            </label>
+
+            <input
+              formControlName="condition"
+              readonly
+              class="w-full bg-gray-100 rounded-lg px-4 py-2.5 text-gray-600">
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-600 mb-2">
+              Status
+            </label>
+
+            <select
+              formControlName="status"
+              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+
+              <option
+                *ngFor="let st of statusOptions"
+                [value]="st">
+                {{ st }}
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+        <div class="flex justify-end gap-3 mt-6">
+
+          <button
+            type="button"
+            (click)="closeEditModal()"
+            class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-lg hover:bg-gray-200">
+
+            Cancel
+
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="isUpdating"
+            class="bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800">
+
+            {{ isUpdating ? 'Updating...' : 'Update Status' }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</app-main-layout>

@@ -1,138 +1,269 @@
 <app-main-layout>
 
-<div class="patient-page-container">
-  <!-- Top Header -->
-  <header class="page-header">
+  <div class="patient-page-container">
+    <!-- Top Blue Header Bar -->
+    <header class="page-header">
+      <div class="header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+        </svg>
+      </div>
+      <div class="header-text">
+        <h2>Patients</h2>
+        <p>Register and manage patient records</p>
+      </div>
+    </header>
 
-    <div class="flex">
-    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#00008b"><path d="M480-560q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-80q33 0 56.5-23.5T560-720q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720q0 33 23.5 56.5T480-640ZM160-80v-271q0-34 17-62.5t47-44.5q51-26 115.5-44T480-520q76 0 140.5 18T736-458q30 16 47 44.5t17 62.5v191q0 33-23.5 56.5T720-80H390q-46 0-78-32t-32-78q0-46 32-78t78-32h113l62-132q-20-4-41-6t-44-2q-72 0-128 17.5T261-386q-10 5-15.5 14.5T240-351v271h-80Zm230-80h48l28-60h-76q-12 0-21 9t-9 21q0 12 9 21t21 9Zm136 0h194v-191q0-11-5.5-20.5T700-386q-12-6-26-12.5T644-411L526-160Zm-46-560Zm0 426Z"/></svg>
-    <h2> Patients</h2>
-   </div>
+    <!-- Register Patient Form Card -->
+    <section class="card form-card">
+      <h3 class="card-title">Register Patient</h3>
 
-    <p>Register and manage patient records</p>
-  </header>
+      <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
 
-  <!-- Register Patient Form Card -->
-  <section class="card form-card">
-    <h3 class="card-title">Register Patient</h3>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" formControlName="name" />
+          </div>
 
-    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
-      <div class="form-grid">
-        
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" formControlName="name" />
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" formControlName="dob" placeholder="dd-mm-yyyy" />
+          </div>
+
+          <div class="form-group">
+            <label>Gender</label>
+            <select formControlName="gender">
+              <option value="" disabled selected>Select Gender</option>
+              <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Blood Group</label>
+            <select formControlName="bloodGroup">
+              <option value="" disabled selected>Select Blood Group</option>
+              <option *ngFor="let bg of bloodGroupOptions" [value]="bg">{{ bg }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" formControlName="phone" />
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Address</label>
+            <textarea formControlName="address" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Emergency Contact</label>
+            <input type="text" formControlName="emergencyContact" />
+          </div>
+
+          <div class="form-group">
+            <label>Insurance Provider ID</label>
+            <input type="text" formControlName="insuranceProviderId" />
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select formControlName="status">
+              <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+
         </div>
 
-        <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date" formControlName="dob" />
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" [disabled]="patientForm.invalid">
+            {{ isLoading ? 'Registering...' : 'Register Patient' }}
+          </button>
         </div>
+      </form>
+    </section>
 
-        <div class="form-group">
-          <label>Gender</label>
-          <select formControlName="gender">
-            <option value="" disabled selected>Select Gender</option>
-            <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
-          </select>
+    <!-- All Patients Table Card -->
+    <section class="card table-card" *ngIf="userRole !== 'Patient'">
+      <!-- Dark Blue Table Header Banner -->
+      <div class="table-header flex-header">
+        <h3>Patient Records</h3>
+
+        <div class="filter-controls">
+          <div class="search-box-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="number" [value]="searchTerm" (input)="onSearchChange($event)"
+              placeholder="Search Patient ID..." class="search-input" />
+          </div>
+
+          <button class="btn-refresh" (click)="fetchPatients()" [disabled]="isLoading">
+            <svg class="refresh-icon" [class.spin]="isLoading" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span>{{ isLoading ? 'Loading...' : 'Refresh' }}</span>
+          </button>
         </div>
-
-        <div class="form-group">
-          <label>Blood Group</label>
-          <select formControlName="bloodGroup">
-            <option value="" disabled selected>Select Blood Group</option>
-            <option *ngFor="let bg of bloodGroupOptions" [value]="bg">{{ bg }}</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="text" formControlName="phone" />
-        </div>
-
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" formControlName="email" />
-        </div>
-
-        <div class="form-group full-width">
-          <label>Address</label>
-          <textarea formControlName="address" rows="3"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Emergency Contact</label>
-          <input type="text" formControlName="emergencyContact" />
-        </div>
-
-        <div class="form-group">
-          <label>Insurance Provider ID</label>
-          <input type="text" formControlName="insuranceProviderId" />
-        </div>
-
-        <div class="form-group">
-          <label>Status</label>
-          <select formControlName="status">
-            <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
-          </select>
-        </div>
-
       </div>
 
-      <div class="form-actions">
-        <button type="submit" class="btn-submit" [disabled]="patientForm.invalid || isLoading">
-          {{ isLoading ? 'Registering...' : 'Register Patient' }}
-        </button>
+      <div *ngIf="errorMessage" class="error-banner">
+        {{ errorMessage }}
       </div>
-    </form>
-  </section>
 
-  <!-- All Patients Table Card (Hidden for 'Patient' role) -->
-  <section class="card table-card" *ngIf="userRole !== 'Patient'">
-    <div class="table-header">
-      <h3>All Patients</h3>
-      <button class="btn-refresh" (click)="fetchPatients()" [disabled]="isLoading">
-        {{ isLoading ? 'Loading...' : 'Refresh' }}
-      </button>
+      <div class="table-responsive">
+        <table class="patients-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>GENDER</th>
+              <th>PHONE</th>
+              <th>EMAIL</th>
+              <th>STATUS</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filteredPatientsList">
+              <td class="font-mono">#{{ p.id }}</td>
+              <td class="font-bold">{{ p.name }}</td>
+              <td>{{ p.gender }}</td>
+              <td>{{ p.phone }}</td>
+              <td>{{ p.email }}</td>
+              <td>
+                <span
+                  [class]="p.status === 'Active' || p.status === 'ACTIVE' ? 'status-badge active' : 'status-badge inactive'">
+                  {{ p.status }}
+                </span>
+              </td>
+              <td class="action-cell">
+                <!-- Modern Edit Button -->
+                <button class="btn-action edit-btn" (click)="openEditModal(p)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  <span>Edit</span>
+                </button>
+
+                <!-- Modern Delete Button -->
+                <button class="btn-action delete-btn" (click)="onDeletePatient(p)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                  <span>Delete</span>
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="filteredPatientsList.length === 0 && !isLoading">
+              <td colspan="7" class="no-records">
+                <span *ngIf="searchTerm">No patient record found for Patient ID #{{ searchTerm }}.</span>
+                <span *ngIf="!searchTerm">No patients records found.</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EDIT PATIENT MODAL POPUP -->
+    <div class="modal-overlay" *ngIf="isEditModalOpen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Patient Details (#{{ selectedPatient?.id }})</h3>
+          <button class="close-btn" (click)="closeEditModal()">&times;</button>
+        </div>
+
+        <form [formGroup]="editPatientForm" (ngSubmit)="onUpdatePatient()">
+          <div class="modal-body form-grid">
+
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" formControlName="name" />
+            </div>
+
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" formControlName="dob" />
+            </div>
+
+            <div class="form-group">
+              <label>Gender</label>
+              <select formControlName="gender">
+                <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Blood Group</label>
+              <select formControlName="bloodGroup">
+                <option *ngFor="let bg of bloodGroupOptions" [value]="bg">{{ bg }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" formControlName="phone" />
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" formControlName="email" />
+            </div>
+
+            <div class="form-group full-width">
+              <label>Address</label>
+              <textarea formControlName="address" rows="2"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Emergency Contact</label>
+              <input type="text" formControlName="emergencyContact" />
+            </div>
+
+            <div class="form-group">
+              <label>Insurance Provider ID</label>
+              <input type="text" formControlName="insuranceProviderId" />
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+              <select formControlName="status">
+                <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" (click)="closeEditModal()">Cancel</button>
+            <button type="submit" class="btn-submit" [disabled]="editPatientForm.invalid || isUpdating">
+              {{ isUpdating ? 'Updating...' : 'Save Changes' }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <!-- Error Banner -->
-    <div *ngIf="errorMessage" class="error-banner">
-      {{ errorMessage }}
-    </div>
+  </div>
 
-    <div class="table-responsive">
-      <table class="patients-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>GENDER</th>
-            <th>PHONE</th>
-            <th>EMAIL</th>
-            <th>STATUS</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let p of patientsList">
-            <td>{{ p.id }}</td>
-            <td>{{ p.name }}</td>
-            <td>{{ p.gender }}</td>
-            <td>{{ p.phone }}</td>
-            <td>{{ p.email }}</td>
-            <td><span class="status-badge">{{ p.status }}</span></td>
-            <td>
-              <button class="action-btn">View</button>
-            </td>
-          </tr>
-
-          <tr *ngIf="patientsList.length === 0 && !isLoading">
-            <td colspan="7" class="no-records">No patients yet.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</div>
 </app-main-layout>

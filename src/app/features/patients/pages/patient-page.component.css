@@ -1,218 +1,445 @@
-/* Angular Host element ko poori width force karne ke liye */
-:host {
-  display: block;
-  width: 100% !important;
-  box-sizing: border-box;
-}
-
+/* Container Layout */
 .patient-page-container {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
-  padding: 0px; /* Padding parent container se aayegi */
-  background-color: transparent;
+  padding: 16px;
+  background-color: #f4f6f9;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #334155;
 }
-
+ 
+/* 1. Header Banner (Dark Blue) */
 .page-header {
+  background-color: #1a3b8b;
+  color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
 }
-
-.page-header h2 {
-  font-size: 24px;
-  font-weight: 600;
+ 
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.header-text h2 {
   margin: 0;
-  color: #0f172a;
+  font-size: 18px;
+  font-weight: 600;
 }
-
-.page-header p {
-  font-size: 13px;
-  color: #64748b;
-  margin: 4px 0 0 0;
+ 
+.header-text p {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  opacity: 0.85;
 }
-
-/* Card General Styling (Full Width Enforced) */
+ 
+/* Cards Design */
 .card {
-  background: #ffffff;
+  background-color: #ffffff;
   border-radius: 8px;
-  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  width: 100% !important;
-  box-sizing: border-box;
+  overflow: hidden;
 }
-
+ 
+.form-card {
+  padding: 20px 24px;
+}
+ 
 .card-title {
+  color: #1a3b8b;
   font-size: 16px;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #1e293b;
 }
-
-/* Form Grid Layout (Spans across entire available space) */
+ 
+/* Form Grid System */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px 24px;
-  width: 100%;
 }
-
+ 
 .form-group {
   display: flex;
   flex-direction: column;
 }
-
+ 
 .form-group.full-width {
   grid-column: span 2;
 }
-
+ 
 .form-group label {
   font-size: 12px;
-  font-weight: 500;
-  color: #64748b;
+  color: #555555;
   margin-bottom: 6px;
+  font-weight: 500;
 }
-
+ 
+/* Form Controls Styling */
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  box-sizing: border-box;
   padding: 10px 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
-  font-size: 14px;
   background-color: #f8fafc;
+  font-size: 13px;
+  color: #333;
   outline: none;
-  transition: border-color 0.2s, background-color 0.2s;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
-
+ 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #0d9488;
+  border-color: #1a3b8b;
   background-color: #ffffff;
 }
-
-/* Form Action Buttons */
+ 
 .form-actions {
   margin-top: 20px;
 }
-
+ 
+/* Submit Button */
 .btn-submit {
-  background-color: #0d9488; /* Exact CareNexus Teal Theme */
+  background-color: #1a3b8b;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
-
-.btn-submit:hover {
-  background-color: #0f766e;
+ 
+.btn-submit:hover:not(:disabled) {
+  background-color: #122a66;
 }
-
+ 
 .btn-submit:disabled {
-  background-color: #94a3b8;
+  opacity: 0.6;
   cursor: not-allowed;
 }
-
-/* Table Card Section */
-.table-header {
+ 
+/* 2. Table Section Header Banner */
+.table-card {
+  padding: 0;
+}
+ 
+.flex-header {
+  background-color: #1a3b8b;
+  color: #ffffff;
+  padding: 12px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
-
-.table-header h3 {
+ 
+.flex-header h3 {
+  margin: 0;
   font-size: 16px;
   font-weight: 600;
+  letter-spacing: 0.2px;
+}
+ 
+/* Filter Controls Wrapper */
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+/* Search Box Container with Icon */
+.search-box-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+ 
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+ 
+/* Search Input Styling */
+.search-input {
+  padding: 8px 12px 8px 34px !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: #ffffff !important;
+  font-size: 13px !important;
+  color: #1e293b !important;
+  outline: none !important;
+  width: 220px !important;
+  height: 36px !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease-in-out !important;
+}
+ 
+.search-input::placeholder {
+  color: #94a3b8;
+  font-size: 12.5px;
+}
+ 
+.search-input:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25) !important;
+}
+ 
+/* Hide Number Arrow Spinners */
+.search-input::-webkit-outer-spin-button,
+.search-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
   margin: 0;
 }
-
+ 
+.search-input[type=number] {
+  -moz-appearance: textfield;
+}
+ 
+/* Styled Refresh Button */
 .btn-refresh {
-  background: transparent;
-  border: 1px solid #cbd5e1;
-  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  color: #1a3b8b;
+  border: none;
+  padding: 0 16px;
+  height: 36px;
   border-radius: 6px;
   font-size: 13px;
-  color: #475569;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
-.btn-refresh:hover {
+ 
+.btn-refresh:hover:not(:disabled) {
   background-color: #f1f5f9;
+  color: #122a66;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
-
-.error-banner {
-  background-color: #fef2f2;
-  color: #991b1b;
-  padding: 10px 14px;
-  border-radius: 6px;
-  border: 1px solid #fecaca;
-  font-size: 13px;
-  margin-bottom: 16px;
+ 
+.btn-refresh:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
-
+ 
+/* Refresh Loading Spinner Animation */
+.refresh-icon.spin {
+  animation: spin 1s linear infinite;
+}
+ 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+ 
+/* Table Design */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
 }
-
+ 
 .patients-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 13px;
 }
-
+ 
 .patients-table th {
-  padding: 12px;
+  background-color: #f8fafc;
   color: #64748b;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 12px 20px;
   border-bottom: 1px solid #e2e8f0;
   text-transform: uppercase;
-  font-size: 11px;
 }
-
+ 
 .patients-table td {
-  padding: 12px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 14px 20px;
+  font-size: 13px;
   color: #334155;
+  border-bottom: 1px solid #f1f5f9;
 }
-
-.no-records {
-  text-align: center;
-  color: #94a3b8;
-  padding: 24px !important;
+ 
+.patients-table tbody tr:hover {
+  background-color: #f8fafc;
 }
-
+ 
+.font-mono {
+  font-family: monospace;
+  color: #000;
+  font-weight: 600;
+}
+ 
+.font-bold {
+  font-weight: 600;
+  color: #0f172a;
+}
+ 
+/* Status Badges */
 .status-badge {
-  background: #dcfce7;
-  color: #166534;
-  padding: 2px 8px;
+  padding: 4px 12px;
   border-radius: 12px;
   font-size: 11px;
   font-weight: 600;
+  display: inline-block;
 }
-
-.action-btn {
-  background: transparent;
-  border: 1px solid #cbd5e1;
-  color: #0f766e;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+ 
+.status-badge.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+ 
+.status-badge.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+ 
+/* Modern Action Buttons */
+.action-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+ 
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  outline: none;
 }
-
-.action-btn:hover {
-  background: #f0fdf4;
+ 
+.btn-action svg {
+  display: block;
+}
+ 
+/* Edit Button Styling */
+.btn-action.edit-btn {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+ 
+.btn-action.edit-btn:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+ 
+/* Delete Button Styling */
+.btn-action.delete-btn {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+ 
+.btn-action.delete-btn:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+}
+ 
+.no-records {
+  text-align: center;
+  color: #64748b;
+  padding: 24px;
+}
+ 
+/* Modal Popup Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+ 
+.modal-content {
+  background: #ffffff;
+  border-radius: 8px;
+  width: 600px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+ 
+.modal-header {
+  background-color: #1a3b8b;
+  color: white;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ 
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+ 
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+ 
+.modal-body {
+  padding: 20px;
+}
+ 
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+ 
+.btn-cancel {
+  background: #e2e8f0;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+ 
+.error-banner {
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 10px 20px;
+  font-size: 13px;
 }

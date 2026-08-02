@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { NotificationItem, NotificationSummary } from '../models/notification.model';
+import { NotificationService } from '../services/notification.service';
+import { AuthService } from '../../../core/auth/auth-service';
 
 @Component({
   selector: 'app-notifications-page',
@@ -17,70 +19,37 @@ import { NotificationItem, NotificationSummary } from '../models/notification.mo
 })
 export class NotificationsPageComponent implements OnInit {
 
+  private notificationService = inject(NotificationService);
+  private authService = inject(AuthService);
+
   activeCategory: string = 'All';
   activeStatus: string = 'All';
   searchQuery: string = '';
+  isLoading: boolean = false;
 
   categories = ['All', 'Appointment', 'Clinical', 'Billing', 'Pharmacy', 'Compliance'];
+  notifications: NotificationItem[] = [];
 
-  notifications: NotificationItem[] = [
-    {
-      notificationId: 101,
-      userId: 1,
-      message: 'Appointment #101 scheduled with Dr. Sarah Jenkins on 2026-07-28 10:00 AM.',
-      category: 'Appointment',
-      status: 'Unread',
-      createdDate: '2026-07-26 09:30 AM',
-      priority: 'High'
-    },
-    {
-      notificationId: 102,
-      userId: 1,
-      message: 'Pharmacy Alert: Amoxicillin 500mg low stock (12 units remaining). Reorder level reached.',
-      category: 'Pharmacy',
-      status: 'Unread',
-      createdDate: '2026-07-26 11:15 AM',
-      priority: 'High'
-    },
-    {
-      notificationId: 103,
-      userId: 1,
-      message: 'Billing Notice: Invoice #402 has an outstanding balance of $250.00 due on 2026-08-05.',
-      category: 'Billing',
-      status: 'Unread',
-      createdDate: '2026-07-25 04:45 PM',
-      priority: 'Medium'
-    },
-    {
-      notificationId: 104,
-      userId: 1,
-      message: 'Clinical Update: Consultation #305 for Patient John Doe completed with Diagnosis: Routine Checkup.',
-      category: 'Clinical',
-      status: 'Read',
-      createdDate: '2026-07-25 02:20 PM',
-      priority: 'Low'
-    },
-    {
-      notificationId: 105,
-      userId: 1,
-      message: 'Compliance Audit: User consent form updated for HIPAA Regulatory Alignment Policy 2026.',
-      category: 'Compliance',
-      status: 'Read',
-      createdDate: '2026-07-24 10:00 AM',
-      priority: 'Medium'
-    },
-    {
-      notificationId: 106,
-      userId: 1,
-      message: 'Appointment Reminder: Telemedicine follow-up scheduled with Dr. Robert Vance on 2026-07-29 02:00 PM.',
-      category: 'Appointment',
-      status: 'Unread',
-      createdDate: '2026-07-26 08:00 AM',
-      priority: 'High'
-    }
-  ];
+  ngOnInit(): void {
+    this.loadUserNotifications();
+  }
 
-  ngOnInit(): void {}
+  loadUserNotifications(): void {
+    this.isLoading = true;
+    const activeUserId = this.notificationService.getActiveUserId();
+
+    this.notificationService.getUserNotifications(activeUserId).subscribe({
+      next: (res) => {
+        this.notifications = Array.isArray(res) ? res : [];
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching backend notifications:', err);
+        this.notifications = [];
+        this.isLoading = false;
+      }
+    });
+  }
 
   get summary(): NotificationSummary {
     const total = this.notifications.filter(n => n.status !== 'Dismissed').length;
@@ -109,23 +78,35 @@ export class NotificationsPageComponent implements OnInit {
   }
 
   markAsRead(id: number): void {
-    const item = this.notifications.find(n => n.notificationId === id);
-    if (item) {
-      item.status = 'Read';
-    }
+    this.notificationService.markAsRead(id).subscribe({
+      next: () => {
+        const item = this.notifications.find(n => n.notificationId === id);
+        if (item) item.status = 'Read';
+      },
+      error: () => {
+        const item = this.notifications.find(n => n.notificationId === id);
+        if (item) item.status = 'Read';
+      }
+    });
   }
 
   dismissNotification(id: number): void {
-    const item = this.notifications.find(n => n.notificationId === id);
-    if (item) {
-      item.status = 'Dismissed';
-    }
+    this.notificationService.dismissNotification(id).subscribe({
+      next: () => {
+        const item = this.notifications.find(n => n.notificationId === id);
+        if (item) item.status = 'Dismissed';
+      },
+      error: () => {
+        const item = this.notifications.find(n => n.notificationId === id);
+        if (item) item.status = 'Dismissed';
+      }
+    });
   }
 
   markAllAsRead(): void {
     this.notifications.forEach(n => {
       if (n.status === 'Unread') {
-        n.status = 'Read';
+        this.markAsRead(n.notificationId);
       }
     });
   }
