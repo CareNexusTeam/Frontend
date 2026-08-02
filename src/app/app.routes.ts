@@ -3,230 +3,117 @@ import { RoleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   // 1. Default & Auth Routes
-  { 
-    path: '', 
-    redirectTo: 'login', 
-    pathMatch: 'full' 
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
-  { 
-    path: 'login', 
-    loadComponent: () => 
+  {
+    path: 'login',
+    loadComponent: () =>
       import('./features/userAndIdentity/pages/login/login-page.component')
-        .then(m => m.LoginPageComponent) 
+        .then(m => m.LoginPageComponent)
   },
-  { 
-    path: 'signup', 
-    loadComponent: () => 
+  {
+    path: 'signup',
+    loadComponent: () =>
       import('./features/userAndIdentity/pages/signup/signup-page.component')
-        .then(m => m.SignupPageComponent) 
+        .then(m => m.SignupPageComponent)
   },
 
   // 2. Main Dashboard & Patient Management
-  { 
-    path: 'dashboard', 
-    loadComponent: () => 
-      import('./features/dashboard/pages/dashboard-page.component')
-        .then(m => m.DashboardPageComponent) 
-  },
-<<<<<<< HEAD
-
   {
-    path: 'drug-inventory',
-
-    canActivate: [
-      authGuard,
-      roleGuard
-    ],
-
-  data: {
-    roles: [
-      'Admin',
-      'Pharmacist'
-    ]
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./features/dashboard/pages/dashboard-page.component')
+        .then(m => m.DashboardPageComponent)
   },
-
-  loadComponent: () =>
-    import(
-      './features/drug-inventory/pages/drug-inventory.page'
-    ).then(
-      m => m.DrugInventoryPageComponent
-    )
-},
-
-{
-  path: 'dispensation',
-
-  canActivate: [
-    authGuard,
-    roleGuard
-  ],
-
-  data: {
-    roles: [
-      'Admin',
-      'Pharmacist'
-    ]
-  },
-
-  loadComponent: () =>
-    import(
-      './features/dispensation/pages/dispensation.page'
-    ).then(
-      m => m.DispensationPageComponent
-    )
-},
-
-{
-  path: 'invoice',
-
-  canActivate: [
-    authGuard,
-    roleGuard
-  ],
-
-  data: {
-    roles: [
-      'Admin',
-      'Billing'
-    ]
-  },
-
-  loadComponent: () =>
-    import(
-      './features/invoice/pages/invoice.page'
-    ).then(
-      m => m.InvoicesPageComponent
-    )
-},
-
-{
-  path: 'insurance',
-
-  canActivate: [
-    authGuard,
-    roleGuard
-  ],
-
-  data: {
-    roles: [
-      'Admin',
-      'Billing'
-    ]
-  },
-
-  loadComponent: () =>
-    import(
-      './features/insurance/pages/insurance.page'
-    ).then(
-      m => m.InsuranceClaimsPageComponent
-    )
-},
-
-
   {
     path: 'patients',
-    canActivate: [authGuard, roleGuard],
-    data: {
-      roles: [
-        'Admin',
-        'Doctor',
-        'Nurse',
-        'Patient'
-      ]
-    },
     loadComponent: () =>
-=======
-  { 
-    path: 'patients', 
-    loadComponent: () => 
->>>>>>> da895aaeb39884caac6819ceb44bd19acd498237
       import('./features/patients/pages/patient-page.component')
-        .then(m => m.PatientManagementPageComponent) 
+        .then(m => m.PatientManagementPageComponent)
   },
 
   // 3. EMR & Medical History Sub-routes
-  { 
-    path: 'medical-history', 
+  {
+    path: 'medical-history',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/medical-history/pages/medical-history-page.component')
-        .then(m => m.MedicalHistoryPageComponent) 
+        .then(m => m.MedicalHistoryPageComponent)
   },
-  { 
-    path: 'consultation', 
+  {
+    path: 'consultation',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/emr/consultation/consultation.page')
-        .then(m => m.ConsultationPageComponent) 
+        .then(m => m.ConsultationPageComponent)
   },
-  { 
-    path: 'prescription', 
+  {
+    path: 'prescription',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/emr/prescription/prescription.page')
-        .then(m => m.PrescriptionPageComponent) 
+        .then(m => m.PrescriptionPageComponent)
   },
-  { 
-    path: 'referral', 
+  {
+    path: 'referral',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/emr/referral/referral.page')
-        .then(m => m.ReferralPageComponent) 
+        .then(m => m.ReferralPageComponent)
   },
 
   // 4. Scheduling & Appointments
-  { 
-    path: 'doctor-schedules', 
-    loadComponent: () => 
+  {
+    path: 'doctor-schedules',
+    loadComponent: () =>
       import('./features/doctor-schedule/pages/doctor-schedule.page')
-        .then(m => m.DoctorSchedulePageComponent) 
+        .then(m => m.DoctorSchedulePageComponent)
   },
-  { 
-    path: 'appointments', 
+  {
+    path: 'appointments',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/appointments/pages/appointments.page')
-        .then(m => m.AppointmentsPageComponent) 
+        .then(m => m.AppointmentsPageComponent)
   },
 
-<<<<<<< HEAD
-];
-=======
   // 5. Pharmacy & Billing
-  { 
-    path: 'drug-inventory', 
+  {
+    path: 'drug-inventory',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'PHARMACIST'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/drug-inventory/pages/drug-inventory.page')
-        .then(m => m.DrugInventoryPageComponent) 
+        .then(m => m.DrugInventoryPageComponent)
   },
-  { 
-    path: 'dispensation', 
+  {
+    path: 'dispensation',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'PHARMACIST'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/dispensation/pages/dispensation.page')
-        .then(m => m.DispensationPageComponent) 
+        .then(m => m.DispensationPageComponent)
   },
-  { 
-    path: 'invoice', 
+  {
+    path: 'invoice',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'BILLING', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/invoice/pages/invoice.page')
-        .then(m => m.InvoicesPageComponent) 
+        .then(m => m.InvoicesPageComponent)
   },
-  // 🔽 NEWLY ADDED INSURANCE ROUTE 🔽
-  { 
-    path: 'insurance', 
+
+  {
+    path: 'insurance',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'BILLING', 'PATIENT'])],
-    loadComponent: () => 
+    loadComponent: () =>
       import('./features/insurance/pages/insurance.page')
-        .then(m => m.InsuranceClaimsPageComponent) 
+        .then(m => m.InsuranceClaimsPageComponent)
   },
 
   // 6. Wildcard / Fallback Route
-  { 
-    path: '**', 
-    redirectTo: 'login' 
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];
->>>>>>> da895aaeb39884caac6819ceb44bd19acd498237

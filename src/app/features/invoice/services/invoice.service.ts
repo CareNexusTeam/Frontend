@@ -3,10 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Invoice } from '../model/invoice.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class InvoiceService {
 
   private http = inject(HttpClient);
+
   private readonly API_URL = 'http://localhost:8082/api';
 
   getAllInvoices(): Observable<Invoice[]> {
@@ -18,20 +21,37 @@ export class InvoiceService {
   }
 
   createInvoice(invoice: Invoice): Observable<Invoice> {
-    return this.http.post<Invoice>(`${this.API_URL}/invoices`, invoice);
+    return this.http.post<Invoice>(
+      `${this.API_URL}/invoices`,
+      invoice
+    );
   }
-
- 
 
   getInvoicesByPatient(patientId: number): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(`${this.API_URL}/invoices/patient/${patientId}`);
+    return this.http.get<Invoice[]>(
+      `${this.API_URL}/invoices/patients/${patientId}/invoices`
+    );
   }
 
-  updatePayment(invoiceID: number, amount: number): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.API_URL}/invoices/${invoiceID}/?amount=${amount}`, {});
+  updatePayment(
+    invoiceID: number,
+    amount: number
+  ): Observable<Invoice> {
+
+    return this.http.patch<Invoice>(
+      `${this.API_URL}/invoices/${invoiceID}/payment?amount=${amount}`,
+      {}
+    );
   }
 
-  cancelInvoice(id: number): Observable<string> {
-    return this.http.put(`${this.API_URL}/invoices/${id}/cancel`, {}, { responseType: 'text' });
+  cancelInvoice(id: number): Observable<Invoice> {
+
+    return this.http.patch<Invoice>(
+      `${this.API_URL}/invoices/${id}/cancel`,
+      {}
+    );
+  }
+
+
   }
 }

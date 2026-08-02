@@ -48,7 +48,7 @@ export class PrescriptionPageComponent implements OnInit {
       medicationName: [''],
       dosage: [''],
       frequency: [''],
-      durationDays: [null],
+      duration: [null],
       status: ['Issued']
     });
 
@@ -149,8 +149,8 @@ export class PrescriptionPageComponent implements OnInit {
       frequency:
         prescription.frequency,
 
-      durationDays:
-        prescription.durationDays,
+      duration:
+        prescription.duration,
 
       status:
         prescription.status
@@ -299,7 +299,7 @@ export class PrescriptionPageComponent implements OnInit {
       medicationName: '',
       dosage: '',
       frequency: '',
-      durationDays: null,
+      duration: null,
       status: 'Issued'
 
     });

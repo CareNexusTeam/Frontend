@@ -33,7 +33,7 @@ export class InsuranceClaimsPageComponent implements OnInit {
   }
 
   loadClaims(): void {
-    this.loading = true;
+    
     this.claimService.getAllClaims().subscribe({
       next: (data) => { this.claims = data; this.loading = false; },
       error: (error) => { console.error('Error loading claims', error); this.loading = false; }
@@ -68,18 +68,11 @@ export class InsuranceClaimsPageComponent implements OnInit {
     });
   }
 
-  applyStatusFilter(): void {
-    if (!this.filterStatus) { this.loadClaims(); return; }
-    this.loading = true;
-    this.claimService.getByStatus(this.filterStatus).subscribe({
-      next: (data) => { this.claims = data; this.loading = false; },
-      error: (error) => { console.error('Error filtering claims', error); this.loading = false; }
-    });
-  }
+  
 
   lookupByInvoice(): void {
     if (!this.lookupInvoiceId) return;
-    this.loading = true;
+  
     this.claimService.getByInvoice(Number(this.lookupInvoiceId)).subscribe({
       next: (data) => { this.claims = data; this.loading = false; },
       error: (error) => { console.error('Error looking up invoice claims', error); this.loading = false; }

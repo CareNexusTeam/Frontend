@@ -25,7 +25,6 @@ export class InvoicesPageComponent implements OnInit {
     paidAmount: [0]
   });
 
-  filterStatus = '';
   lookupPatientId = '';
   paymentInputs: { [invoiceID: number]: number } = {};
 
@@ -34,7 +33,7 @@ export class InvoicesPageComponent implements OnInit {
   }
 
   loadInvoices(): void {
-    this.loading = true;
+    // this.loading = true;
     this.invoiceService.getAllInvoices().subscribe({
       next: (data) => { this.invoices = data; this.loading = false; },
       error: (error) => { console.error('Error loading invoices', error); this.loading = false; }
@@ -58,7 +57,7 @@ export class InvoicesPageComponent implements OnInit {
 
   lookupByPatient(): void {
     if (!this.lookupPatientId) return;
-    this.loading = true;
+    // this.loading = true;
     this.invoiceService.getInvoicesByPatient(Number(this.lookupPatientId)).subscribe({
       next: (data) => { this.invoices = data; this.loading = false; },
       error: (error) => { console.error('Error looking up patient invoices', error); this.loading = false; }
@@ -66,7 +65,7 @@ export class InvoicesPageComponent implements OnInit {
   }
 
   showAll(): void {
-    this.filterStatus = '';
+
     this.lookupPatientId = '';
     this.loadInvoices();
   }

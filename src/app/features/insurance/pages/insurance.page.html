@@ -95,36 +95,7 @@
 
       <div class="flex flex-wrap gap-3 items-end">
 
-        <div>
-
-          <label class="block text-sm text-gray-600 mb-2">
-            Claim Status
-          </label>
-
-          <select
-            [(ngModel)]="filterStatus"
-            [ngModelOptions]="{ standalone: true }"
-            class="bg-gray-50 rounded-lg px-4 py-2.5 text-sm">
-
-            <option value="">Any</option>
-            <option value="Pending">Pending</option>
-            <option value="Submitted">Submitted</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-            <option value="Settled">Settled</option>
-
-          </select>
-
-        </div>
-
-        <button
-          type="button"
-          (click)="applyStatusFilter()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200 transition">
-
-          Filter
-
-        </button>
+        
 
         <div>
 
