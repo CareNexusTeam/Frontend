@@ -1,8 +1,39 @@
+/* Page */
+
 .page-container {
   min-height: 100vh;
   background-color: #f8fafc;
   padding: 24px;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header */
+
+.header-card {
+  background-color: #1e3a8a;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #dbeafe;
 }
 
 /* Cards */
@@ -12,7 +43,6 @@
   background: #ffffff;
   border-radius: 12px;
   padding: 24px;
-  margin-top: 20px;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -20,7 +50,6 @@
 .section-title {
   color: #1e3a8a;
   font-size: 20px;
-  font-weight: 600;
   margin-bottom: 20px;
 }
 
@@ -32,17 +61,9 @@
   gap: 20px;
 }
 
-.form-grid-margin {
-  margin-top: 20px;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
-}
-
-.textarea-group {
-  margin-top: 20px;
 }
 
 .form-group label {
@@ -52,23 +73,15 @@
 }
 
 .form-group input,
-.form-group textarea,
 .form-group select {
-  width: 100%;
   padding: 10px 14px;
-  background: #f9fafb;
   border: 1px solid #d1d5db;
   border-radius: 8px;
+  background-color: #f9fafb;
   font-size: 14px;
-  box-sizing: border-box;
-}
-
-.form-group textarea {
-  resize: vertical;
 }
 
 .form-group input:focus,
-.form-group textarea:focus,
 .form-group select:focus {
   outline: none;
   border-color: #1e3a8a;
@@ -81,7 +94,7 @@
   background-color: #1e3a8a;
   color: white;
   border: none;
-  padding: 12px 22px;
+  padding: 11px 20px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
@@ -122,7 +135,6 @@
 
 .table-header h2 {
   margin: 0;
-  font-size: 18px;
 }
 
 .table-actions {
@@ -134,10 +146,8 @@
 .search-input {
   width: 250px;
   padding: 10px;
-  border: none;
   border-radius: 8px;
-  background-color: #f9fafb;
-  color: #374151;
+  border: none;
 }
 
 /* Table */
@@ -157,8 +167,8 @@ thead tr {
 
 th {
   text-align: left;
-  padding: 14px;
   color: #374151;
+  padding: 14px;
   font-size: 14px;
 }
 
@@ -171,45 +181,6 @@ td {
 
 tbody tr:hover {
   background-color: #f9fafb;
-}
-
-/* Status & Priority Badges */
-
-.status-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* Priority */
-
-.priority-routine {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.priority-urgent {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-.priority-emergency {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-/* Status */
-
-.status-completed {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.status-active {
-  background-color: #dbeafe;
-  color: #1d4ed8;
 }
 
 /* Actions */
@@ -243,7 +214,7 @@ tbody tr:hover {
   text-decoration: underline;
 }
 
-/* Empty State */
+/* Empty Records */
 
 .no-records {
   text-align: center;
@@ -266,8 +237,8 @@ tbody tr:hover {
   }
 
   .table-actions {
-    width: 100%;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .search-input {

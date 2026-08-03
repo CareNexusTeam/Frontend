@@ -1,27 +1,24 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+    <div class="header-card">
 
-      <div class="flex items-center gap-3">
+      <div class="header-content">
 
         <svg xmlns="http://www.w3.org/2000/svg"
              height="24"
              width="24"
              viewBox="0 -960 960 960"
              fill="white">
-          <path d="M420-340h120v-100h100v-120H540v-100H420v100H320v120h100v100Zm60 260q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5t127 85.5q54 54 85.5 127T880-480q0 82-31.5 155T763-197q-54 54-127 85.5T480-80Z"/>
+          <path d="M200-80q-33 0-56.5-23.5T120-160v-640q0-33 23.5-56.5T200-880h400l240 240v480q0 33-23.5 56.5T760-80H200Zm360-520v-200H200v640h560v-440H560ZM320-240h320v-80H320v80Zm0-160h320v-80H320v80Zm0-160h200v-80H320v80Z"/>
         </svg>
 
         <div>
-          <h1 class="text-xl font-semibold">
-            Appointments
-          </h1>
-
-          <p class="text-sm text-blue-100 mt-1">
-            Book and manage patient appointments
+          <h1 class="page-title">Appointments</h1>
+          <p class="page-subtitle">
+            Create and manage appointments for patients and doctors
           </p>
         </div>
 
@@ -29,95 +26,62 @@
 
     </div>
 
-    <!-- Book Appointment Form -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+    <!-- Appointment Form -->
+    <div class="card">
 
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
-        Book Appointment
+      <h2 class="section-title">
+        {{ isEditMode ? 'Update Appointment' : 'Book Appointment' }}
       </h2>
 
       <form
         [formGroup]="appointmentForm"
         (ngSubmit)="bookAppointment()">
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="form-grid">
 
-          <!-- Patient ID -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Patient ID
-            </label>
-
+          <div class="form-group">
+            <label>Patient ID</label>
             <input
-              formControlName="patientId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+              type="text"
+              formControlName="patientId">
           </div>
 
-          <!-- Doctor ID -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Doctor ID
-            </label>
-
+          <div class="form-group">
+            <label>Doctor ID</label>
             <input
-              formControlName="doctorId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+              type="text"
+              formControlName="doctorId">
           </div>
 
-          <!-- Department ID -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Department ID
-            </label>
-
+          <div class="form-group">
+            <label>Department ID</label>
             <input
-              formControlName="departmentId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+              type="text"
+              formControlName="departmentId">
           </div>
 
-          <!-- Date & Time -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Scheduled Date & Time
-            </label>
-
+          <div class="form-group">
+            <label>Scheduled Date &amp; Time</label>
             <input
               type="datetime-local"
-              formControlName="scheduledDateTime"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900"/>
+              formControlName="scheduledDateTime">
           </div>
 
-          <!-- Type -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Type
-            </label>
-
-            <select
-              formControlName="type"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
-
+          <div class="form-group">
+            <label>Type</label>
+            <select formControlName="type">
               <option>Consultation</option>
               <option>Follow Up</option>
               <option>Emergency</option>
-
             </select>
           </div>
 
-          <!-- Status -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Status
-            </label>
-
-            <select
-              formControlName="status"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
-
+          <div class="form-group">
+            <label>Status</label>
+            <select formControlName="status">
               <option>Scheduled</option>
               <option>Completed</option>
               <option>Cancelled</option>
-
             </select>
           </div>
 
@@ -125,145 +89,105 @@
 
         <button
           type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
-          Book Appointment
-
+          class="primary-btn">
+          {{ isEditMode ? 'Update Appointment' : 'Book Appointment' }}
         </button>
 
       </form>
 
     </div>
 
-    <!-- Appointment Records -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <!-- Records Section -->
+    <div class="table-card">
 
-      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+      <div class="table-header">
 
-        <h2 class="text-lg font-semibold">
-          Appointment Records
-        </h2>
+        <h2>Appointment Records</h2>
 
-        <button
-          (click)="refreshAppointments()"
-          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+        <div class="table-actions">
 
-          Refresh
+          <input
+            [(ngModel)]="searchId"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Search Appointment ID"
+            class="search-input">
 
-        </button>
+          <button
+            type="button"
+            (click)="searchAppointment()"
+            class="secondary-btn">
+            Search
+          </button>
+
+          <button
+            type="button"
+            (click)="refreshAppointments()"
+            class="secondary-btn">
+            Refresh
+          </button>
+
+        </div>
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table>
 
           <thead>
-
-            <tr class="bg-gray-50">
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Patient
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Doctor
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Date & Time
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Type
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Status
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Actions
-              </th>
-
+            <tr>
+              <th>ID</th>
+              <th>Patient</th>
+              <th>Doctor</th>
+              <th>Date &amp; Time</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-
           </thead>
 
           <tbody>
 
-            @if (loading) {
+            <tr *ngFor="let appointment of appointments">
 
-              <tr>
-                <td colspan="7"
-                    class="text-center py-10 text-sm text-gray-500">
-                  Loading appointments...
-                </td>
-              </tr>
+              <td>{{ appointment.appointmentId }}</td>
+              <td>{{ appointment.patientId }}</td>
+              <td>{{ appointment.doctorId }}</td>
+              <td>{{ appointment.scheduledDateTime }}</td>
+              <td>{{ appointment.type }}</td>
+              <td>{{ appointment.status }}</td>
 
-            }
+              <td class="action-cell">
 
-            @else if (appointments.length === 0) {
+                <button
+                  type="button"
+                  (click)="editAppointment(appointment)"
+                  class="edit-btn">
+                  Edit
+                </button>
 
-              <tr>
-                <td colspan="7"
-                    class="text-center py-10 text-sm text-gray-500">
-                  No appointments found
-                </td>
-              </tr>
+                <button
+                  type="button"
+                  (click)="deleteAppointment(appointment.appointmentId!)"
+                  class="delete-btn">
+                  Delete
+                </button>
 
-            }
+              </td>
 
-            @else {
+            </tr>
 
-              @for (appointment of appointments; track appointment.appointmentId) {
+            <tr *ngIf="!loading && appointments.length === 0">
 
-                <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+              <td
+                colspan="7"
+                class="no-records">
 
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.appointmentId }}
-                  </td>
+                No appointments found
 
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.patientId }}
-                  </td>
+              </td>
 
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.doctorId }}
-                  </td>
-
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.scheduledDateTime }}
-                  </td>
-
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.type }}
-                  </td>
-
-                  <td class="px-4 py-4 text-sm text-gray-700">
-                    {{ appointment.status }}
-                  </td>
-
-                  <td class="px-4 py-4">
-
-                    <button
-                      class="text-blue-900 text-sm hover:underline">
-
-                      Edit
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-              }
-
-            }
+            </tr>
 
           </tbody>
 

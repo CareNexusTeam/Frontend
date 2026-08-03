@@ -20,9 +20,9 @@ export class NotificationService {
       localStorage.getItem('user_id') ??
       localStorage.getItem('userId');
 
-    if (userId && !isNaN(Number(userId))) {
-      return Number(userId);
-    }
+    // if (userId && !isNaN(Number(userId))) {
+    //   return Number(userId);
+    // }
 
     return 1;
   }

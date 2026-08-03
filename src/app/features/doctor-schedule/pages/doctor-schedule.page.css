@@ -1,3 +1,5 @@
+/* Page */
+
 .page-container {
   min-height: 100vh;
   background-color: #f8fafc;
@@ -5,14 +7,42 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Cards */
+/* Header */
+
+.header-card {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  margin-top: 4px;
+  color: #dbeafe;
+  font-size: 14px;
+}
+
+/* Common Card */
 
 .card,
 .table-card {
   background: #ffffff;
   border-radius: 12px;
   padding: 24px;
-  margin-top: 20px;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -20,7 +50,6 @@
 .section-title {
   color: #1e3a8a;
   font-size: 20px;
-  font-weight: 600;
   margin-bottom: 20px;
 }
 
@@ -32,17 +61,9 @@
   gap: 20px;
 }
 
-.form-grid-margin {
-  margin-top: 20px;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
-}
-
-.textarea-group {
-  margin-top: 20px;
 }
 
 .form-group label {
@@ -51,25 +72,15 @@
   margin-bottom: 8px;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
+.form-group input {
   padding: 10px 14px;
-  background: #f9fafb;
   border: 1px solid #d1d5db;
   border-radius: 8px;
+  background: #f9fafb;
   font-size: 14px;
-  box-sizing: border-box;
 }
 
-.form-group textarea {
-  resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group input:focus {
   outline: none;
   border-color: #1e3a8a;
 }
@@ -81,10 +92,10 @@
   background-color: #1e3a8a;
   color: white;
   border: none;
-  padding: 12px 22px;
+  padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  font-size: 14px;
 }
 
 .primary-btn:hover {
@@ -93,8 +104,8 @@
 
 .secondary-btn {
   background-color: white;
-  color: #1e3a8a;
   border: none;
+  color: #1e3a8a;
   padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -110,8 +121,8 @@
 .table-header {
   background-color: #1e3a8a;
   color: white;
-  margin: -24px -24px 20px -24px;
   padding: 16px 20px;
+  margin: -24px -24px 20px -24px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 
@@ -122,7 +133,6 @@
 
 .table-header h2 {
   margin: 0;
-  font-size: 18px;
 }
 
 .table-actions {
@@ -136,8 +146,6 @@
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background-color: #f9fafb;
-  color: #374151;
 }
 
 /* Table */
@@ -173,55 +181,14 @@ tbody tr:hover {
   background-color: #f9fafb;
 }
 
-/* Status & Priority Badges */
-
-.status-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* Priority */
-
-.priority-routine {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.priority-urgent {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-.priority-emergency {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-/* Status */
-
-.status-completed {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.status-active {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
-
-/* Actions */
-
 .action-cell {
   display: flex;
   gap: 16px;
 }
 
 .edit-btn {
-  background: transparent;
   border: none;
+  background: transparent;
   color: #1e3a8a;
   cursor: pointer;
   font-size: 14px;
@@ -232,8 +199,8 @@ tbody tr:hover {
 }
 
 .delete-btn {
-  background: transparent;
   border: none;
+  background: transparent;
   color: #dc2626;
   cursor: pointer;
   font-size: 14px;
@@ -242,8 +209,6 @@ tbody tr:hover {
 .delete-btn:hover {
   text-decoration: underline;
 }
-
-/* Empty State */
 
 .no-records {
   text-align: center;
@@ -261,21 +226,16 @@ tbody tr:hover {
 
   .table-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 15px;
+    align-items: flex-start;
   }
 
   .table-actions {
-    width: 100%;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .search-input {
     width: 100%;
-  }
-
-  .action-cell {
-    flex-direction: column;
-    gap: 8px;
   }
 }

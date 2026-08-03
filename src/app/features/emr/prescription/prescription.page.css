@@ -1,3 +1,5 @@
+/* Page Layout */
+
 .page-container {
   min-height: 100vh;
   background-color: #f8fafc;
@@ -32,17 +34,9 @@
   gap: 20px;
 }
 
-.form-grid-margin {
-  margin-top: 20px;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
-}
-
-.textarea-group {
-  margin-top: 20px;
 }
 
 .form-group label {
@@ -52,24 +46,20 @@
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 10px 14px;
-  background: #f9fafb;
   border: 1px solid #d1d5db;
   border-radius: 8px;
+  background-color: #f9fafb;
   font-size: 14px;
   box-sizing: border-box;
 }
 
-.form-group textarea {
-  resize: vertical;
-}
-
 .form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: #1e3a8a;
 }
@@ -136,8 +126,8 @@
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background-color: #f9fafb;
-  color: #374151;
+  background-color: #f3f4f6;
+  color:#374151
 }
 
 /* Table */
@@ -158,8 +148,8 @@ thead tr {
 th {
   text-align: left;
   padding: 14px;
-  color: #374151;
   font-size: 14px;
+  color: #374151;
 }
 
 td {
@@ -173,7 +163,7 @@ tbody tr:hover {
   background-color: #f9fafb;
 }
 
-/* Status & Priority Badges */
+/* Status */
 
 .status-badge {
   display: inline-block;
@@ -183,31 +173,12 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-/* Priority */
-
-.priority-routine {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.priority-urgent {
-  background-color: #fef3c7;
-  color: #b45309;
-}
-
-.priority-emergency {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-/* Status */
-
 .status-completed {
   background-color: #dcfce7;
   color: #15803d;
 }
 
-.status-active {
+.status-issued {
   background-color: #dbeafe;
   color: #1d4ed8;
 }
@@ -243,7 +214,7 @@ tbody tr:hover {
   text-decoration: underline;
 }
 
-/* Empty State */
+/* No Records */
 
 .no-records {
   text-align: center;
