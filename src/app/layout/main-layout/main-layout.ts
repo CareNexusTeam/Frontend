@@ -8,6 +8,7 @@ from '../sidebar/sidebar';
 
 import { FooterComponent }
 from '../footer/footer';
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-main-layout',
@@ -15,8 +16,10 @@ from '../footer/footer';
   imports: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
-  ],
-  templateUrl: './main-layout.html'
+    FooterComponent,
+    RouterOutlet
+],
+  templateUrl: './main-layout.html',
+  styleUrl: './main-layout.css'
 })
 export class MainLayoutComponent {}

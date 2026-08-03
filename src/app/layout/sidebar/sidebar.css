@@ -1,0 +1,79 @@
+:host {
+  display: block;
+}
+
+/* Sidebar Outer Container */
+.sidebar-container {
+  position: fixed;
+  top: 4rem; /* 64px (Header height) */
+  left: 0;
+  width: 16rem; /* 256px */
+  height: calc(100vh - 4rem);
+  background-color: #0b192c; /* Deep Blue theme */
+  color: #e2e8f0;
+  border-right: 1px solid #1e293b;
+  z-index: 40;
+  overflow-y: auto;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Navigation List Wrapper */
+.sidebar-nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+/* Link Item Base State */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  border-left: 4px solid transparent;
+}
+
+/* Hover State */
+.nav-item:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.nav-item:hover .nav-icon {
+  stroke: #ffffff;
+}
+
+/* Active Link State (Angular routerLinkActive) */
+.nav-item.active {
+  background-color: #1e3a8a; /* Rich Blue */
+  color: #ffffff;
+  font-weight: 600;
+  border-left-color: #60a5fa; /* Bright Blue accent border */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item.active .nav-icon {
+  stroke: #ffffff;
+}
+
+/* Icon Styling */
+.nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  stroke: #93c5fd;
+  transition: stroke 0.2s ease-in-out;
+}
+
+/* Label Styling */
+.nav-label {
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}

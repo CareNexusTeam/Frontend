@@ -23,9 +23,11 @@ import { ConsultationService } from '../../emr/consultation/services/consultatio
     MainLayoutComponent,
     EmrTabsComponent
   ],
-  templateUrl: './consultation.page.html'
+  templateUrl: './consultation.page.html',
+  styleUrl: './consultation.page.css'
 })
-export class ConsultationPageComponent implements OnInit {
+export class ConsultationPageComponent
+implements OnInit {
 
   consultationForm: FormGroup;
 
@@ -35,28 +37,42 @@ export class ConsultationPageComponent implements OnInit {
 
   isEditMode = false;
 
-  selectedConsultationId: number | null = null;
+  selectedConsultationId:
+    number | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private consultationService: ConsultationService
+    private consultationService:
+      ConsultationService
   ) {
 
-    this.consultationForm = this.fb.group({
-      appointmentId: [null],
-      patientId: [null],
-      doctorId: [null],
-      consultationDate: [''],
-      symptoms: [''],
-      diagnosis: [''],
-      treatmentPlan: [''],
-      status: ['InProgress']
-    });
+    this.consultationForm =
+      this.fb.group({
+
+        appointmentId: [null],
+
+        patientId: [null],
+
+        doctorId: [null],
+
+        consultationDate: [''],
+
+        symptoms: [''],
+
+        diagnosis: [''],
+
+        treatmentPlan: [''],
+
+        status: ['InProgress']
+
+      });
 
   }
 
   ngOnInit(): void {
+
     this.loadConsultations();
+
   }
 
   loadConsultations(): void {
@@ -173,7 +189,8 @@ export class ConsultationPageComponent implements OnInit {
   updateConsultation(): void {
 
     if (
-      this.selectedConsultationId === null
+      this.selectedConsultationId ===
+      null
     ) {
       return;
     }
@@ -261,6 +278,7 @@ export class ConsultationPageComponent implements OnInit {
     ) {
 
       this.loadConsultations();
+
       return;
 
     }
@@ -309,15 +327,27 @@ export class ConsultationPageComponent implements OnInit {
     this.consultationForm.reset({
 
       appointmentId: null,
+
       patientId: null,
+
       doctorId: null,
+
       consultationDate: '',
+
       symptoms: '',
+
       diagnosis: '',
+
       treatmentPlan: '',
+
       status: 'InProgress'
 
     });
+
+    this.isEditMode = false;
+
+    this.selectedConsultationId =
+      null;
 
   }
 

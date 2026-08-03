@@ -1,14 +1,13 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <app-emr-tabs></app-emr-tabs>
 
     <!-- Create Prescription -->
+    <div class="card">
 
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
+      <h2 class="section-title">
         {{ isEditMode ? 'Update Prescription' : 'Create Prescription' }}
       </h2>
 
@@ -16,82 +15,60 @@
         [formGroup]="prescriptionForm"
         (ngSubmit)="savePrescription()">
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="form-grid">
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Consultation ID
-            </label>
+          <div class="form-group">
+            <label>Consultation ID</label>
 
             <input
               type="number"
-              formControlName="consultationId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="consultationId">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Patient ID
-            </label>
+          <div class="form-group">
+            <label>Patient ID</label>
 
             <input
               type="number"
-              formControlName="patientId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="patientId">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Medication Name
-            </label>
+          <div class="form-group">
+            <label>Medication Name</label>
 
             <input
               type="text"
-              formControlName="medicationName"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="medicationName">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Dosage
-            </label>
+          <div class="form-group">
+            <label>Dosage</label>
 
             <input
               type="text"
-              formControlName="dosage"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="dosage">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Frequency
-            </label>
+          <div class="form-group">
+            <label>Frequency</label>
 
             <input
               type="text"
-              formControlName="frequency"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="frequency">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Duration Days
-            </label>
+          <div class="form-group">
+            <label>Duration Days</label>
 
             <input
               type="number"
-              formControlName="duration"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="duration">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Status
-            </label>
+          <div class="form-group">
+            <label>Status</label>
 
-            <select
-              formControlName="status"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+            <select formControlName="status">
 
               <option value="Issued">
                 Issued
@@ -109,7 +86,7 @@
 
         <button
           type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+          class="primary-btn">
 
           {{ isEditMode ? 'Update Prescription' : 'Save Prescription' }}
 
@@ -120,27 +97,24 @@
     </div>
 
     <!-- Prescription Records -->
+    <div class="table-card">
 
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div class="table-header">
 
-      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+        <h2>Prescription Records</h2>
 
-        <h2 class="text-lg font-semibold">
-          Prescription Records
-        </h2>
-
-        <div class="flex gap-3">
+        <div class="table-actions">
 
           <input
             [(ngModel)]="searchId"
-            [ngModelOptions]="{standalone:true}"
+            [ngModelOptions]="{ standalone: true }"
             placeholder="Search Prescription ID"
-            class="bg-white text-gray-700 rounded-lg px-4 py-2 w-64">
+            class="search-input">
 
           <button
             type="button"
             (click)="searchPrescription()"
-            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
+            class="secondary-btn">
 
             Search
 
@@ -149,7 +123,7 @@
           <button
             type="button"
             (click)="refreshPrescriptions()"
-            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
+            class="secondary-btn">
 
             Refresh
 
@@ -159,95 +133,45 @@
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table>
 
           <thead>
 
-            <tr class="bg-gray-50">
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Consultation ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Patient ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Medication
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Dosage
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Frequency
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Duration
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Status
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Actions
-              </th>
-
+            <tr>
+              <th>ID</th>
+              <th>Consultation ID</th>
+              <th>Patient ID</th>
+              <th>Medication</th>
+              <th>Dosage</th>
+              <th>Frequency</th>
+              <th>Duration</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
 
           </thead>
 
           <tbody>
 
-            <tr
-              *ngFor="let prescription of prescriptions"
-              class="border-t border-gray-100 hover:bg-gray-50 transition">
+            <tr *ngFor="let prescription of prescriptions">
 
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.prescriptionId }}
-              </td>
+              <td>{{ prescription.prescriptionId }}</td>
+              <td>{{ prescription.consultationId }}</td>
+              <td>{{ prescription.patientId }}</td>
+              <td>{{ prescription.medicationName }}</td>
+              <td>{{ prescription.dosage }}</td>
+              <td>{{ prescription.frequency }}</td>
+              <td>{{ prescription.duration }}</td>
 
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.consultationId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.patientId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.medicationName }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.dosage }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.frequency }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ prescription.duration }}
-              </td>
-
-              <td class="px-4 py-4">
+              <td>
 
                 <span
-                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  class="status-badge"
                   [ngClass]="prescription.status === 'Completed'
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-blue-100 text-blue-700'">
+                  ? 'status-completed'
+                  : 'status-issued'">
 
                   {{ prescription.status }}
 
@@ -255,12 +179,12 @@
 
               </td>
 
-              <td class="px-4 py-4 flex gap-4">
+              <td class="action-cell">
 
                 <button
                   type="button"
                   (click)="editPrescription(prescription)"
-                  class="text-blue-900 text-sm hover:underline">
+                  class="edit-btn">
 
                   Edit
 
@@ -269,7 +193,7 @@
                 <button
                   type="button"
                   (click)="deletePrescription(prescription.prescriptionId!)"
-                  class="text-red-600 text-sm hover:underline">
+                  class="delete-btn">
 
                   Delete
 
@@ -283,7 +207,7 @@
 
               <td
                 colspan="9"
-                class="text-center py-10 text-sm text-gray-500">
+                class="no-records">
 
                 No prescriptions found
 
