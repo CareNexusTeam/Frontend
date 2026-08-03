@@ -1,28 +1,16 @@
-<div class="min-h-screen bg-gray-50 flex flex-col relative overflow-x-hidden">
+<div class="min-h-screen bg-gray-50">
 
-  <!-- Fixed Header -->
+
+  <app-sidebar></app-sidebar>
   <app-header></app-header>
 
-  <!-- Middle Layout Area: Sidebar + Main Body -->
-  <div class="flex-1 flex pt-16">
 
-    <!-- Sidebar with template reference variable #sidebar -->
-    <app-sidebar #sidebar></app-sidebar>
+  <main class="ml-64 pt-20 px-6 pb-6 min-h-screen">
 
-    <!-- Main Content Area with dynamic margin based on sidebar state -->
-    <main 
-      class="flex-1 px-6 pt-4 pb-8 min-w-0 transition-all duration-300"
-      [class.ml-64]="!sidebar.collapsed" 
-      [class.ml-16]="sidebar.collapsed">
-      
-      <!-- Supports routing or direct slotted content -->
-      <router-outlet></router-outlet>
-      <ng-content></ng-content>
-    </main>
+    <ng-content></ng-content>
 
-  </div>
+  </main>
 
-  <!-- Full-Width Base Footer -->
-  <app-footer class="w-full shrink-0 z-50"></app-footer>
+  <app-footer></app-footer>
 
 </div>

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RoleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
+  // 1. Default & Auth Routes
   {
     path: '',
     redirectTo: 'login',
@@ -13,7 +14,6 @@ export const routes: Routes = [
       import('./features/userAndIdentity/pages/login/login-page.component')
         .then(m => m.LoginPageComponent)
   },
-
   {
     path: 'signup',
     loadComponent: () =>
@@ -21,7 +21,7 @@ export const routes: Routes = [
         .then(m => m.SignupPageComponent)
   },
 
-  
+  // 2. Main Dashboard & Patient Management
   {
     path: 'dashboard',
     loadComponent: () =>
@@ -35,7 +35,7 @@ export const routes: Routes = [
         .then(m => m.PatientManagementPageComponent)
   },
 
-
+  // 3. EMR & Medical History Sub-routes
   {
     path: 'medical-history',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR'])],
@@ -50,7 +50,6 @@ export const routes: Routes = [
       import('./features/emr/consultation/consultation.page')
         .then(m => m.ConsultationPageComponent)
   },
-
   {
     path: 'prescription',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'PATIENT'])],
@@ -66,7 +65,7 @@ export const routes: Routes = [
         .then(m => m.ReferralPageComponent)
   },
 
-
+  // 4. Scheduling & Appointments
   {
     path: 'doctor-schedules',
     loadComponent: () =>
@@ -75,12 +74,13 @@ export const routes: Routes = [
   },
   {
     path: 'appointments',
-    canActivate: [RoleGuard.checkRole(['ADMIN', 'PATIENT', 'DOCTOR'])],
+    canActivate: [RoleGuard.checkRole(['ADMIN', 'PATIENT'])],
     loadComponent: () =>
       import('./features/appointments/pages/appointments.page')
         .then(m => m.AppointmentsPageComponent)
   },
 
+  // 5. Pharmacy & Billing
   {
     path: 'drug-inventory',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'PHARMACIST'])],
@@ -102,7 +102,7 @@ export const routes: Routes = [
       import('./features/invoice/pages/invoice.page')
         .then(m => m.InvoicesPageComponent)
   },
-
+  // 🔽 NEWLY ADDED INSURANCE ROUTE 🔽
   {
     path: 'insurance',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'BILLING', 'PATIENT'])],
@@ -110,7 +110,7 @@ export const routes: Routes = [
       import('./features/insurance/pages/insurance.page')
         .then(m => m.InsuranceClaimsPageComponent)
   },
-
+  // 🔽 ANALYTICS & REPORTING ROUTE 🔽
   {
     path: 'analytics',
     canActivate: [RoleGuard.checkRole(['ADMIN', 'DOCTOR', 'BILLING', 'COMPLIANCE'])],
@@ -119,6 +119,7 @@ export const routes: Routes = [
         .then(m => m.AnalyticsPageComponent)
   },
 
+  // 6. Wildcard / Fallback Route
 
   {
     path: '**',

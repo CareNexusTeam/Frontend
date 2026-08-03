@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from '../sidebar/sidebar'; // Adjust path if needed
-import { HeaderComponent } from '../header/header';   // Adjust path if needed
-import { FooterComponent } from '../footer/footer';   // Adjust path if needed
+
+import { HeaderComponent }
+from '../header/header';
+
+import { SidebarComponent }
+from '../sidebar/sidebar';
+
+import { FooterComponent }
+from '../footer/footer';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
   imports: [
-    RouterOutlet,
-    SidebarComponent,
     HeaderComponent,
+    SidebarComponent,
     FooterComponent
   ],
-  templateUrl: './main-layout.html',
-  styleUrls: ['./main-layout.css']
+  templateUrl: './main-layout.html'
 })
 export class MainLayoutComponent {}

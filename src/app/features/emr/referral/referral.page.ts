@@ -4,8 +4,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
-  FormsModule
+  Validators
 } from '@angular/forms';
 
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -20,12 +19,10 @@ import { Referral } from '../referral/models/referral.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     MainLayoutComponent,
     EmrTabsComponent
   ],
-  templateUrl: './referral.page.html',
-  styleUrl: './referral.css'
+  templateUrl: './referral.page.html'
 })
 export class ReferralPageComponent implements OnInit {
 
@@ -38,8 +35,6 @@ export class ReferralPageComponent implements OnInit {
   selectedReferralId: number | null = null;
 
   loading = false;
-
-  searchId = '';
 
   constructor(
     private fb: FormBuilder,
@@ -106,13 +101,9 @@ export class ReferralPageComponent implements OnInit {
       return;
     }
 
-    const referral: Referral =
-      this.referralForm.value;
+    const referral: Referral = this.referralForm.value;
 
-    if (
-      this.isEditMode &&
-      this.selectedReferralId
-    ) {
+    if (this.isEditMode && this.selectedReferralId) {
 
       this.referralService
         .updateReferral(
@@ -123,18 +114,13 @@ export class ReferralPageComponent implements OnInit {
 
           next: () => {
 
-            alert(
-              'Referral Updated Successfully'
-            );
-
             this.resetForm();
 
             this.loadReferrals();
 
           },
 
-          error: (err: any) =>
-            console.error(err)
+          error: (err: any) => console.error(err)
 
         });
 
@@ -146,18 +132,13 @@ export class ReferralPageComponent implements OnInit {
 
           next: () => {
 
-            alert(
-              'Referral Created Successfully'
-            );
-
             this.resetForm();
 
             this.loadReferrals();
 
           },
 
-          error: (err: any) =>
-            console.error(err)
+          error: (err: any) => console.error(err)
 
         });
 
@@ -205,67 +186,14 @@ export class ReferralPageComponent implements OnInit {
 
         next: () => {
 
-          alert(
-            'Referral Deleted Successfully'
-          );
-
           this.loadReferrals();
 
         },
 
         error: (err: any) =>
-
           console.error(err)
 
       });
-
-  }
-
-  searchReferral(): void {
-
-    if (
-      this.searchId.trim() === ''
-    ) {
-
-      this.loadReferrals();
-
-      return;
-
-    }
-
-    this.referralService
-      .getReferralById(
-        Number(this.searchId)
-      )
-      .subscribe({
-
-        next: (response: Referral) => {
-
-          this.referrals = [
-            response
-          ];
-
-        },
-
-        error: (err: any) => {
-
-          console.error(err);
-
-          alert(
-            'Referral Not Found'
-          );
-
-        }
-
-      });
-
-  }
-
-  refreshReferrals(): void {
-
-    this.searchId = '';
-
-    this.loadReferrals();
 
   }
 

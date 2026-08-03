@@ -4,8 +4,7 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
-  FormsModule
+  Validators
 } from '@angular/forms';
 
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -18,11 +17,9 @@ import { DoctorSchedule } from '../models/doctor-schedule.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
-    MainLayoutComponent,
+    MainLayoutComponent
   ],
   templateUrl: './doctor-schedule.page.html',
-  styleUrl: './doctor-schedule.page.css'
 })
 export class DoctorSchedulePageComponent
 implements OnInit {
@@ -30,12 +27,6 @@ implements OnInit {
   schedules: DoctorSchedule[] = [];
 
   loading = false;
-
-  searchId = '';
-
-  isEditMode = false;
-
-  selectedScheduleId: number | null = null;
 
   scheduleForm!: FormGroup;
 
@@ -48,28 +39,22 @@ implements OnInit {
   ngOnInit(): void {
 
     this.scheduleForm = this.fb.group({
-
       doctorId: ['', Validators.required],
-
       date: ['', Validators.required],
-
       startTime: ['', Validators.required],
-
       endTime: ['', Validators.required],
-
       slotDurationMinutes: [
         '',
         Validators.required
       ],
-
       availableSlots: [
         '',
         Validators.required
       ]
-
     });
 
     this.loadSchedules();
+
   }
 
   loadSchedules(): void {
@@ -106,13 +91,6 @@ implements OnInit {
       return;
     }
 
-    if (this.isEditMode) {
-
-      this.updateSchedule();
-
-      return;
-    }
-
     const payload =
       this.scheduleForm.value as DoctorSchedule;
 
@@ -122,103 +100,15 @@ implements OnInit {
 
         next: () => {
 
-          alert(
-            'Schedule Created Successfully'
-          );
-
           this.loadSchedules();
 
-          this.clearForm();
+          this.scheduleForm.reset();
 
         },
 
         error: (error: any) => {
 
           console.error(error);
-
-        }
-
-      });
-
-  }
-
-  editSchedule(
-    schedule: DoctorSchedule
-  ): void {
-
-    if (!schedule.scheduleId) {
-      return;
-    }
-
-    this.isEditMode = true;
-
-    this.selectedScheduleId =
-      schedule.scheduleId;
-
-    this.scheduleForm.patchValue({
-
-      doctorId:
-        schedule.doctorId,
-
-      date:
-        schedule.date,
-
-      startTime:
-        schedule.startTime,
-
-      endTime:
-        schedule.endTime,
-
-      slotDurationMinutes:
-        schedule.slotDurationMinutes,
-
-      availableSlots:
-        schedule.availableSlots
-
-    });
-
-  }
-
-  updateSchedule(): void {
-
-    if (
-      this.selectedScheduleId === null
-    ) {
-      return;
-    }
-
-    const payload =
-      this.scheduleForm.value as DoctorSchedule;
-
-    this.doctorScheduleService
-      .updateSchedule(
-        this.selectedScheduleId,
-        payload
-      )
-      .subscribe({
-
-        next: () => {
-
-          alert(
-            'Schedule Updated Successfully'
-          );
-
-          this.isEditMode = false;
-
-          this.selectedScheduleId = null;
-
-          this.clearForm();
-
-          this.loadSchedules();
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
 
         }
 
@@ -228,23 +118,11 @@ implements OnInit {
 
   deleteSchedule(id: number): void {
 
-    if (
-      !confirm(
-        'Are you sure you want to delete this schedule?'
-      )
-    ) {
-      return;
-    }
-
     this.doctorScheduleService
       .deleteSchedule(id)
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Schedule Deleted Successfully'
-          );
 
           this.loadSchedules();
 
@@ -260,72 +138,9 @@ implements OnInit {
 
   }
 
-  searchSchedule(): void {
-
-    if (
-      this.searchId.trim() === ''
-    ) {
-
-      this.loadSchedules();
-
-      return;
-    }
-
-    this.doctorScheduleService
-      .getScheduleById(
-        Number(this.searchId)
-      )
-      .subscribe({
-
-        next: (
-          response: DoctorSchedule
-        ) => {
-
-          this.schedules = [
-            response
-          ];
-
-        },
-
-        error: (error: any) => {
-
-          console.error(error);
-
-          alert(
-            'Schedule Not Found'
-          );
-
-        }
-
-      });
-
-  }
-
   refreshSchedules(): void {
 
-    this.searchId = '';
-
     this.loadSchedules();
-
-  }
-
-  clearForm(): void {
-
-    this.scheduleForm.reset({
-
-      doctorId: '',
-
-      date: '',
-
-      startTime: '',
-
-      endTime: '',
-
-      slotDurationMinutes: '',
-
-      availableSlots: ''
-
-    });
 
   }
 

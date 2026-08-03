@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
-  FormsModule
+  ReactiveFormsModule
 } from '@angular/forms';
 
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -17,23 +16,16 @@ import { Appointment } from '../models/appointments.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
-    MainLayoutComponent,
+    MainLayoutComponent
   ],
-  templateUrl: './appointments.page.html',
-  styleUrl: './appointments.page.css'
+  templateUrl: './appointments.page.html'
 })
-export class AppointmentsPageComponent implements OnInit {
+export class AppointmentsPageComponent
+implements OnInit {
 
   appointments: Appointment[] = [];
 
   loading = true;
-
-  searchId = '';
-
-  isEditMode = false;
-
-  selectedAppointmentId: number | null = null;
 
   appointmentForm: FormGroup;
 
@@ -54,7 +46,11 @@ export class AppointmentsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAppointments();
+
+    setTimeout(() => {
+      this.loadAppointments();
+    });
+
   }
 
   loadAppointments(): void {
@@ -90,14 +86,6 @@ export class AppointmentsPageComponent implements OnInit {
 
   bookAppointment(): void {
 
-    if (this.isEditMode) {
-
-      this.updateAppointment();
-
-      return;
-
-    }
-
     const payload =
       this.appointmentForm.value as Appointment;
 
@@ -107,11 +95,12 @@ export class AppointmentsPageComponent implements OnInit {
 
         next: () => {
 
-          alert('Appointment Created Successfully');
-
-          this.clearForm();
-
           this.loadAppointments();
+
+          this.appointmentForm.reset({
+            type: 'Consultation',
+            status: 'Scheduled'
+          });
 
         },
 
@@ -128,195 +117,9 @@ export class AppointmentsPageComponent implements OnInit {
 
   }
 
-  editAppointment(
-    appointment: Appointment
-  ): void {
-
-    if (!appointment.appointmentId) {
-      return;
-    }
-
-    this.isEditMode = true;
-
-    this.selectedAppointmentId =
-      appointment.appointmentId;
-
-    this.appointmentForm.patchValue({
-
-      patientId:
-        appointment.patientId,
-
-      doctorId:
-        appointment.doctorId,
-
-      departmentId:
-        appointment.departmentId,
-
-      scheduledDateTime:
-        appointment.scheduledDateTime,
-
-      type:
-        appointment.type,
-
-      status:
-        appointment.status
-
-    });
-
-  }
-
-  updateAppointment(): void {
-
-    if (this.selectedAppointmentId === null) {
-      return;
-    }
-
-    const payload =
-      this.appointmentForm.value as Appointment;
-
-    this.appointmentService
-      .updateAppointment(
-        this.selectedAppointmentId,
-        payload
-      )
-      .subscribe({
-
-        next: () => {
-
-          alert(
-            'Appointment Updated Successfully'
-          );
-
-          this.isEditMode = false;
-
-          this.selectedAppointmentId = null;
-
-          this.clearForm();
-
-          this.loadAppointments();
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
-
-        }
-
-      });
-
-  }
-
-  deleteAppointment(
-    id: number
-  ): void {
-
-    if (
-      !confirm(
-        'Are you sure you want to delete this appointment?'
-      )
-    ) {
-      return;
-    }
-
-    this.appointmentService
-      .deleteAppointment(id)
-      .subscribe({
-
-        next: () => {
-
-          alert(
-            'Appointment Deleted Successfully'
-          );
-
-          this.loadAppointments();
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            'Delete Error',
-            error
-          );
-
-        }
-
-      });
-
-  }
-
-  searchAppointment(): void {
-
-    if (
-      this.searchId.trim() === ''
-    ) {
-
-      this.loadAppointments();
-
-      return;
-
-    }
-
-    this.appointmentService
-      .getAppointmentById(
-        Number(this.searchId)
-      )
-      .subscribe({
-
-        next: (response: Appointment) => {
-
-          this.appointments = [
-            response
-          ];
-
-        },
-
-        error: (error: any) => {
-
-          console.error(
-            'Search Error',
-            error
-          );
-
-          alert(
-            'Appointment Not Found'
-          );
-
-        }
-
-      });
-
-  }
-
   refreshAppointments(): void {
 
-    this.searchId = '';
-
     this.loadAppointments();
-
-  }
-
-  clearForm(): void {
-
-    this.appointmentForm.reset({
-
-      patientId: '',
-
-      doctorId: '',
-
-      departmentId: '',
-
-      scheduledDateTime: '',
-
-      type: 'Consultation',
-
-      status: 'Scheduled'
-
-    });
 
   }
 

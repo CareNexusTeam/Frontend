@@ -16,8 +16,7 @@ interface MenuItem {
     RouterLink,
     RouterLinkActive
   ],
-  templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.css']
+  templateUrl: './sidebar.html'
 })
 export class SidebarComponent implements OnInit {
 
@@ -95,12 +94,9 @@ export class SidebarComponent implements OnInit {
       },
     ];
 
+
     this.menus = allMenus.filter(menu =>
       menu.roles.some(r => r.toLowerCase() === userRole)
     );
-  }
-
-  toggleSidebar(): void {
-    this.collapsed = !this.collapsed;
   }
 }
