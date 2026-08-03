@@ -95,8 +95,6 @@
 
       <div class="flex flex-wrap gap-3 items-end">
 
-        
-
         <div>
 
           <label class="block text-sm text-gray-600 mb-2">
@@ -287,5 +285,48 @@
 
   </div>
 
+  <!-- FLOATING TOAST NOTIFICATION (Shifted clear of header & auto-dismissing) -->
+  <div 
+    *ngIf="showToast" 
+    class="fixed top-20 right-6 z-[9999] flex items-center gap-3 w-80 max-w-full p-4 rounded-xl shadow-xl border bg-white transition-all duration-300"
+    [ngClass]="{
+      'border-emerald-200': toastType === 'success',
+      'border-rose-200': toastType === 'error',
+      'border-blue-200': toastType === 'info'
+    }">
+    
+    <!-- Status Icon -->
+    <div 
+      class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full text-sm font-bold"
+      [ngClass]="{
+        'bg-emerald-100 text-emerald-700': toastType === 'success',
+        'bg-rose-100 text-rose-700': toastType === 'error',
+        'bg-blue-100 text-blue-900': toastType === 'info'
+      }">
+      <span *ngIf="toastType === 'success'">✓</span>
+      <span *ngIf="toastType === 'error'">✕</span>
+      <span *ngIf="toastType === 'info'">ℹ</span>
+    </div>
+
+    <!-- Text Body -->
+    <div class="flex-1 min-w-0">
+      <h4 class="text-sm font-semibold text-slate-800 truncate">
+        {{ toastTitle }}
+      </h4>
+      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
+        {{ toastMessage }}
+      </p>
+    </div>
+
+    <!-- Close Button -->
+    <button 
+      type="button" 
+      (click)="closeToast()" 
+      class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
 </app-main-layout>
- 
