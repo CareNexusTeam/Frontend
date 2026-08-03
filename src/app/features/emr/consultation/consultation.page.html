@@ -1,14 +1,13 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <app-emr-tabs></app-emr-tabs>
 
     <!-- Create Consultation -->
+    <div class="card">
 
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
+      <h2 class="section-title">
         {{ isEditMode ? 'Update Consultation' : 'Create Consultation' }}
       </h2>
 
@@ -16,97 +15,79 @@
         [formGroup]="consultationForm"
         (ngSubmit)="saveConsultation()">
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="form-grid">
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Appointment ID
-            </label>
+          <div class="form-group">
+            <label>Appointment ID</label>
 
             <input
               type="number"
-              formControlName="appointmentId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="appointmentId">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Patient ID
-            </label>
+          <div class="form-group">
+            <label>Patient ID</label>
 
             <input
               type="number"
-              formControlName="patientId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="patientId">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Doctor ID
-            </label>
+          <div class="form-group">
+            <label>Doctor ID</label>
 
             <input
               type="number"
-              formControlName="doctorId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="doctorId">
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Consultation Date
-            </label>
+          <div class="form-group">
+            <label>Consultation Date</label>
 
             <input
               type="datetime-local"
-              formControlName="consultationDate"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+              formControlName="consultationDate">
           </div>
 
         </div>
 
-        <div class="mt-5">
-          <label class="block text-sm text-gray-600 mb-2">
-            Symptoms
-          </label>
+        <div class="form-group textarea-group">
+
+          <label>Symptoms</label>
 
           <input
             type="text"
-            formControlName="symptoms"
-            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+            formControlName="symptoms">
+
         </div>
 
-        <div class="mt-5">
-          <label class="block text-sm text-gray-600 mb-2">
-            Diagnosis
-          </label>
+        <div class="form-group textarea-group">
+
+          <label>Diagnosis</label>
 
           <textarea
             rows="3"
-            formControlName="diagnosis"
-            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+            formControlName="diagnosis">
           </textarea>
+
         </div>
 
-        <div class="mt-5">
-          <label class="block text-sm text-gray-600 mb-2">
-            Treatment Plan
-          </label>
+        <div class="form-group textarea-group">
+
+          <label>Treatment Plan</label>
 
           <textarea
             rows="3"
-            formControlName="treatmentPlan"
-            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+            formControlName="treatmentPlan">
           </textarea>
+
         </div>
 
-        <div class="mt-5">
-          <label class="block text-sm text-gray-600 mb-2">
-            Status
-          </label>
+        <div class="form-group textarea-group">
 
-          <select
-            formControlName="status"
-            class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900">
+          <label>Status</label>
+
+          <select formControlName="status">
 
             <option value="InProgress">
               In Progress
@@ -117,11 +98,12 @@
             </option>
 
           </select>
+
         </div>
 
         <button
           type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+          class="primary-btn">
 
           {{ isEditMode ? 'Update Consultation' : 'Save Consultation' }}
 
@@ -132,110 +114,71 @@
     </div>
 
     <!-- Consultation Records -->
+    <div class="table-card">
 
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div class="table-header">
 
-      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+        <h2>Consultation Records</h2>
 
-        <h2 class="text-lg font-semibold">
-          Consultation Records
-        </h2>
-
-        <div class="flex gap-3">
+        <div class="table-actions">
 
           <input
             [(ngModel)]="searchId"
-            [ngModelOptions]="{standalone:true}"
+            [ngModelOptions]="{ standalone: true }"
             placeholder="Search Consultation ID"
-            class="bg-white text-gray-700 rounded-lg px-4 py-2 w-64">
+            class="search-input">
 
           <button
             type="button"
             (click)="searchConsultation()"
-            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
-
+            class="secondary-btn">
             Search
-
           </button>
 
           <button
             type="button"
             (click)="refreshConsultations()"
-            class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50">
-
+            class="secondary-btn">
             Refresh
-
           </button>
 
         </div>
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table>
 
           <thead>
 
-            <tr class="bg-gray-50">
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Appointment ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Patient ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Doctor ID
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Status
-              </th>
-
-              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                Actions
-              </th>
-
+            <tr>
+              <th>ID</th>
+              <th>Appointment ID</th>
+              <th>Patient ID</th>
+              <th>Doctor ID</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
 
           </thead>
 
           <tbody>
 
-            <tr
-              *ngFor="let consultation of consultations"
-              class="border-t border-gray-100 hover:bg-gray-50 transition">
+            <tr *ngFor="let consultation of consultations">
 
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ consultation.consultationId }}
-              </td>
+              <td>{{ consultation.consultationId }}</td>
+              <td>{{ consultation.appointmentId }}</td>
+              <td>{{ consultation.patientId }}</td>
+              <td>{{ consultation.doctorId }}</td>
 
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ consultation.appointmentId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ consultation.patientId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ consultation.doctorId }}
-              </td>
-
-              <td class="px-4 py-4">
+              <td>
 
                 <span
-                  class="px-3 py-1 rounded-full text-xs font-medium"
+                  class="status-badge"
                   [ngClass]="consultation.status === 'Completed'
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-yellow-100 text-yellow-700'">
+                  ? 'status-completed'
+                  : 'status-progress'">
 
                   {{ consultation.status }}
 
@@ -243,12 +186,12 @@
 
               </td>
 
-              <td class="px-4 py-4 flex gap-4">
+              <td class="action-cell">
 
                 <button
                   type="button"
                   (click)="editConsultation(consultation)"
-                  class="text-blue-900 text-sm hover:underline">
+                  class="edit-btn">
 
                   Edit
 
@@ -257,11 +200,23 @@
                 <button
                   type="button"
                   (click)="deleteConsultation(consultation.consultationId!)"
-                  class="text-red-600 text-sm hover:underline">
+                  class="delete-btn">
 
                   Delete
 
                 </button>
+
+              </td>
+
+            </tr>
+
+            <tr *ngIf="consultations.length === 0">
+
+              <td
+                colspan="6"
+                class="no-records">
+
+                No consultations found
 
               </td>
 

@@ -23,7 +23,8 @@ import { Prescription } from '../../emr/prescription/models/prescription.model';
     MainLayoutComponent,
     EmrTabsComponent
   ],
-  templateUrl: './prescription.page.html'
+  templateUrl: './prescription.page.html',
+  styleUrl: './prescription.page.css'
 })
 export class PrescriptionPageComponent implements OnInit {
 

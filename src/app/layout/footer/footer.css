@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.app-footer {
+  width: 100%;
+  background-color: #0b0b43; /* Tailwind bg-teal-600 */
+  border-top: 1px solid #191965; /* Optional subtle top border */
+  padding-top: 1rem;            /* py-4 */
+  padding-bottom: 1rem;         /* py-4 */
+  text-align: center;           /* text-center */
+  color: #ffffff;               /* text-white */
+  font-size: 0.875rem;          /* text-sm */
+}

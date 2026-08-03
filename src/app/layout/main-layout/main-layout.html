@@ -1,16 +1,23 @@
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 flex flex-col relative">
 
-
-  <app-sidebar></app-sidebar>
   <app-header></app-header>
 
+  <div class="flex-1 flex pt-16 relative">
 
-  <main class="ml-64 pt-20 px-6 pb-6 min-h-screen">
+    <!-- Add relative, z-30, and overflow-visible directly to <app-sidebar> -->
+    <app-sidebar #sidebar class="relative z-30 shrink-0 overflow-visible"></app-sidebar>
 
-    <ng-content></ng-content>
+    <!-- Content area stays z-10 underneath -->
+    <main 
+      class="flex-1 px-6 pt-4 pb-8 min-w-0 transition-all duration-300 relative z-10"
+      [class.ml-0]="!sidebar.collapsed" 
+      [class.ml-0]="sidebar.collapsed">
+      <router-outlet></router-outlet>
+      <ng-content></ng-content>
+    </main>
 
-  </main>
+  </div>
 
-  <app-footer></app-footer>
+  <app-footer class="w-full shrink-0 z-50"></app-footer>
 
 </div>

@@ -1,17 +1,47 @@
-<aside class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white text-gray-800 border-r z-40 overflow-y-auto">
-  <nav class="p-4 flex flex-col gap-1.5">
+<aside class="relative h-full bg-white border-r border-gray-200 transition-all duration-300"
+       [class.w-64]="!collapsed"
+       [class.w-16]="collapsed">
+
+  <!-- Floating Toggle Badge (Centered directly on the border) -->
+  <button 
+    (click)="toggleSidebar()" 
+    type="button"
+    class="toggle-badge absolute right-0 top-6 translate-x-1/2 z-50 flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none transition-transform active:scale-95"
+    [title]="collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'">
+    
+    <svg 
+      class="h-4 w-4 transition-transform duration-300" 
+      [class.rotate-180]="collapsed" 
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor" 
+      stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <!-- Navigation Links -->
+  <nav class="p-3 space-y-1">
     @for(menu of menus; track menu.route) {
-    <a [routerLink]="menu.route" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-      class="px-4 py-2.5 rounded-lg hover:bg-gray-100 flex items-center gap-3 transition-colors text-sm text-gray-700">
+      <a [routerLink]="menu.route" 
+         routerLinkActive="bg-indigo-50 text-indigo-600 font-semibold"
+         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+         [title]="collapsed ? menu.name : ''">
 
-      <!-- Clean Tailwind Inline SVG Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0 stroke-current" fill="none"
-        viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="menu.iconSvg" />
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="w-5 h-5 shrink-0" 
+             fill="none"
+             viewBox="0 0 24 24" 
+             stroke="currentColor" 
+             stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="menu.iconSvg" />
+        </svg>
 
-      <span>{{ menu.name }}</span>
-    </a>
+        @if (!collapsed) {
+          <span class="text-sm truncate">{{ menu.name }}</span>
+        }
+      </a>
     }
   </nav>
+
 </aside>

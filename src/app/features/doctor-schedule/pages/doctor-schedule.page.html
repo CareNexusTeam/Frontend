@@ -1,256 +1,169 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+    <div class="header-card">
 
-      <div class="flex items-center gap-3">
+      <div class="header-content">
 
         <svg xmlns="http://www.w3.org/2000/svg"
              height="24"
              width="24"
              viewBox="0 -960 960 960"
              fill="white">
-          <path d="M540-80q-108 0-184-76t-76-184v-23q-86-14-143-80.5T80-600v-240h120v-40h80v160h-80v-40h-40v160q0 66 47 113t113 47q66 0 113-47t47-113v-160h-40v40h-80v-160h80v40h120v240q0 90-57 156.5T360-363v23q0 75 52.5 127.5T540-160q75 0 127.5-52.5T720-340v-67q-35-12-57.5-43T640-520q0-50 35-85t85-35q50 0 85 35t35 85q0 39-22.5 70T800-407v67q0 108-76 184T540-80Z"/>
+          <path d="M200-80q-33 0-56.5-23.5T120-160v-640q0-33 23.5-56.5T200-880h400l240 240v480q0 33-23.5 56.5T760-80H200Zm360-520v-200H200v640h560v-440H560ZM320-240h320v-80H320v80Zm0-160h320v-80H320v80Zm0-160h200v-80H320v80Z"/>
         </svg>
 
         <div>
-          <h1 class="text-xl font-semibold">
-            Doctor Schedules
-          </h1>
-
-          <p class="text-sm text-blue-100 mt-1">
-            Doctors can add and manage available time slots
-          </p>
+          <h1 class="page-title">Doctor Schedule</h1>
+          <p class="page-subtitle">Create and manage doctor schedules</p>
         </div>
 
       </div>
 
     </div>
 
-    <!-- Create Schedule Form -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
+    <!-- Create Schedule -->
+    <div class="card">
 
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
-        Create Schedule
+      <h2 class="section-title">
+        {{ isEditMode ? 'Update Schedule' : 'Create Schedule' }}
       </h2>
 
-      <form
-        [formGroup]="scheduleForm"
-        (ngSubmit)="addSchedule()">
+      <form [formGroup]="scheduleForm" (ngSubmit)="addSchedule()">
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="form-grid">
 
-          <!-- Doctor ID -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Doctor ID
-            </label>
-
-            <input
-              type="text"
-              formControlName="doctorId"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>Doctor ID</label>
+            <input type="text" formControlName="doctorId">
           </div>
 
-          <!-- Date -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Date
-            </label>
-
-            <input
-              type="date"
-              formControlName="date"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" formControlName="date">
           </div>
 
-          <!-- Start Time -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Start Time
-            </label>
-
-            <input
-              type="time"
-              formControlName="startTime"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>Start Time</label>
+            <input type="time" formControlName="startTime">
           </div>
 
-          <!-- End Time -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              End Time
-            </label>
-
-            <input
-              type="time"
-              formControlName="endTime"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>End Time</label>
+            <input type="time" formControlName="endTime">
           </div>
 
-          <!-- Slot Duration -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Slot Duration (Min)
-            </label>
-
-            <input
-              type="number"
-              formControlName="slotDurationMinutes"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>Slot Duration (Min)</label>
+            <input type="number" formControlName="slotDurationMinutes">
           </div>
 
-          <!-- Available Slots -->
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Available Slots
-            </label>
-
-            <input
-              type="number"
-              formControlName="availableSlots"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="form-group">
+            <label>Available Slots</label>
+            <input type="number" formControlName="availableSlots">
           </div>
 
         </div>
 
-        <button
-          type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
-          Add Schedule
-
+        <button type="submit" class="primary-btn">
+          {{ isEditMode ? 'Update Schedule' : 'Add Schedule' }}
         </button>
 
       </form>
 
     </div>
 
-    <!-- Schedule List -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <!-- Schedule Records -->
+    <div class="table-card">
 
-      <div class="bg-blue-900 px-6 py-4 text-white flex justify-between items-center">
+      <div class="table-header">
 
-        <h2 class="text-lg font-semibold">
-          Schedule Records
-        </h2>
+        <h2>Schedule Records</h2>
 
-        <button
-          (click)="refreshSchedules()"
-          class="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-blue-50 transition">
+        <div class="table-actions">
 
-          Refresh
+          <input
+            [(ngModel)]="searchId"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Search Schedule ID"
+            class="search-input">
 
-        </button>
+          <button
+            type="button"
+            (click)="searchSchedule()"
+            class="secondary-btn">
+            Search
+          </button>
+
+          <button
+            type="button"
+            (click)="refreshSchedules()"
+            class="secondary-btn">
+            Refresh
+          </button>
+
+        </div>
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table>
 
           <thead>
 
-          <tr class="bg-gray-50">
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              ID
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Doctor ID
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Date
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Start Time
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              End Time
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Slot Duration
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Available Slots
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Actions
-            </th>
-
-          </tr>
+            <tr>
+              <th>ID</th>
+              <th>Doctor ID</th>
+              <th>Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Slot Duration</th>
+              <th>Available Slots</th>
+              <th>Actions</th>
+            </tr>
 
           </thead>
 
           <tbody>
 
-          @if (schedules.length === 0) {
+            <tr *ngFor="let schedule of schedules">
 
-            <tr>
-              <td colspan="8"
-                  class="text-center py-10 text-sm text-gray-500">
-                No schedules found
-              </td>
-            </tr>
+              <td>{{ schedule.scheduleId }}</td>
+              <td>{{ schedule.doctorId }}</td>
+              <td>{{ schedule.date }}</td>
+              <td>{{ schedule.startTime }}</td>
+              <td>{{ schedule.endTime }}</td>
+              <td>{{ schedule.slotDurationMinutes }}</td>
+              <td>{{ schedule.availableSlots }}</td>
 
-          }
-
-          @for(schedule of schedules; track schedule.scheduleId) {
-
-            <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.scheduleId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.doctorId }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.date }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.startTime }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.endTime }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.slotDurationMinutes }}
-              </td>
-
-              <td class="px-4 py-4 text-sm text-gray-700">
-                {{ schedule.availableSlots }}
-              </td>
-
-              <td class="px-4 py-4">
+              <td class="action-cell">
 
                 <button
-                  class="text-blue-900 text-sm hover:underline"
-                  (click)="deleteSchedule(schedule.scheduleId!)">
+                  type="button"
+                  (click)="editSchedule(schedule)"
+                  class="edit-btn">
+                  Edit
+                </button>
 
+                <button
+                  type="button"
+                  (click)="deleteSchedule(schedule.scheduleId!)"
+                  class="delete-btn">
                   Delete
-
                 </button>
 
               </td>
 
             </tr>
 
-          }
+            <tr *ngIf="schedules.length === 0">
+              <td colspan="8" class="no-records">
+                No schedules found
+              </td>
+            </tr>
 
           </tbody>
 
