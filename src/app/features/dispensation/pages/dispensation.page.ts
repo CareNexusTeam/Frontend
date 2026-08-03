@@ -9,7 +9,8 @@ import { Dispensation } from '../model/dispensation.model';
   selector: 'app-dispensation-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './dispensation.page.html'
+  templateUrl: './dispensation.page.html',
+  styleUrl : './dispensation.page.css'
 })
 export class DispensationPageComponent implements OnInit {
 
@@ -78,5 +79,15 @@ export class DispensationPageComponent implements OnInit {
       next: (data) => { this.dispensations = data; this.loading = false; },
       error: (error) => { console.error('Error looking up prescription', error); this.loading = false; }
     });
+
+
+  }
+
+    deleteDispensation(dispensationID: number): void {
+    this.dispensationService.deleteDispensation( dispensationID).subscribe({
+      next: () => this.loadDispensations(),
+      error: (error) => console.error('Error deleting dispensation', error)
+    });
   }
 }
+

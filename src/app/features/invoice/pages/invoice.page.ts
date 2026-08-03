@@ -9,7 +9,9 @@ import { Invoice } from '../model/invoice.model';
   selector: 'app-invoices-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './invoice.page.html'
+  templateUrl: './invoice.page.html',
+  styleUrl:'./invoice.page.css'
+
 })
 export class InvoicesPageComponent implements OnInit {
 
@@ -88,4 +90,3 @@ export class InvoicesPageComponent implements OnInit {
 
 
 }
- 

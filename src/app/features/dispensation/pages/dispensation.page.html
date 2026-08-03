@@ -1,22 +1,25 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
 
-      <div class="flex items-center gap-3">
+    <div class="page-header">
 
-        <i class="fa-solid fa-capsules text-xl"></i>
+      <div class="page-header-content">
+
+        <i class="fa-solid fa-capsules"></i>
 
         <div>
-          <h1 class="text-xl font-semibold">
+
+          <h1 class="page-title">
             Drug Dispensation
           </h1>
 
-          <p class="text-sm text-blue-100 mt-1">
+          <p class="page-subtitle">
             Manage medication dispensing records
           </p>
+
         </div>
 
       </div>
@@ -24,48 +27,41 @@
     </div>
 
     <!-- Statistics -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Total Records
-        </p>
+    <div class="stats-grid">
 
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
-          {{ dispensations.length }}
-        </h2>
+      <div class="stat-card">
+        <p class="stat-label">Total Records</p>
+        <h2 class="stat-value">{{ dispensations.length }}</h2>
       </div>
 
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Dispensed
-        </p>
+      <div class="stat-card">
+        <p class="stat-label">Dispensed</p>
 
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
+        <h2 class="stat-value">
           {{ dispensations.filter(d => d.status === 'Dispensed').length }}
         </h2>
       </div>
 
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Pending
-        </p>
+      <div class="stat-card">
+        <p class="stat-label">Pending</p>
 
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
+        <h2 class="stat-value">
           {{ dispensations.filter(d => d.status === 'Pending').length }}
         </h2>
       </div>
-       
+
     </div>
 
     <!-- Dispense Form -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-      <div class="flex items-center gap-2 mb-5">
+    <div class="card">
 
-        <i class="fa-solid fa-prescription-bottle-medical text-blue-900"></i>
+      <div class="dispense-form-title">
 
-        <h2 class="text-lg font-semibold text-blue-900">
+        <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+        <h2 class="card-title">
           Dispense Medication
         </h2>
 
@@ -73,33 +69,29 @@
 
       <form [formGroup]="dispenseForm" (ngSubmit)="dispenseDrug()">
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div class="form-grid">
 
-          <div>
+          <div class="form-group">
 
-            <label class="block text-sm text-gray-600 mb-2">
-              Prescription ID
-            </label>
+            <label>Prescription ID</label>
 
             <input
               type="number"
               formControlName="prescriptionId"
               placeholder="Enter Prescription ID"
-              class="w-full rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-control">
 
           </div>
 
-          <div>
+          <div class="form-group">
 
-            <label class="block text-sm text-gray-600 mb-2">
-              Dispensed By (User ID)
-            </label>
+            <label>Dispensed By (User ID)</label>
 
             <input
               type="number"
               formControlName="userId"
               placeholder="Enter User ID"
-              class="w-full rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-control">
 
           </div>
 
@@ -107,21 +99,23 @@
 
         <button
           type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+          class="btn-primary">
 
-          <i class="fa-solid fa-check mr-2"></i>
+          <i class="fa-solid fa-check"></i>
           Dispense Drug
 
         </button>
 
         @if (resultMessage) {
-        <div class="mt-4 bg-blue-50 text-blue-900 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+
+        <div class="result-message">
 
           <i class="fa-solid fa-circle-check"></i>
 
           {{ resultMessage }}
 
         </div>
+
         }
 
       </form>
@@ -129,14 +123,15 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-      <div class="flex flex-wrap items-end gap-3">
+    <div class="card">
+
+      <div class="filter-container">
 
         <button
           type="button"
           (click)="showAll()"
-          class="px-5 py-2.5 rounded-lg bg-blue-50 text-blue-900 hover:bg-blue-100 transition">
+          class="btn-light-blue">
 
           All Records
 
@@ -145,7 +140,7 @@
         <button
           type="button"
           (click)="showPending()"
-          class="px-5 py-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+          class="btn-secondary">
 
           Pending
 
@@ -154,15 +149,15 @@
         <button
           type="button"
           (click)="showHistory()"
-          class="px-5 py-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+          class="btn-secondary">
 
           History
 
         </button>
 
-        <div>
+        <div class="form-group">
 
-          <label class="block text-sm text-gray-600 mb-2">
+          <label>
             Lookup Prescription ID
           </label>
 
@@ -170,14 +165,14 @@
             [(ngModel)]="lookupPrescriptionId"
             [ngModelOptions]="{standalone:true}"
             placeholder="Enter Prescription ID"
-            class="w-64 rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+            class="form-control lookup-input">
 
         </div>
 
         <button
           type="button"
           (click)="lookupByPrescription()"
-          class="px-5 py-2.5 rounded-lg bg-blue-900 text-white hover:bg-blue-800 transition">
+          class="btn-primary">
 
           Search
 
@@ -188,42 +183,49 @@
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-      <div class="bg-blue-900 px-6 py-4 text-white">
+    <!-- Table -->
 
-        <h2 class="text-lg font-semibold">
+    <div class="table-wrapper">
+
+      <div class="table-header">
+
+        <h2>
           Dispensation Records
         </h2>
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table class="custom-table">
 
           <thead>
 
-          <tr class="bg-gray-50">
+          <tr>
 
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+            <th>
               Drug Name
             </th>
 
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+            <th>
               Prescription ID
             </th>
 
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+            <th>
               Quantity
             </th>
 
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+            <th>
               Dispensed Date
             </th>
 
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+            <th>
               Status
+            </th>
+
+            <th>
+              Delete
             </th>
 
           </tr>
@@ -235,13 +237,15 @@
           @if (loading) {
 
           <tr>
-            <td colspan="5" class="text-center py-10 text-sm text-gray-500">
 
-              <i class="fa-solid fa-spinner fa-spin mr-2 text-blue-900"></i>
+            <td colspan="5" class="empty-message">
+
+              <i class="fa-solid fa-spinner fa-spin"></i>
 
               Loading dispensations...
 
             </td>
+
           </tr>
 
           }
@@ -249,9 +253,13 @@
           @else if (dispensations.length === 0) {
 
           <tr>
-            <td colspan="5" class="text-center py-10 text-sm text-gray-500">
+
+            <td colspan="5" class="empty-message">
+
               No dispensation records found.
+
             </td>
+
           </tr>
 
           }
@@ -260,32 +268,28 @@
 
           @for (d of dispensations; track d.dispensationID) {
 
-          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
-
-            <td class="px-6 py-4 text-sm text-gray-800">
+          <tr>
+            <td>
               {{ d.drugName }}
             </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
+            <td>
               #{{ d.prescriptionId }}
             </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
+            <td>
               {{ d.quantityDispensed }}
             </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
+            <td>
               {{ d.dispensationDate }}
             </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
+            <td>
               {{ d.status }}
             </td>
 
+            <td>
+              <button  type="button" (click)="deleteDispensation(d.dispensationID!)" class="action-link">Delete</button>
+            </td>
           </tr>
-
           }
-
           }
 
           </tbody>

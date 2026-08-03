@@ -9,11 +9,6 @@ export class DrugInventoryService {
   private http = inject(HttpClient);
   private readonly API_URL = 'http://localhost:8082/api/drugs';
 
-  // ==== JWT PLACEHOLDER (currently disabled) ====
-  // private authHeaders() {
-  //   return { headers: new HttpHeaders({ Authorization: `Bearer ${this.authService.getToken()}` }) };
-  // }
-  // TEMP: no-auth (remove this comment block + pass authHeaders() into each call when JWT is enabled)
 
   addDrug(drug: Drug): Observable<Drug> {
     return this.http.post<Drug>(this.API_URL, drug);

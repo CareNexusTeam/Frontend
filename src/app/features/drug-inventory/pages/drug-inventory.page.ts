@@ -9,7 +9,8 @@ import { Drug } from '../model/drug-inventory.model';
   selector: 'app-drug-inventory-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './drug-inventory.page.html'
+  templateUrl: './drug-inventory.page.html',
+  styleUrl: './drug-inventory.page.css'
 })
 export class DrugInventoryPageComponent implements OnInit {
 
@@ -42,15 +43,12 @@ export class DrugInventoryPageComponent implements OnInit {
   }
 
   loadDrugs(): void {
-  //this.loading = true;
-  //console.log('Before API:', this.loading);
+
 
   this.drugService.getAllDrugs().subscribe({
     next: (data) => {
-      //console.log('API returned');
       this.drugs = data;
       this.loading = false;
-     // console.log('After API:', this.loading);
     },
     error: (error) => {
       console.error(error);

@@ -9,7 +9,8 @@ import { InsuranceClaim } from '../model/insurance.model';
   selector: 'app-insurance-claims-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './insurance.page.html'
+  templateUrl: './insurance.page.html',
+  styleUrl:'./insurance.page.css'
 })
 export class InsuranceClaimsPageComponent implements OnInit {
 
@@ -33,7 +34,7 @@ export class InsuranceClaimsPageComponent implements OnInit {
   }
 
   loadClaims(): void {
-    
+
     this.claimService.getAllClaims().subscribe({
       next: (data) => { this.claims = data; this.loading = false; },
       error: (error) => { console.error('Error loading claims', error); this.loading = false; }
@@ -68,11 +69,11 @@ export class InsuranceClaimsPageComponent implements OnInit {
     });
   }
 
-  
+
 
   lookupByInvoice(): void {
     if (!this.lookupInvoiceId) return;
-  
+
     this.claimService.getByInvoice(Number(this.lookupInvoiceId)).subscribe({
       next: (data) => { this.claims = data; this.loading = false; },
       error: (error) => { console.error('Error looking up invoice claims', error); this.loading = false; }

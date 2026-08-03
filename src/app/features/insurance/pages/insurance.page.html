@@ -1,28 +1,34 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
+    <div class="page-header">
 
-      <div class="flex items-center gap-3">
+      <div class="header-content">
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-             height="24"
-             width="24"
-             viewBox="0 -960 960 960"
-             fill="white">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          width="24"
+          viewBox="0 -960 960 960"
+          fill="white"
+          class="header-icon">
+
           <path d="M400-280h160v-80H400v80Zm0-160h160v-80H400v80Zm-80 320q-33 0-56.5-23.5T240-200v-560q0-33 23.5-56.5T320-840h440q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H320Zm0-80h440v-560H320v560Zm-160 80q-33 0-56.5-23.5T80-200v-640h80v640h520v80H160Zm160-80v-560 560Z"/>
+
         </svg>
 
         <div>
-          <h1 class="text-xl font-semibold">
+
+          <h1 class="page-title">
             Insurance Claims
           </h1>
 
-          <p class="text-sm text-blue-100 mt-1">
+          <p class="page-subtitle">
             Manage insurance claims and reimbursement requests
           </p>
+
         </div>
 
       </div>
@@ -30,18 +36,20 @@
     </div>
 
     <!-- Create Claim -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
+    <div class="card">
+
+      <h2 class="card-title">
         Create Insurance Claim
       </h2>
 
       <form [formGroup]="claimForm" (ngSubmit)="createClaim()">
 
-        <div class="grid md:grid-cols-3 gap-5">
+        <div class="form-grid-3">
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
+          <div class="form-group">
+
+            <label>
               Invoice ID
             </label>
 
@@ -49,11 +57,13 @@
               type="number"
               formControlName="invoiceId"
               placeholder="Enter Invoice ID"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-control">
+
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
+          <div class="form-group">
+
+            <label>
               Insurance Provider ID
             </label>
 
@@ -61,11 +71,13 @@
               type="number"
               formControlName="insuranceProviderId"
               placeholder="Enter Provider ID"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-control">
+
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
+          <div class="form-group">
+
+            <label>
               Claim Amount
             </label>
 
@@ -73,14 +85,15 @@
               type="number"
               formControlName="claimAmount"
               placeholder="Enter Amount"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-control">
+
           </div>
 
         </div>
 
         <button
           type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
+          class="btn-primary">
 
           Create Claim
 
@@ -91,15 +104,14 @@
     </div>
 
     <!-- Filter Section -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-      <div class="flex flex-wrap gap-3 items-end">
+    <div class="card">
 
-        
+      <div class="filter-section">
 
-        <div>
+        <div class="form-group">
 
-          <label class="block text-sm text-gray-600 mb-2">
+          <label>
             Invoice ID
           </label>
 
@@ -107,14 +119,14 @@
             [(ngModel)]="lookupInvoiceId"
             [ngModelOptions]="{ standalone: true }"
             placeholder="Enter Invoice ID"
-            class="w-48 bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+            class="form-control invoice-input">
 
         </div>
 
         <button
           type="button"
           (click)="lookupByInvoice()"
-          class="bg-blue-50 text-blue-900 px-5 py-2.5 rounded-lg hover:bg-blue-100 transition">
+          class="btn-light">
 
           Lookup Claim
 
@@ -123,7 +135,7 @@
         <button
           type="button"
           (click)="showAll()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200 transition">
+          class="btn-secondary">
 
           Refresh
 
@@ -134,51 +146,32 @@
     </div>
 
     <!-- Claims Table -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
 
-      <div class="bg-blue-900 px-6 py-4 text-white">
+    <div class="table-wrapper">
 
-        <h2 class="text-lg font-semibold">
+      <div class="table-header">
+
+        <h2>
           Insurance Claim Records
         </h2>
 
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="table-responsive">
 
-        <table class="w-full">
+        <table class="custom-table">
 
           <thead>
 
-          <tr class="bg-gray-50">
+          <tr>
 
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Invoice ID
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Provider ID
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Claim Amount
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Submitted Date
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Status
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Change Status
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Actions
-            </th>
+            <th>Invoice ID</th>
+            <th>Provider ID</th>
+            <th>Claim Amount</th>
+            <th>Submitted Date</th>
+            <th>Status</th>
+            <th>Change Status</th>
+            <th>Actions</th>
 
           </tr>
 
@@ -189,9 +182,11 @@
           @if (loading) {
 
           <tr>
-            <td colspan="7" class="text-center py-10 text-sm text-gray-500">
+
+            <td colspan="7" class="empty-message">
               Loading claims...
             </td>
+
           </tr>
 
           }
@@ -199,9 +194,11 @@
           @else if (claims.length === 0) {
 
           <tr>
-            <td colspan="7" class="text-center py-10 text-sm text-gray-500">
+
+            <td colspan="7" class="empty-message">
               No claims found.
             </td>
+
           </tr>
 
           }
@@ -210,33 +207,23 @@
 
           @for (c of claims; track c.claimID) {
 
-          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+          <tr>
 
-            <td class="px-4 py-4 text-sm text-gray-800">
-              {{ c.invoiceId }}
-            </td>
+            <td>{{ c.invoiceId }}</td>
 
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ c.insuranceProviderId }}
-            </td>
+            <td>{{ c.insuranceProviderId }}</td>
 
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ c.claimAmount }}
-            </td>
+            <td>{{ c.claimAmount }}</td>
 
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ c.submissionDate }}
-            </td>
+            <td>{{ c.submissionDate }}</td>
 
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ c.status }}
-            </td>
+            <td>{{ c.status }}</td>
 
-            <td class="px-4 py-4">
+            <td>
 
               <select
                 (change)="updateStatus(c.claimID!, $any($event.target).value)"
-                class="bg-gray-50 rounded-lg px-3 py-2 text-sm">
+                class="status-select">
 
                 <option value="">
                   Change
@@ -258,12 +245,12 @@
 
             </td>
 
-            <td class="px-4 py-4">
+            <td>
 
               <button
                 type="button"
                 (click)="submitClaim(c.claimID!)"
-                class="text-blue-900 text-sm hover:underline">
+                class="action-link">
 
                 Submit
 
@@ -288,4 +275,3 @@
   </div>
 
 </app-main-layout>
- 
