@@ -9,12 +9,6 @@ export class DispensationService {
   private http = inject(HttpClient);
   private readonly API_URL = 'http://localhost:8082/api';
 
-  // ==== JWT PLACEHOLDER (currently disabled) ====
-  // private authHeaders() {
-  //   return { headers: new HttpHeaders({ Authorization: `Bearer ${this.authService.getToken()}` }) };
-  // }
-  // TEMP: no-auth (remove this comment block + pass authHeaders() into each call when JWT is enabled)
-
   dispenseDrug(prescriptionId: number, userId: number): Observable<string> {
     return this.http.post(
       `${this.API_URL}/dispensations?prescriptionId=${prescriptionId}&userId=${userId}`,
@@ -41,5 +35,9 @@ export class DispensationService {
 
   getByPrescription(prescriptionId: number): Observable<Dispensation[]> {
     return this.http.get<Dispensation[]>(`${this.API_URL}/prescriptions/${prescriptionId}/dispensation`);
+  }
+
+   deleteDispensation(dispensationID: number): Observable<string> {
+    return this.http.delete(`${this.API_URL}/dispensations/${dispensationID}`,{ responseType: 'text' });
   }
 }

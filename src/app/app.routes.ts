@@ -74,7 +74,7 @@ export const routes: Routes = [
   },
   {
     path: 'appointments',
-    canActivate: [RoleGuard.checkRole(['ADMIN', 'PATIENT'])],
+    canActivate: [RoleGuard.checkRole(['ADMIN', 'PATIENT','DOCTOR'])],
     loadComponent: () =>
       import('./features/appointments/pages/appointments.page')
         .then(m => m.AppointmentsPageComponent)

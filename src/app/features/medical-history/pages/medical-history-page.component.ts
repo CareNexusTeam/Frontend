@@ -10,7 +10,8 @@ import { PatientService } from '../../patients/services/patient.service';
   selector: 'app-medical-history-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MainLayoutComponent],
-  templateUrl: './medical-history-page.component.html' 
+  templateUrl: './medical-history-page.component.html',
+  styleUrls: ['./medical-history-page.component.css']
 })
 export class MedicalHistoryPageComponent implements OnInit {
   medicalHistoryForm!: FormGroup;
@@ -32,7 +33,7 @@ export class MedicalHistoryPageComponent implements OnInit {
     private fb: FormBuilder,
     private medicalHistoryService: MedicalHistoryService,
     private patientService: PatientService,
-    private cdr: ChangeDetectorRef // 2. Injected ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -121,11 +122,11 @@ export class MedicalHistoryPageComponent implements OnInit {
       this.patientService.getPatientById(patientId).subscribe({
         next: (patient) => {
           this.currentPatientName = patient?.name ? patient.name : `Patient #${patientId}`;
-          this.cdr.detectChanges(); // Force UI Update
+          // this.cdr.detectChanges(); 
         },
         error: () => {
           this.currentPatientName = `Patient #${patientId}`;
-          this.cdr.detectChanges(); // Force UI Update
+          // this.cdr.detectChanges(); 
         }
       });
     } else {

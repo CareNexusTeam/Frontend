@@ -9,16 +9,15 @@ import { Drug } from '../model/drug-inventory.model';
   selector: 'app-drug-inventory-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './drug-inventory.page.html'
+  templateUrl: './drug-inventory.page.html',
+  styleUrls: ['./drug-inventory.component.css']
 })
 export class DrugInventoryPageComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private drugService = inject(DrugInventoryService);
-
   drugs: Drug[] = [];
   loading = false;
-
   drugForm = this.fb.group({
     drugName: [''],
     category: [''],
@@ -34,7 +33,7 @@ export class DrugInventoryPageComponent implements OnInit {
   filterStatus = '';
   stockInputs: { [drugId: number]: number } = {};
 
-  // Toast Notification State
+
   showToast = false;
   toastType: 'success' | 'error' | 'info' = 'success';
   toastTitle = '';
@@ -46,8 +45,7 @@ export class DrugInventoryPageComponent implements OnInit {
   }
 
   loadDrugs(): void {
-    this.loading = true;
-    this.drugService.getAllDrugs().subscribe({
+      this.drugService.getAllDrugs().subscribe({
       next: (data) => {
         this.drugs = data;
         this.loading = false;
@@ -80,14 +78,14 @@ export class DrugInventoryPageComponent implements OnInit {
   searchDrugs(): void {
     if (!this.searchKeyword.trim()) { this.loadDrugs(); return; }
     this.drugService.searchDrugs(this.searchKeyword).subscribe({
-      next: (data) => { 
-        this.drugs = data; 
+      next: (data) => {
+        this.drugs = data;
         this.loading = false;
         this.triggerToast('info', 'Search Results', `Found ${data.length} drug(s) matching "${this.searchKeyword}".`);
       },
-      error: (error) => { 
-        console.error('Error searching drugs', error); 
-        this.loading = false; 
+      error: (error) => {
+        console.error('Error searching drugs', error);
+        this.loading = false;
         this.triggerToast('error', 'Search Failed', 'Failed to fetch search results.');
       }
     });
@@ -103,8 +101,8 @@ export class DrugInventoryPageComponent implements OnInit {
 
   showLowStock(): void {
     this.drugService.getLowStock().subscribe({
-      next: (data) => { 
-        this.drugs = data; 
+      next: (data) => {
+        this.drugs = data;
         this.loading = false;
         this.triggerToast('info', 'Filter Applied', `Showing ${data.length} low stock item(s).`);
       },
@@ -114,8 +112,8 @@ export class DrugInventoryPageComponent implements OnInit {
 
   showExpiring(): void {
     this.drugService.getExpiringDrugs().subscribe({
-      next: (data) => { 
-        this.drugs = data; 
+      next: (data) => {
+        this.drugs = data;
         this.loading = false;
         this.triggerToast('info', 'Filter Applied', `Showing ${data.length} drug(s) expiring soon.`);
       },
@@ -132,9 +130,9 @@ export class DrugInventoryPageComponent implements OnInit {
     const quantity = this.stockInputs[drugId];
     if (!quantity) return;
     this.drugService.updateStock(drugId, quantity).subscribe({
-      next: () => { 
-        this.stockInputs[drugId] = 0; 
-        this.loadDrugs(); 
+      next: () => {
+        this.stockInputs[drugId] = 0;
+        this.loadDrugs();
         this.triggerToast('success', 'Stock Updated', 'Inventory stock quantity updated successfully.');
       },
       error: (error) => {
@@ -171,7 +169,7 @@ export class DrugInventoryPageComponent implements OnInit {
     });
   }
 
-  // Toast Handler
+
   triggerToast(type: 'success' | 'error' | 'info', title: string, message: string): void {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
@@ -183,7 +181,7 @@ export class DrugInventoryPageComponent implements OnInit {
 
     this.toastTimeout = setTimeout(() => {
       this.closeToast();
-    }, 5000);
+    }, 500);
   }
 
   closeToast(): void {

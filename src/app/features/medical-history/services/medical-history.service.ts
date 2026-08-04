@@ -12,9 +12,7 @@ export class MedicalHistoryService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Helper to attach JWT Token in headers if present
-   */
+  
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || localStorage.getItem('jwtToken');
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -24,29 +22,21 @@ export class MedicalHistoryService {
     return headers;
   }
 
-  /**
-   * GET /api/v1/medical-histories/patient/{patientId}
-   */
+  
   getMedicalHistoryByPatient(patientId: number): Observable<MedicalHistory[]> {
     return this.http.get<MedicalHistory[]>(`${this.baseUrl}/patient/${patientId}`, {
       headers: this.getAuthHeaders()
     });
   }
 
-  /**
-   * POST /api/v1/medical-histories/patient/{patientId}
-   */
+  
   addMedicalHistory(patientId: number, historyDto: MedicalHistory): Observable<string> {
     return this.http.post(`${this.baseUrl}/patient/${patientId}`, historyDto, {
       headers: this.getAuthHeaders(),
-      responseType: 'text' // Backend returns ResponseEntity<String>
+      responseType: 'text' 
     });
   }
 
-  /**
-   * PATCH /api/v1/medical-histories/{historyId}/status
-   * Sends JSON body payload matching @RequestBody MedicalHistoryDto
-   */
   updateHistoryStatus(historyId: number, status: string): Observable<MedicalHistory> {
     const payload = { status: status }; 
     return this.http.patch<MedicalHistory>(

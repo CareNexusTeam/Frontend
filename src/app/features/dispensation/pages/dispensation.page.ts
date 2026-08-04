@@ -9,7 +9,8 @@ import { Dispensation } from '../model/dispensation.model';
   selector: 'app-dispensation-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './dispensation.page.html'
+  templateUrl: './dispensation.page.html',
+  styleUrls: ['./dispensation.component.css']
 })
 export class DispensationPageComponent implements OnInit {
 
@@ -28,7 +29,7 @@ export class DispensationPageComponent implements OnInit {
 
   lookupPrescriptionId = '';
 
-  // Toast Notification State
+
   showToast = false;
   toastType: 'success' | 'error' | 'info' = 'success';
   toastTitle = '';
@@ -40,7 +41,7 @@ export class DispensationPageComponent implements OnInit {
   }
 
   loadDispensations(): void {
-    this.loading = true;
+
     this.dispensationService.getAllDispensations().subscribe({
       next: (data) => {
         this.dispensations = data;
@@ -113,6 +114,17 @@ export class DispensationPageComponent implements OnInit {
     this.loadDispensations();
     this.triggerToast('info', 'Records Refreshed', 'Showing all dispensation records.');
   }
+
+
+   deleteDispensation(dispensationID: number): void {
+    this.dispensationService.deleteDispensation( dispensationID).subscribe({
+      next: () => this.loadDispensations(),
+      error: (error) => console.error('Error deleting dispensation', error)
+    });
+    this.triggerToast('info', 'Records Deleted', 'Record deleted Successfully');
+  }
+
+
 
   lookupByPrescription(): void {
     if (!this.lookupPrescriptionId) {

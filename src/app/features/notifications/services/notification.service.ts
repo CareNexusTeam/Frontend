@@ -16,13 +16,7 @@ export class NotificationService {
 
   public getActiveUserId(): number {
 
-    const userId =
-      localStorage.getItem('user_id') ??
-      localStorage.getItem('userId');
-
-    if (userId && !isNaN(Number(userId))) {
-      return Number(userId);
-    }
+    
 
     return 1;
   }

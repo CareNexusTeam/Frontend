@@ -9,7 +9,8 @@ import { Invoice } from '../model/invoice.model';
   selector: 'app-invoices-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './invoice.page.html'
+  templateUrl: './invoice.page.html',
+  styleUrls: ['./invoice.component.css']
 })
 export class InvoicesPageComponent implements OnInit {
 
@@ -29,7 +30,7 @@ export class InvoicesPageComponent implements OnInit {
   lookupPatientId = '';
   paymentInputs: { [invoiceID: number]: number } = {};
 
-  // Toast State
+
   showToast = false;
   toastType: 'success' | 'error' | 'info' = 'success';
   toastTitle = '';
@@ -147,7 +148,6 @@ export class InvoicesPageComponent implements OnInit {
     this.toastMessage = message;
     this.showToast = true;
 
-    // Dismisses reliably inside NgZone after 4 seconds
     this.toastTimeout = setTimeout(() => {
       this.ngZone.run(() => {
         this.closeToast();

@@ -9,6 +9,7 @@ import { AuthService } from '../../../../core/auth/auth-service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup-page.component.html',
+  styleUrls: ['./signup-page.component.css']
 })
 export class SignupPageComponent {
   signupForm: FormGroup;
@@ -35,7 +36,6 @@ export class SignupPageComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Convert phone string to Number for Long data type in backend
     const payload = {
       ...this.signupForm.value,
       phone: Number(this.signupForm.value.phone)

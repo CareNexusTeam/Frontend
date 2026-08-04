@@ -1,345 +1,197 @@
 <app-main-layout>
-
- <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
-
-      <div class="flex items-center gap-3">
-
-        <i class="fa-solid fa-capsules text-xl"></i>
-
+    <header class="page-header">
+      <div class="header-content">
+        <i class="fa-solid fa-capsules header-icon"></i>
         <div>
-          <h1 class="text-xl font-semibold">
-            Drug Dispensation
-          </h1>
-
-          <p class="text-sm text-blue-100 mt-1">
-            Manage medication dispensing records
-          </p>
+          <h1 class="header-title">Drug Dispensation</h1>
+          <p class="header-subtitle">Manage medication dispensing records</p>
         </div>
-
       </div>
-
-    </div>
+    </header>
 
     <!-- Statistics -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Total Records
-        </p>
-
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
-          {{ dispensations.length }}
-        </h2>
+    <section class="stats-grid">
+      <div class="card stat-card">
+        <p class="stat-label">Total Records</p>
+        <h2 class="stat-value">{{ dispensations.length }}</h2>
       </div>
 
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Dispensed
-        </p>
-
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
+      <div class="card stat-card">
+        <p class="stat-label">Dispensed</p>
+        <h2 class="stat-value">
           {{ dispensations.filter(d => d.status === 'Dispensed').length }}
         </h2>
       </div>
 
-      <div class="bg-white rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-500">
-          Pending
-        </p>
-
-        <h2 class="text-2xl font-semibold text-blue-900 mt-1">
+      <div class="card stat-card">
+        <p class="stat-label">Pending</p>
+        <h2 class="stat-value">
           {{ dispensations.filter(d => d.status === 'Pending').length }}
         </h2>
       </div>
+    </section>
 
-    </div>
-
-    <!-- Dispense Form -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <div class="flex items-center gap-2 mb-5">
-
-        <i class="fa-solid fa-prescription-bottle-medical text-blue-900"></i>
-
-        <h2 class="text-lg font-semibold text-blue-900">
-          Dispense Medication
-        </h2>
-
+    <!-- Form Section -->
+    <section class="card form-card">
+      <div class="section-title-group">
+        <i class="fa-solid fa-prescription-bottle-medical icon-blue"></i>
+        <h2 class="section-title">Dispense Medication</h2>
       </div>
 
       <form [formGroup]="dispenseForm" (ngSubmit)="dispenseDrug()">
-
-        <div class="grid md:grid-cols-2 gap-5">
-
-          <div>
-
-            <label class="block text-sm text-gray-600 mb-2">
-              Prescription ID
-            </label>
-
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label">Prescription ID</label>
             <input
               type="number"
               formControlName="prescriptionId"
               placeholder="Enter Prescription ID"
-              class="w-full rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
-
+              class="form-input" />
           </div>
 
-          <div>
-
-            <label class="block text-sm text-gray-600 mb-2">
-              Dispensed By (User ID)
-            </label>
-
+          <div class="field-group">
+            <label class="field-label">Dispensed By (User ID)</label>
             <input
               type="number"
               formControlName="userId"
               placeholder="Enter User ID"
-              class="w-full rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
-
+              class="form-input" />
           </div>
-
         </div>
 
-        <button
-          type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
-          <i class="fa-solid fa-check mr-2"></i>
-          Dispense Drug
-
+        <button type="submit" class="btn btn-primary btn-submit">
+          <i class="fa-solid fa-check mr-2"></i> Dispense Drug
         </button>
 
         @if (resultMessage) {
-        <div class="mt-4 bg-blue-50 text-blue-900 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
-
+        <div class="alert-box">
           <i class="fa-solid fa-circle-check"></i>
-
-          {{ resultMessage }}
-
+          <span>{{ resultMessage }}</span>
         </div>
         }
-
       </form>
+    </section>
 
-    </div>
+    <!-- Filter Bar Section -->
+    <section class="card filter-card">
+      <div class="filter-actions">
 
-    <!-- Filters -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
 
-      <div class="flex flex-wrap items-end gap-3">
-
-        <button
-          type="button"
-          (click)="showAll()"
-          class="px-5 py-2.5 rounded-lg bg-blue-50 text-blue-900 hover:bg-blue-100 transition">
-
-          All Records
-
-        </button>
-
-        <button
-          type="button"
-          (click)="showPending()"
-          class="px-5 py-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
-
+        <button type="button" (click)="showPending()" class="btn btn-chip">
           Pending
-
         </button>
 
-        <button
-          type="button"
-          (click)="showHistory()"
-          class="px-5 py-2.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
-
+        <button type="button" (click)="showHistory()" class="btn btn-chip">
           History
-
         </button>
 
-        <div>
-
-          <label class="block text-sm text-gray-600 mb-2">
-            Lookup Prescription ID
-          </label>
-
+        <div class="field-group inline-search">
+          <label class="field-label">Lookup Prescription ID</label>
           <input
             [(ngModel)]="lookupPrescriptionId"
             [ngModelOptions]="{standalone:true}"
             placeholder="Enter Prescription ID"
-            class="w-64 rounded-lg px-4 py-2.5 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-900" />
-
+            class="form-input search-input" />
         </div>
 
-        <button
-          type="button"
-          (click)="lookupByPrescription()"
-          class="px-5 py-2.5 rounded-lg bg-blue-900 text-white hover:bg-blue-800 transition">
-
+        <button type="button" (click)="lookupByPrescription()" class="btn btn-primary">
           Search
-
         </button>
 
+        <button type="button" (click)="showAll()" class="btn btn-chip-active">
+          Refresh
+        </button>
+      </div>
+    </section>
+
+    <!-- Table Section -->
+    <section class="card table-card">
+      <div class="table-header">
+        <h2>Dispensation Records</h2>
       </div>
 
-    </div>
-
-    <!-- Table -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-
-      <div class="bg-blue-900 px-6 py-4 text-white">
-
-        <h2 class="text-lg font-semibold">
-          Dispensation Records
-        </h2>
-
-      </div>
-
-      <div class="overflow-x-auto">
-
-        <table class="w-full">
-
+      <div class="table-scroll-wrapper">
+        <table class="data-table">
           <thead>
-
-          <tr class="bg-gray-50">
-
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-              Drug Name
-            </th>
-
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-              Prescription ID
-            </th>
-
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-              Quantity
-            </th>
-
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-              Dispensed Date
-            </th>
-
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">
-              Status
-            </th>
-
-          </tr>
-
-          </thead>
-
-          <tbody>
-
-          @if (loading) {
-
           <tr>
-            <td colspan="5" class="text-center py-10 text-sm text-gray-500">
-
-              <i class="fa-solid fa-spinner fa-spin mr-2 text-blue-900"></i>
-
+            <th>Drug Name</th>
+            <th>Prescription ID</th>
+            <th>Quantity</th>
+            <th>Dispensed Date</th>
+            <th>Status</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          @if (loading) {
+          <tr>
+            <td colspan="5" class="table-state-cell">
+              <i class="fa-solid fa-spinner fa-spin icon-blue mr-2"></i>
               Loading dispensations...
-
             </td>
           </tr>
-
           }
-
           @else if (dispensations.length === 0) {
-
           <tr>
-            <td colspan="5" class="text-center py-10 text-sm text-gray-500">
+            <td colspan="5" class="table-state-cell">
               No dispensation records found.
             </td>
           </tr>
-
           }
-
           @else {
-
           @for (d of dispensations; track d.dispensationID) {
+          <tr class="table-row">
+            <td class="cell-main">{{ d.drugName }}</td>
+            <td class="cell-muted">#{{ d.prescriptionId }}</td>
+            <td class="cell-muted">{{ d.quantityDispensed }}</td>
+            <td class="cell-muted">{{ d.dispensationDate }}</td>
+            <td class="cell-muted">{{ d.status }}</td>
 
-          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
-
-            <td class="px-6 py-4 text-sm text-gray-800">
-              {{ d.drugName }}
+            <td class="cell-muted">
+              <button type="button" (click)="deleteDispensation(d.dispensationID!)" class="action-link">Delete</button>
             </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
-              #{{ d.prescriptionId }}
-            </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
-              {{ d.quantityDispensed }}
-            </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
-              {{ d.dispensationDate }}
-            </td>
-
-            <td class="px-6 py-4 text-sm text-gray-600">
-              {{ d.status }}
-            </td>
-
           </tr>
-
           }
-
           }
-
           </tbody>
-
         </table>
-
       </div>
-
-    </div>
+    </section>
 
   </div>
 
-  <!-- FLOATING TOAST NOTIFICATION (Clear of header & auto-dismissing) -->
-  <div 
-    *ngIf="showToast" 
-    class="fixed top-20 right-6 z-[9999] flex items-center gap-3 w-80 max-w-full p-4 rounded-xl shadow-xl border bg-white transition-all duration-300"
+
+  <div
+    *ngIf="showToast"
+    class="toast-container"
     [ngClass]="{
-      'border-emerald-200': toastType === 'success',
-      'border-rose-200': toastType === 'error',
-      'border-blue-200': toastType === 'info'
+      'toast-success': toastType === 'success',
+      'toast-error': toastType === 'error',
+      'toast-info': toastType === 'info'
     }">
-    
-    <!-- Status Icon -->
-    <div 
-      class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full text-sm font-bold"
+
+    <div
+      class="toast-icon-wrapper"
       [ngClass]="{
-        'bg-emerald-100 text-emerald-700': toastType === 'success',
-        'bg-rose-100 text-rose-700': toastType === 'error',
-        'bg-blue-100 text-blue-900': toastType === 'info'
+        'badge-success': toastType === 'success',
+        'badge-error': toastType === 'error',
+        'badge-info': toastType === 'info'
       }">
       <span *ngIf="toastType === 'success'">✓</span>
       <span *ngIf="toastType === 'error'">✕</span>
       <span *ngIf="toastType === 'info'">ℹ</span>
     </div>
 
-    <!-- Text Body -->
-    <div class="flex-1 min-w-0">
-      <h4 class="text-sm font-semibold text-slate-800 truncate">
-        {{ toastTitle }}
-      </h4>
-      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
-        {{ toastMessage }}
-      </p>
+    <div class="toast-body">
+      <h4 class="toast-title">{{ toastTitle }}</h4>
+      <p class="toast-message">{{ toastMessage }}</p>
     </div>
 
-    <!-- Close Button -->
-    <button 
-      type="button" 
-      (click)="closeToast()" 
-      class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition shrink-0">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+    <button type="button" (click)="closeToast()" class="toast-close-btn">
+      &times;
     </button>
   </div>
-
 </app-main-layout>

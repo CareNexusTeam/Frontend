@@ -1,6 +1,6 @@
 export interface Drug{
     drugId?:number;
-    drugName:number;
+    drugName:string;
     category:string;
     quantityInStock:number;
     reorderLevel:number;

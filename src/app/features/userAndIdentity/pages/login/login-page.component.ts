@@ -9,6 +9,7 @@ import { AuthService } from '../../../../core/auth/auth-service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
@@ -39,15 +40,25 @@ export class LoginPageComponent {
       },
       error: (err) => {
         this.isLoading = false;
+        console.error('Login Error details:', err);
 
-        if (err.status === 401 || err.status === 400) {
-          this.errorMessage = 'Wrong password or invalid credentials!';
+        // 1. Check backend error response string / message (e.g. Bad credentials)
+        const serverErrorMsg = err.error?.message || err.error || err.message || '';
+        const isBadCredentials = 
+          typeof serverErrorMsg === 'string' && 
+          serverErrorMsg.toLowerCase().includes('bad credential');
+
+        // 2. Handle 500 status code with "Bad Credentials" or standard auth failure status codes (401, 400)
+        if (isBadCredentials || err.status === 401 || err.status === 400) {
+          this.errorMessage = 'Invalid email or wrong password!';
         } else if (err.status === 404) {
           this.errorMessage = 'User not registered. Please sign up first!';
-        } else if (err.error && typeof err.error.message === 'string') {
+        } else if (typeof err.error === 'string' && err.error.length > 0) {
+          this.errorMessage = err.error;
+        } else if (err.error?.message) {
           this.errorMessage = err.error.message;
         } else {
-          this.errorMessage = 'Something went wrong. Please try again later.';
+          this.errorMessage = 'Invalid password or login failed. Please check your credentials.';
         }
       }
     });

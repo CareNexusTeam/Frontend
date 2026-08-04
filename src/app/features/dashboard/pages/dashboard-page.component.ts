@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { AuthService } from '../../../core/auth/auth-service';
 
@@ -6,14 +7,15 @@ import { AuthService } from '../../../core/auth/auth-service';
   selector: 'app-dashboard-page',
   standalone: true,
   imports: [
+    CommonModule,
     MainLayoutComponent
   ],
   templateUrl: './dashboard-page.component.html'
 })
 export class DashboardPageComponent {
+  private authService = inject(AuthService);
 
-  constructor(
-    public authService: AuthService
-  ) {}
-
+  // Store basic user identity without loading secondary data
+  userName = this.authService.getUserName();
+  userRole = this.authService.getRole();
 }

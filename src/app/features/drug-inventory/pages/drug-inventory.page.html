@@ -1,12 +1,9 @@
 <app-main-layout>
+  <div class="inventory-container">
 
-  <div class="min-h-screen bg-slate-50 p-6">
 
-    <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
-
-      <div class="flex items-center gap-3">
-
+    <header class="page-header">
+      <div class="header-flex">
         <svg xmlns="http://www.w3.org/2000/svg"
              height="24"
              width="24"
@@ -16,445 +13,218 @@
         </svg>
 
         <div>
-          <h1 class="text-xl font-semibold">
-            Drug Inventory
-          </h1>
-
-          <p class="text-sm text-blue-100 mt-1">
-            Add drugs and manage inventory status
-          </p>
+          <h1 class="header-title">Drug Inventory</h1>
+          <p class="header-subtitle">Add drugs and manage inventory status</p>
         </div>
-
       </div>
+    </header>
 
-    </div>
 
-    <!-- Add Drug Form -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
-        Add New Drug
-      </h2>
+    <section class="card card-padding">
+      <h2 class="section-title">Add New Drug</h2>
 
       <form [formGroup]="drugForm" (ngSubmit)="addDrug()">
-
-        <div class="grid md:grid-cols-2 gap-5">
-
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Drug Name
-            </label>
-
-            <input
-              formControlName="drugName"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+        <div class="form-grid-2col">
+          <div class="field-group">
+            <label class="field-label">Drug Name</label>
+            <input formControlName="drugName" class="form-control" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Category
-            </label>
-
-            <input
-              formControlName="category"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="field-group">
+            <label class="field-label">Category</label>
+            <input formControlName="category" class="form-control" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Quantity In Stock
-            </label>
-
-            <input
-              type="number"
-              formControlName="quantityInStock"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="field-group">
+            <label class="field-label">Quantity In Stock</label>
+            <input type="number" formControlName="quantityInStock" class="form-control" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Reorder Level
-            </label>
-
-            <input
-              type="number"
-              formControlName="reorderLevel"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="field-group">
+            <label class="field-label">Reorder Level</label>
+            <input type="number" formControlName="reorderLevel" class="form-control" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Price Per Unit
-            </label>
-
-            <input
-              type="number"
-              formControlName="pricePerUnit"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="field-group">
+            <label class="field-label">Price Per Unit</label>
+            <input type="number" formControlName="pricePerUnit" class="form-control" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Expiry Date
-            </label>
-
-            <input
-              type="date"
-              formControlName="expiryDate"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+          <div class="field-group">
+            <label class="field-label">Expiry Date</label>
+            <input type="date" formControlName="expiryDate" class="form-control" />
           </div>
-
         </div>
 
-        <button
-          type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
+        <button type="submit" class="btn btn-primary btn-submit">
           Add Drug
-
         </button>
-
       </form>
+    </section>
 
-    </div>
-
-    <!-- Search & Filters -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <div class="flex flex-wrap gap-3 items-end">
-
-        <div>
-          <label class="block text-sm text-gray-600 mb-2">
-            Search
-          </label>
-
+<!--    search Filter-->
+    <section class="card card-padding">
+      <div class="filter-toolbar">
+        <div class="field-group">
+          <label class="field-label">Search</label>
           <input
             [(ngModel)]="searchKeyword"
             [ngModelOptions]="{standalone:true}"
             placeholder="Drug name or category"
-            class="w-52 bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+            class="form-control input-w-52" />
         </div>
 
-        <button
-          type="button"
-          (click)="searchDrugs()"
-          class="bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
+        <button type="button" (click)="searchDrugs()" class="btn btn-primary">
           Search
-
         </button>
 
-        <div>
-          <label class="block text-sm text-gray-600 mb-2">
-            Category
-          </label>
-
+        <div class="field-group">
+          <label class="field-label">Category</label>
           <input
             [(ngModel)]="filterCategory"
             [ngModelOptions]="{standalone:true}"
             placeholder="Category"
-            class="w-40 bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+            class="form-control input-w-40" />
         </div>
 
-        <div>
-          <label class="block text-sm text-gray-600 mb-2">
-            Status
-          </label>
-
+        <div class="field-group">
+          <label class="field-label">Status</label>
           <select
             [(ngModel)]="filterStatus"
             [ngModelOptions]="{standalone:true}"
-            class="bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none">
-
+            class="form-control">
             <option value="">Any</option>
             <option value="Available">Available</option>
             <option value="OutOfStock">Out Of Stock</option>
-
           </select>
         </div>
 
-        <button
-          type="button"
-          (click)="applyFilter()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200 transition">
-
+        <button type="button" (click)="applyFilter()" class="btn btn-secondary">
           Filter
-
         </button>
 
-        <button
-          type="button"
-          (click)="showLowStock()"
-          class="bg-blue-50 text-blue-900 px-5 py-2.5 rounded-lg hover:bg-blue-100 transition">
-
+        <button type="button" (click)="showLowStock()" class="btn btn-accent">
           Low Stock
-
         </button>
 
-        <button
-          type="button"
-          (click)="showExpiring()"
-          class="bg-blue-50 text-blue-900 px-5 py-2.5 rounded-lg hover:bg-blue-100 transition">
-
+        <button type="button" (click)="showExpiring()" class="btn btn-accent">
           Expiring Soon
-
         </button>
 
-        <button
-          type="button"
-          (click)="showAll()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200 transition">
-
+        <button type="button" (click)="showAll()" class="btn btn-secondary">
           Refresh
-
         </button>
-
       </div>
-
-    </div>
+    </section>
 
     <!-- Table -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-
-      <div class="bg-blue-900 px-6 py-4 text-white">
-
-        <h2 class="text-lg font-semibold">
-          Inventory Records
-        </h2>
-
+    <section class="card table-card">
+      <div class="table-header">
+        <h2>Inventory Records</h2>
       </div>
 
-      <div class="overflow-x-auto">
-
-        <table class="w-full">
-
+      <div class="table-scroll">
+        <table class="data-table">
           <thead>
-
-          <tr class="bg-gray-50">
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Drug Name
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Category
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Stock
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Reorder Level
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Price
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Expiry
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Status
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Update Stock
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Change Status
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Actions
-            </th>
-
+          <tr>
+            <th>Drug Name</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Reorder Level</th>
+            <th>Price</th>
+            <th>Expiry</th>
+            <th>Status</th>
+            <th>Update Stock</th>
+            <th>Change Status</th>
+            <th>Actions</th>
           </tr>
-
           </thead>
-
           <tbody>
-
           @if (loading) {
-
           <tr>
-            <td colspan="10" class="text-center py-10 text-sm text-gray-500">
-              Loading drugs...
-            </td>
+            <td colspan="10" class="table-state-cell">Loading drugs...</td>
           </tr>
-
           }
-
           @else if (drugs.length === 0) {
-
           <tr>
-            <td colspan="10" class="text-center py-10 text-sm text-gray-500">
-              No Drugs Found
-            </td>
+            <td colspan="10" class="table-state-cell">No Drugs Found</td>
           </tr>
-
           }
-
           @else {
-
           @for (drug of drugs; track drug.drugId) {
-
-          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
-
-            <td class="px-4 py-4 text-sm text-gray-800">
-              {{ drug.drugName }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.category }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.quantityInStock }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.reorderLevel }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.pricePerUnit }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.expiryDate }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ drug.status }}
-            </td>
-
-            <td class="px-4 py-4">
-
-              <div class="flex items-center gap-2">
-
+          <tr>
+            <td class="cell-primary">{{ drug.drugName }}</td>
+            <td class="cell-muted">{{ drug.category }}</td>
+            <td class="cell-muted">{{ drug.quantityInStock }}</td>
+            <td class="cell-muted">{{ drug.reorderLevel }}</td>
+            <td class="cell-muted">{{ drug.pricePerUnit }}</td>
+            <td class="cell-muted">{{ drug.expiryDate }}</td>
+            <td class="cell-muted">{{ drug.status }}</td>
+            <td>
+              <div class="table-inline-flex">
                 <input
                   type="number"
                   [(ngModel)]="stockInputs[drug.drugId!]"
                   [ngModelOptions]="{standalone:true}"
                   placeholder="Qty"
-                  class="w-20 bg-gray-50 rounded-lg px-2 py-2 text-sm focus:outline-none" />
-
-                <button
-                  type="button"
-                  (click)="updateStock(drug.drugId!)"
-                  class="text-blue-900 text-sm hover:underline">
-
+                  class="form-control input-w-20 select-sm" />
+                <button type="button" (click)="updateStock(drug.drugId!)" class="btn-link">
                   Update
-
                 </button>
-
               </div>
-
             </td>
-
-            <td class="px-4 py-4">
-
+            <td>
               <select
                 (change)="updateStatus(drug.drugId!, $any($event.target).value)"
-                class="bg-gray-50 rounded-lg px-3 py-2 text-sm">
-
+                class="form-control select-sm">
                 <option value="">Change</option>
-
-                <option
-                  value="Available"
-                  [selected]="drug.status === 'Available'">
-
-                  Available
-
-                </option>
-
-                <option
-                  value="OutOfStock"
-                  [selected]="drug.status === 'OutOfStock'">
-
-                  OutOfStock
-
-                </option>
-
+                <option value="Available" [selected]="drug.status === 'Available'">Available</option>
+                <option value="OutOfStock" [selected]="drug.status === 'OutOfStock'">OutOfStock</option>
               </select>
-
             </td>
-
-            <td class="px-4 py-4">
-
-              <button
-                type="button"
-                (click)="deleteDrug(drug.drugId!)"
-                class="text-blue-900 text-sm hover:underline">
-
+            <td>
+              <button type="button" (click)="deleteDrug(drug.drugId!)" class="btn-link">
                 Delete
-
               </button>
-
             </td>
-
           </tr>
-
           }
-
           }
-
           </tbody>
-
         </table>
-
       </div>
-
-    </div>
+    </section>
 
   </div>
 
-<!-- TOP-RIGHT TOAST NOTIFICATION -->
-<!-- TOP-RIGHT TOAST NOTIFICATION (Shifted down with top-24) -->
-  <div 
-    *ngIf="showToast" 
-    class="fixed top-24 right-6 z-50 flex items-center gap-3 w-80 max-w-full p-4 rounded-xl shadow-xl border bg-white transition-all duration-300"
+  <div
+    *ngIf="showToast"
+    class="toast-notification"
     [ngClass]="{
-      'border-emerald-200': toastType === 'success',
-      'border-rose-200': toastType === 'error',
-      'border-blue-200': toastType === 'info'
+      'toast-success': toastType === 'success',
+      'toast-error': toastType === 'error',
+      'toast-info': toastType === 'info'
     }">
-    
-    <!-- Status Icon -->
-    <div 
-      class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full text-sm font-bold"
+
+    <div
+      class="toast-badge"
       [ngClass]="{
-        'bg-emerald-100 text-emerald-700': toastType === 'success',
-        'bg-rose-100 text-rose-700': toastType === 'error',
-        'bg-blue-100 text-blue-900': toastType === 'info'
+        'badge-success': toastType === 'success',
+        'badge-error': toastType === 'error',
+        'badge-info': toastType === 'info'
       }">
       <span *ngIf="toastType === 'success'">✓</span>
       <span *ngIf="toastType === 'error'">✕</span>
       <span *ngIf="toastType === 'info'">ℹ</span>
     </div>
 
-    <!-- Text Content -->
-    <div class="flex-1 min-w-0">
-      <h4 class="text-sm font-semibold text-slate-800 truncate">
-        {{ toastTitle }}
-      </h4>
-      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
-        {{ toastMessage }}
-      </p>
+    <div class="toast-content">
+      <h4 class="toast-title">{{ toastTitle }}</h4>
+      <p class="toast-message">{{ toastMessage }}</p>
     </div>
 
-    <!-- Close Button -->
-    <button 
-      type="button" 
-      (click)="closeToast()" 
-      class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition shrink-0">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+    <button type="button" (click)="closeToast()" class="toast-close-btn">
+      &times;
     </button>
   </div>
 </app-main-layout>

@@ -9,7 +9,8 @@ import { InsuranceClaim } from '../model/insurance.model';
   selector: 'app-insurance-claims-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
-  templateUrl: './insurance.page.html'
+  templateUrl: './insurance.page.html',
+  styleUrls: ['./insurance.component.css']
 })
 export class InsuranceClaimsPageComponent implements OnInit {
 

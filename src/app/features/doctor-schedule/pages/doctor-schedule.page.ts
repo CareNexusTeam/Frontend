@@ -8,6 +8,8 @@ import {
   FormsModule
 } from '@angular/forms';
 
+import {AuthService} from '../../../core/auth/auth-service';
+
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { DoctorScheduleService } from '../services/doctor-schedule.service';
 import { DoctorSchedule } from '../models/doctor-schedule.model';
@@ -41,9 +43,8 @@ implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private doctorScheduleService:
-      DoctorScheduleService
-  ) {}
+    private doctorScheduleService: DoctorScheduleService,
+      ) {}
 
   ngOnInit(): void {
 

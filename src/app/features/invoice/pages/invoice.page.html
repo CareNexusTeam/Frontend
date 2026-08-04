@@ -1,352 +1,193 @@
 <app-main-layout>
 
-  <div class="min-h-screen bg-slate-50 p-6">
+  <div class="page-container">
 
     <!-- Header -->
-    <div class="bg-blue-900 rounded-xl p-5 mb-6 shadow-sm text-white">
-
-      <div class="flex items-center gap-3">
-
-        <svg xmlns="http://www.w3.org/2000/svg"
-             height="24"
-             width="24"
-             viewBox="0 -960 960 960"
-             fill="white">
+    <div class="header-card">
+      <div class="header-flex">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960" fill="white">
           <path d="M480-80q-73 0-136.5-27.5T232-184q-48-49-75-112T130-432q0-75 27-138t75-110q49-48 112-74t136-26q74 0 137 26t111 74q48 47 75 110t27 138q0 73-27 136t-75 112q-48 49-111 76.5T480-80Zm0-80q40 0 75-10v-132h105q9-18 15.5-37.5T686-380H555v-60h146q-1-21-7.5-40.5T678-520H555v-132q-35-10-75-10t-75 10v132H282q-9 19-15.5 39T259-440h146v60H259q1 21 7.5 40.5T282-300h123v132q35 10 75 10Z"/>
         </svg>
 
         <div>
-          <h1 class="text-xl font-semibold">
-            Invoice Management
-          </h1>
-
-          <p class="text-sm text-blue-100 mt-1">
-            Generate and manage patient invoices
-          </p>
+          <h1 class="header-title">Invoice Management</h1>
+          <p class="header-subtitle">Generate and manage patient invoices</p>
         </div>
-
       </div>
-
     </div>
 
     <!-- Create Invoice -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <h2 class="text-lg font-semibold text-blue-900 mb-5">
-        Create Invoice
-      </h2>
+    <div class="card-section">
+      <h2 class="section-title">Create Invoice</h2>
 
       <form [formGroup]="invoiceForm" (ngSubmit)="createInvoice()">
-
-        <div class="grid md:grid-cols-3 gap-5">
-
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Patient ID
-            </label>
-
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Patient ID</label>
             <input
               type="number"
               formControlName="patientId"
               placeholder="Enter Patient ID"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-input" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Consultation ID
-            </label>
-
+          <div class="form-group">
+            <label class="form-label">Consultation ID</label>
             <input
               type="number"
               formControlName="consultationId"
               placeholder="Enter Consultation ID"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-input" />
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-600 mb-2">
-              Paid Amount
-            </label>
-
+          <div class="form-group">
+            <label class="form-label">Paid Amount</label>
             <input
               type="number"
               formControlName="paidAmount"
               placeholder="Enter Amount"
-              class="w-full bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
+              class="form-input" />
           </div>
-
         </div>
 
-        <button
-          type="submit"
-          class="mt-5 bg-blue-900 text-white px-5 py-2.5 rounded-lg hover:bg-blue-800 transition">
-
+        <button type="submit" class="btn btn-primary">
           Create Invoice
-
         </button>
-
       </form>
-
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-xl p-6 shadow-sm mb-6">
-
-      <div class="flex flex-wrap gap-3 items-end">
-
-        <div>
-
-          <label class="block text-sm text-gray-600 mb-2">
-            Patient ID
-          </label>
-
+    <div class="card-section">
+      <div class="filter-bar">
+        <div class="form-group">
+          <label class="form-label">Patient ID</label>
           <input
             [(ngModel)]="lookupPatientId"
             [ngModelOptions]="{standalone:true}"
             placeholder="Enter Patient ID"
-            class="w-48 bg-gray-50 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-900" />
-
+            class="form-input input-medium" />
         </div>
 
-        <button
-          type="button"
-          (click)="lookupByPatient()"
-          class="bg-blue-50 text-blue-900 px-5 py-2.5 rounded-lg hover:bg-blue-100 transition">
-
+        <button type="button" (click)="lookupByPatient()" class="btn btn-secondary">
           Lookup Invoices
-
         </button>
 
-        <button
-          type="button"
-          (click)="showAll()"
-          class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-lg hover:bg-slate-200 transition">
-
+        <button type="button" (click)="showAll()" class="btn btn-neutral">
           Refresh
-
         </button>
-
       </div>
-
     </div>
 
     <!-- Invoice Table -->
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-
-      <div class="bg-blue-900 px-6 py-4 text-white">
-
-        <h2 class="text-lg font-semibold">
-          Invoice Records
-        </h2>
-
+    <div class="table-card">
+      <div class="table-header">
+        <h2 class="table-header-title">Invoice Records</h2>
       </div>
 
-      <div class="overflow-x-auto">
-
-        <table class="w-full">
-
+      <div class="table-responsive">
+        <table class="data-table">
           <thead>
-
-          <tr class="bg-gray-50">
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Patient
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Total
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Paid
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Outstanding
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Invoice Date
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Status
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Payment
-            </th>
-
-            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-              Actions
-            </th>
-
+          <tr>
+            <th>Patient</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Outstanding</th>
+            <th>Invoice Date</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Actions</th>
           </tr>
-
           </thead>
 
           <tbody>
-
           @if (loading) {
-
           <tr>
-
-            <td colspan="8"
-                class="text-center py-10 text-sm text-gray-500">
-
+            <td colspan="8" class="empty-cell">
               Loading invoices...
-
             </td>
-
           </tr>
-
           }
-
           @else if (invoices.length === 0) {
-
           <tr>
-
-            <td colspan="8"
-                class="text-center py-10 text-sm text-gray-500">
-
+            <td colspan="8" class="empty-cell">
               No invoices found.
-
             </td>
-
           </tr>
-
           }
-
           @else {
-
           @for (inv of invoices; track inv.invoiceID) {
-
-          <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
-
-            <td class="px-4 py-4 text-sm text-gray-800">
-              {{ inv.patientId }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ inv.totalAmount }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ inv.paidAmount }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ inv.outstandingAmount }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ inv.invoiceDate }}
-            </td>
-
-            <td class="px-4 py-4 text-sm text-gray-600">
-              {{ inv.status }}
-            </td>
-
-            <td class="px-4 py-4">
-
-              <div class="flex items-center gap-2">
-
+          <tr class="table-row">
+            <td class="td-highlight">{{ inv.patientId }}</td>
+            <td>{{ inv.totalAmount }}</td>
+            <td>{{ inv.paidAmount }}</td>
+            <td>{{ inv.outstandingAmount }}</td>
+            <td>{{ inv.invoiceDate }}</td>
+            <td>{{ inv.status }}</td>
+            <td>
+              <div class="action-flex">
                 <input
                   type="number"
                   [(ngModel)]="paymentInputs[inv.invoiceID!]"
                   [ngModelOptions]="{standalone:true}"
                   placeholder="Amount"
-                  class="w-24 bg-gray-50 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  class="form-input input-small" />
 
                 <button
                   type="button"
                   (click)="updatePayment(inv.invoiceID!)"
-                  class="text-blue-900 text-sm hover:underline">
-
+                  class="btn-link">
                   Pay
-
                 </button>
-
               </div>
-
             </td>
-
-            <td class="px-4 py-4">
-
-              <div class="flex gap-4">
-
+            <td>
+              <div class="action-flex">
                 <button
                   type="button"
                   (click)="cancelInvoice(inv.invoiceID!)"
-                  class="text-blue-900 text-sm hover:underline">
-
+                  class="btn-link">
                   Cancel
-
                 </button>
-
               </div>
-
             </td>
-
           </tr>
-
           }
-
           }
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
 
   </div>
 
-  <!-- FLOATING TOAST NOTIFICATION -->
-  <div 
-    *ngIf="showToast" 
-    class="fixed top-20 right-6 z-[9999] flex items-center gap-3 w-80 max-w-full p-4 rounded-xl shadow-xl border bg-white transition-all duration-300"
-    [ngClass]="{
-      'border-emerald-200': toastType === 'success',
-      'border-rose-200': toastType === 'error',
-      'border-blue-200': toastType === 'info'
-    }">
-    
+
+  @if (showToast) {
+  <div
+    class="toast-container"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'"
+    [class.toast-info]="toastType === 'info'">
+
     <!-- Status Icon Badge -->
-    <div 
-      class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full text-sm font-bold"
-      [ngClass]="{
-        'bg-emerald-100 text-emerald-700': toastType === 'success',
-        'bg-rose-100 text-rose-700': toastType === 'error',
-        'bg-blue-100 text-blue-900': toastType === 'info'
-      }">
-      <span *ngIf="toastType === 'success'">✓</span>
-      <span *ngIf="toastType === 'error'">✕</span>
-      <span *ngIf="toastType === 'info'">ℹ</span>
+    <div
+      class="toast-badge"
+      [class.badge-success]="toastType === 'success'"
+      [class.badge-error]="toastType === 'error'"
+      [class.badge-info]="toastType === 'info'">
+      @if (toastType === 'success') { <span>✓</span> }
+      @if (toastType === 'error') { <span>✕</span> }
+      @if (toastType === 'info') { <span>ℹ</span> }
     </div>
 
-    <!-- Content -->
-    <div class="flex-1 min-w-0">
-      <h4 class="text-sm font-semibold text-slate-800 truncate">
-        {{ toastTitle }}
-      </h4>
-      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
-        {{ toastMessage }}
-      </p>
+    <div class="toast-content">
+      <h4 class="toast-title">{{ toastTitle }}</h4>
+      <p class="toast-message">{{ toastMessage }}</p>
     </div>
 
-    <!-- Close Action -->
-    <button 
-      type="button" 
-      (click)="closeToast()" 
-      class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition shrink-0">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
+    <button type="button" (click)="closeToast()" class="toast-close">
+     &times;
     </button>
   </div>
+  }
 
 </app-main-layout>

@@ -1,21 +1,46 @@
 <app-main-layout>
+  <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
 
-  <div class="bg-white rounded-2xl shadow-sm p-8">
+    <!-- Dark Blue Gradient Welcome Banner -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-blue-950 to-indigo-900 p-8 text-white shadow-xl border border-blue-900/30">
+      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="inline-flex items-center gap-2 rounded-full bg-blue-500/10 border border-blue-400/20 px-3 py-1 text-xs font-medium text-blue-200 backdrop-blur-md mb-3">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Healthcare Portal
+          </span>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Welcome, {{ userName }}
+          </h1>
+          <p class="mt-1 text-blue-200/80 text-sm">
+            Logged in as <span class="font-semibold capitalize text-blue-100">{{ userRole }}</span>
+          </p>
+        </div>
+      </div>
 
-    <h1 class="text-3xl font-semibold text-gray-800">
+      <!-- Subtle Ambient Glow -->
+      <div class="absolute -right-12 -bottom-12 h-52 w-52 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+    </div>
 
-      Welcome,
-      {{ authService.getUserName() }}
+    <!-- Main Workspace Container -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 min-h-[350px] flex flex-col items-center justify-center text-center">
 
-    </h1>
+      <!-- Icon with Darker Blue Accent -->
+      <div class="p-4 bg-blue-950/5 text-blue-900 rounded-2xl mb-4 border border-blue-900/10">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
 
-    <p class="text-gray-500 mt-3">
+      <h2 class="text-xl font-semibold text-slate-800 mb-2">
+        Main Dashboard Workspace
+      </h2>
 
-      Role:
-      {{ authService.getRole() }}
+      <p class="text-sm text-slate-500 max-w-md leading-relaxed">
+        Select a feature from the navigation menu to view your clinical tools, schedules, or account details.
+      </p>
 
-    </p>
+    </div>
 
   </div>
-
 </app-main-layout>
