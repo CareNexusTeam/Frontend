@@ -174,10 +174,9 @@ select.form-control {
 .filter-toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.5rem;
 }
-
 
 .table-card {
   overflow: hidden;
@@ -188,12 +187,64 @@ select.form-control {
   background-color: #1e3a8a;
   padding: 1rem 1.5rem;
   color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .table-header h2 {
   font-size: 1.125rem;
   font-weight: 600;
   margin: 0;
+}
+
+.header-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 0.875rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-input-md {
+  width: 13rem;
+}
+
+.search-input-sm {
+  width: 8rem;
+}
+
+.header-select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 0.875rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.header-btn {
+  background-color: #ffffff;
+  color: #1e3a8a;
+  border: none;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.header-btn:hover {
+  background-color: #eff6ff;
+  color: #1d4ed8;
 }
 
 .table-scroll {
@@ -263,11 +314,34 @@ select.form-control {
   border: 1px solid #e2e8f0;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .toast-success { border-color: #a7f3d0; }
 .toast-error   { border-color: #fecdd3; }
 .toast-info    { border-color: #bfdbfe; }
+
+.toast-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  animation: shrinkToastProgress 3.5s linear forwards;
+}
+
+.toast-success .toast-progress-bar { background-color: #10b981; }
+.toast-error   .toast-progress-bar { background-color: #f43f5e; }
+.toast-info    .toast-progress-bar { background-color: #3b82f6; }
+
+@keyframes shrinkToastProgress {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
 
 .toast-badge {
   display: flex;

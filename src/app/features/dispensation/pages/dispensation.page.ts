@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, NgZone } from '@angular/core';
+import { Component, OnInit, inject, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -17,6 +17,7 @@ export class DispensationPageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dispensationService = inject(DispensationService);
   private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
 
   dispensations: Dispensation[] = [];
   loading = false;
@@ -116,12 +117,17 @@ export class DispensationPageComponent implements OnInit {
   }
 
 
-   deleteDispensation(dispensationID: number): void {
-    this.dispensationService.deleteDispensation( dispensationID).subscribe({
-      next: () => this.loadDispensations(),
-      error: (error) => console.error('Error deleting dispensation', error)
+  deleteDispensation(dispensationID: number): void {
+    this.dispensationService.deleteDispensation(dispensationID).subscribe({
+      next: () => {
+        this.loadDispensations();
+        this.triggerToast('info', 'Records Deleted', 'Record deleted successfully.');
+      },
+      error: (error) => {
+        console.error('Error deleting dispensation', error);
+        this.triggerToast('error', 'Delete Failed', 'Failed to delete dispensation record.');
+      }
     });
-    this.triggerToast('info', 'Records Deleted', 'Record deleted Successfully');
   }
 
 
@@ -150,22 +156,30 @@ export class DispensationPageComponent implements OnInit {
   triggerToast(type: 'success' | 'error' | 'info', title: string, message: string): void {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
 
-    this.toastType = type;
-    this.toastTitle = title;
-    this.toastMessage = message;
-    this.showToast = true;
+    this.ngZone.run(() => {
+      this.toastType = type;
+      this.toastTitle = title;
+      this.toastMessage = message;
+      this.showToast = true;
+      this.cdr.detectChanges();
+    });
 
-    // Auto-dismiss after 4 seconds (runs safely within Angular zone)
     this.toastTimeout = setTimeout(() => {
-      this.ngZone.run(() => {
-        this.closeToast();
-      });
-    }, 4000);
+      this.closeToast();
+    }, 3500);
   }
 
   closeToast(): void {
-    this.showToast = false;
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this.ngZone.run(() => {
+      this.showToast = false;
+      this.cdr.detectChanges();
+    });
   }
 }

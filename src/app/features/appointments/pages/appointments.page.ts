@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { AppointmentService } from '../services/appointments.service';
 import { Appointment } from '../models/appointments.model';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-appointments-page',
@@ -36,6 +37,8 @@ export class AppointmentsPageComponent implements OnInit {
   selectedAppointmentId: number | null = null;
 
   appointmentForm: FormGroup;
+
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -106,22 +109,13 @@ export class AppointmentsPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert('Appointment Created Successfully');
-
+          this.toastService.showToast('success', 'Appointment Created', 'Appointment Created Successfully');
           this.clearForm();
-
           this.loadAppointments();
-
         },
-
         error: (error: any) => {
-
-          console.error(
-            'Error creating appointment',
-            error
-          );
-
+          console.error('Error creating appointment', error);
+          this.toastService.showToast('error', 'Creation Failed', 'Could not create appointment.');
         }
 
       });
@@ -182,28 +176,15 @@ export class AppointmentsPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Appointment Updated Successfully'
-          );
-
+          this.toastService.showToast('success', 'Appointment Updated', 'Appointment Updated Successfully');
           this.isEditMode = false;
-
           this.selectedAppointmentId = null;
-
           this.clearForm();
-
           this.loadAppointments();
-
         },
-
         error: (error: any) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
-
+          console.error('Update Error', error);
+          this.toastService.showToast('error', 'Update Failed', 'Could not update appointment.');
         }
 
       });
@@ -227,22 +208,12 @@ export class AppointmentsPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Appointment Deleted Successfully'
-          );
-
+          this.toastService.showToast('success', 'Appointment Deleted', 'Appointment Deleted Successfully');
           this.loadAppointments();
-
         },
-
         error: (error: any) => {
-
-          console.error(
-            'Delete Error',
-            error
-          );
-
+          console.error('Delete Error', error);
+          this.toastService.showToast('error', 'Delete Failed', 'Could not delete appointment.');
         }
 
       });
@@ -276,16 +247,8 @@ export class AppointmentsPageComponent implements OnInit {
         },
 
         error: (error: any) => {
-
-          console.error(
-            'Search Error',
-            error
-          );
-
-          alert(
-            'Appointment Not Found'
-          );
-
+          console.error('Search Error', error);
+          this.toastService.showToast('error', 'Not Found', 'Appointment Not Found');
         }
 
       });

@@ -56,32 +56,26 @@
       </form>
     </div>
 
-    <!-- Filters -->
-    <div class="card-section">
-      <div class="filter-bar">
-        <div class="form-group">
-          <label class="form-label">Patient ID</label>
-          <input
-            [(ngModel)]="lookupPatientId"
-            [ngModelOptions]="{standalone:true}"
-            placeholder="Enter Patient ID"
-            class="form-input input-medium" />
-        </div>
-
-        <button type="button" (click)="lookupByPatient()" class="btn btn-secondary">
-          Lookup Invoices
-        </button>
-
-        <button type="button" (click)="showAll()" class="btn btn-neutral">
-          Refresh
-        </button>
-      </div>
-    </div>
-
     <!-- Invoice Table -->
     <div class="table-card">
       <div class="table-header">
         <h2 class="table-header-title">Invoice Records</h2>
+
+        <div class="filter-bar">
+          <input
+            [(ngModel)]="lookupPatientId"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Search Patient ID..."
+            class="header-input search-input-md" />
+
+          <button type="button" (click)="lookupByPatient()" class="header-btn">
+            Lookup Invoices
+          </button>
+
+          <button type="button" (click)="showAll()" class="header-btn">
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -158,36 +152,35 @@
       </div>
     </div>
 
-  </div>
-
-
-  @if (showToast) {
-  <div
-    class="toast-container"
-    [class.toast-success]="toastType === 'success'"
-    [class.toast-error]="toastType === 'error'"
-    [class.toast-info]="toastType === 'info'">
-
-    <!-- Status Icon Badge -->
+    @if (showToast) {
     <div
-      class="toast-badge"
-      [class.badge-success]="toastType === 'success'"
-      [class.badge-error]="toastType === 'error'"
-      [class.badge-info]="toastType === 'info'">
-      @if (toastType === 'success') { <span>✓</span> }
-      @if (toastType === 'error') { <span>✕</span> }
-      @if (toastType === 'info') { <span>ℹ</span> }
-    </div>
+      class="toast-container"
+      [class.toast-success]="toastType === 'success'"
+      [class.toast-error]="toastType === 'error'"
+      [class.toast-info]="toastType === 'info'">
 
-    <div class="toast-content">
-      <h4 class="toast-title">{{ toastTitle }}</h4>
-      <p class="toast-message">{{ toastMessage }}</p>
-    </div>
+      <!-- Status Icon Badge -->
+      <div
+        class="toast-badge"
+        [class.badge-success]="toastType === 'success'"
+        [class.badge-error]="toastType === 'error'"
+        [class.badge-info]="toastType === 'info'">
+        @if (toastType === 'success') { <span>✓</span> }
+        @if (toastType === 'error') { <span>✕</span> }
+        @if (toastType === 'info') { <span>ℹ</span> }
+      </div>
 
-    <button type="button" (click)="closeToast()" class="toast-close">
-     &times;
-    </button>
+      <div class="toast-content">
+        <h4 class="toast-title">{{ toastTitle }}</h4>
+        <p class="toast-message">{{ toastMessage }}</p>
+      </div>
+
+      <button type="button" (click)="closeToast()" class="toast-close">
+       &times;
+      </button>
+      <div class="toast-progress-bar"></div>
+    </div>
+    }
+
   </div>
-  }
-
 </app-main-layout>

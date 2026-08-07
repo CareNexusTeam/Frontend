@@ -9,12 +9,6 @@ export class DrugInventoryService {
   private http = inject(HttpClient);
   private readonly API_URL = 'http://localhost:8082/api/drugs';
 
-  // ==== JWT PLACEHOLDER (currently disabled) ====
-  // private authHeaders() {
-  //   return { headers: new HttpHeaders({ Authorization: `Bearer ${this.authService.getToken()}` }) };
-  // }
-  // TEMP: no-auth (remove this comment block + pass authHeaders() into each call when JWT is enabled)
-
   addDrug(drug: Drug): Observable<Drug> {
     return this.http.post<Drug>(this.API_URL, drug);
   }
@@ -27,9 +21,9 @@ export class DrugInventoryService {
     return this.http.get<Drug[]>(this.API_URL);
   }
 
-  filterDrugs(category: string, status: string): Observable<Drug[]> {
-    return this.http.get<Drug[]>(`${this.API_URL}?category=${category}&status=${status}`);
-  }
+  // filterDrugs(category: string, status: string): Observable<Drug[]> {
+  //   return this.http.get<Drug[]>(`${this.API_URL}?category=${category}&status=${status}`);
+  // }
 
   deleteDrug(drugId: number): Observable<string> {
     return this.http.delete(`${this.API_URL}/${drugId}`,

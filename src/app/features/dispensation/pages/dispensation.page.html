@@ -75,42 +75,34 @@
       </form>
     </section>
 
-    <!-- Filter Bar Section -->
-    <section class="card filter-card">
-      <div class="filter-actions">
-
-
-        <button type="button" (click)="showPending()" class="btn btn-chip">
-          Pending
-        </button>
-
-        <button type="button" (click)="showHistory()" class="btn btn-chip">
-          History
-        </button>
-
-        <div class="field-group inline-search">
-          <label class="field-label">Lookup Prescription ID</label>
-          <input
-            [(ngModel)]="lookupPrescriptionId"
-            [ngModelOptions]="{standalone:true}"
-            placeholder="Enter Prescription ID"
-            class="form-input search-input" />
-        </div>
-
-        <button type="button" (click)="lookupByPrescription()" class="btn btn-primary">
-          Search
-        </button>
-
-        <button type="button" (click)="showAll()" class="btn btn-chip-active">
-          Refresh
-        </button>
-      </div>
-    </section>
-
     <!-- Table Section -->
     <section class="card table-card">
       <div class="table-header">
         <h2>Dispensation Records</h2>
+
+        <div class="filter-actions">
+          <button type="button" (click)="showPending()" class="btn btn-chip-header">
+            Pending
+          </button>
+
+          <button type="button" (click)="showHistory()" class="btn btn-chip-header">
+            History
+          </button>
+
+          <input
+            [(ngModel)]="lookupPrescriptionId"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Lookup Prescription ID..."
+            class="header-input search-input-md" />
+
+          <button type="button" (click)="lookupByPrescription()" class="btn btn-chip-header">
+            Search
+          </button>
+
+          <button type="button" (click)="showAll()" class="btn btn-chip-header active">
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div class="table-scroll-wrapper">
@@ -193,5 +185,6 @@
     <button type="button" (click)="closeToast()" class="toast-close-btn">
       &times;
     </button>
+    <div class="toast-progress-bar"></div>
   </div>
 </app-main-layout>

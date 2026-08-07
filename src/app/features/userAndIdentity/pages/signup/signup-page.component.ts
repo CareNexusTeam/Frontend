@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth-service';
+import { ToastComponent } from '../../../../layout/toast/toast';
+import { ToastService } from '../../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-signup-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, ToastComponent],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css']
 })
@@ -15,6 +17,7 @@ export class SignupPageComponent {
   signupForm: FormGroup;
   errorMessage: string = '';
   isLoading: boolean = false;
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +34,10 @@ export class SignupPageComponent {
   }
 
   onSubmit(): void {
-    if (this.signupForm.invalid) return;
+    if (this.signupForm.invalid) {
+      this.toastService.showToast('info', 'Validation Error', 'Please complete all required fields correctly.');
+      return;
+    }
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -44,7 +50,7 @@ export class SignupPageComponent {
     this.authService.signup(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
-        alert('Registration successful! Please login.');
+        this.toastService.showToast('success', 'Registration Successful', 'Registration successful! Please login.');
         this.router.navigate(['/login']);
       },
       error: (err) => {
@@ -60,6 +66,8 @@ export class SignupPageComponent {
         } else {
           this.errorMessage = 'Registration failed. Please try again later.';
         }
+
+        this.toastService.showToast('error', 'Registration Failed', this.errorMessage);
       }
     });
   }

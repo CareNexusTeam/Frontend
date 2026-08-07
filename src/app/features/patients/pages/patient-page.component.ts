@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
 import { MainLayoutComponent } from "../../../layout/main-layout/main-layout";
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-patient-management-page',
@@ -30,6 +31,8 @@ export class PatientManagementPageComponent implements OnInit {
   genderOptions: string[] = ['Male', 'Female', 'Other'];
   bloodGroupOptions: string[] = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   statusOptions: string[] = ['Active', 'Inactive'];
+
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -154,17 +157,15 @@ export class PatientManagementPageComponent implements OnInit {
 
     this.patientService.createPatient(payload).subscribe({
       next: () => {
-        
         this.patientForm.reset({ status: 'Active' });
         this.isLoading = false;
         this.cdr.detectChanges();
-        alert('Patient registered successfully!');
+        this.toastService.showToast('success', 'Patient Registered', 'Patient registered successfully!');
         this.fetchPatients();
       },
       error: (err) => {
-        alert("Error");
         console.error('Error saving patient:', err);
-        alert('Failed to register patient!');
+        this.toastService.showToast('error', 'Registration Failed', 'Failed to register patient!');
         this.isLoading = false;
         this.cdr.detectChanges();
       }
@@ -206,7 +207,7 @@ export class PatientManagementPageComponent implements OnInit {
   onUpdatePatient(): void {
     const patientId = Number(this.selectedPatient?.patientId || this.selectedPatient?.id);
     if (!patientId) {
-      alert('Invalid Patient ID');
+      this.toastService.showToast('info', 'Validation Error', 'Invalid Patient ID');
       return;
     }
 
@@ -239,11 +240,11 @@ export class PatientManagementPageComponent implements OnInit {
         this.isUpdating = false;
         this.closeEditModal();
         this.fetchPatients();
-        alert('Patient updated successfully!');
+        this.toastService.showToast('success', 'Patient Updated', 'Patient updated successfully!');
       },
       error: (err) => {
         console.error('Update Error:', err);
-        alert('Failed to update patient details.');
+        this.toastService.showToast('error', 'Update Failed', 'Failed to update patient details.');
         this.isUpdating = false;
         this.cdr.detectChanges();
       }
@@ -254,7 +255,7 @@ export class PatientManagementPageComponent implements OnInit {
   onDeletePatient(patient: any): void {
     const patientId = Number(patient.patientId || patient.id);
     if (!patientId || isNaN(patientId)) {
-      alert('Invalid Patient ID!');
+      this.toastService.showToast('info', 'Validation Error', 'Invalid Patient ID!');
       return;
     }
 
@@ -263,7 +264,7 @@ export class PatientManagementPageComponent implements OnInit {
 
     this.patientService.deletePatient(patientId).subscribe({
       next: (responseMsg) => {
-        alert(responseMsg || 'Patient record permanently deleted!');
+        this.toastService.showToast('success', 'Patient Deleted', responseMsg || 'Patient record permanently deleted!');
         this.fetchPatients();
       },
       error: (err) => {
@@ -278,9 +279,9 @@ export class PatientManagementPageComponent implements OnInit {
             this.softDeletePatient(patient);
           }
         } else if (err.status === 403) {
-          alert('Unauthorized: Only ADMIN can delete patient records.');
+          this.toastService.showToast('error', 'Access Denied', 'Unauthorized: Only ADMIN can delete patient records.');
         } else {
-          alert('Failed to delete patient record!');
+          this.toastService.showToast('error', 'Delete Failed', 'Failed to delete patient record!');
         }
       }
     });
@@ -298,12 +299,12 @@ export class PatientManagementPageComponent implements OnInit {
 
     this.patientService.updatePatientStatus(patientId, softDeletePayload).subscribe({
       next: () => {
-        alert(`Patient #${patientId} has been successfully marked as INACTIVE.`);
+        this.toastService.showToast('info', 'Status Updated', `Patient #${patientId} has been successfully marked as INACTIVE.`);
         this.fetchPatients();
       },
       error: (err) => {
         console.error('Soft Delete Error:', err);
-        alert('Failed to deactivate patient.');
+        this.toastService.showToast('error', 'Deactivation Failed', 'Failed to deactivate patient.');
       }
     });
   }

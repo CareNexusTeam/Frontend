@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -13,6 +13,7 @@ import {AuthService} from '../../../core/auth/auth-service';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { DoctorScheduleService } from '../services/doctor-schedule.service';
 import { DoctorSchedule } from '../models/doctor-schedule.model';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-doctor-schedule-page',
@@ -40,11 +41,12 @@ implements OnInit {
   selectedScheduleId: number | null = null;
 
   scheduleForm!: FormGroup;
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
     private doctorScheduleService: DoctorScheduleService,
-      ) {}
+  ) {}
 
   ngOnInit(): void {
 
@@ -122,21 +124,13 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Schedule Created Successfully'
-          );
-
+          this.toastService.showToast('success', 'Schedule Created', 'Schedule Created Successfully');
           this.loadSchedules();
-
           this.clearForm();
-
         },
-
         error: (error: any) => {
-
           console.error(error);
-
+          this.toastService.showToast('error', 'Creation Failed', 'Could not create schedule.');
         }
 
       });
@@ -199,28 +193,15 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Schedule Updated Successfully'
-          );
-
+          this.toastService.showToast('success', 'Schedule Updated', 'Schedule Updated Successfully');
           this.isEditMode = false;
-
           this.selectedScheduleId = null;
-
           this.clearForm();
-
           this.loadSchedules();
-
         },
-
         error: (error: any) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
-
+          console.error('Update Error', error);
+          this.toastService.showToast('error', 'Update Failed', 'Could not update schedule.');
         }
 
       });
@@ -242,19 +223,12 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Schedule Deleted Successfully'
-          );
-
+          this.toastService.showToast('success', 'Schedule Deleted', 'Schedule Deleted Successfully');
           this.loadSchedules();
-
         },
-
         error: (error: any) => {
-
           console.error(error);
-
+          this.toastService.showToast('error', 'Delete Failed', 'Could not delete schedule.');
         }
 
       });
@@ -289,13 +263,8 @@ implements OnInit {
         },
 
         error: (error: any) => {
-
           console.error(error);
-
-          alert(
-            'Schedule Not Found'
-          );
-
+          this.toastService.showToast('error', 'Not Found', 'Schedule Not Found');
         }
 
       });

@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 
-import { HeaderComponent }
-from '../header/header';
-
-import { SidebarComponent }
-from '../sidebar/sidebar';
-
-import { FooterComponent }
-from '../footer/footer';
+import { HeaderComponent } from '../header/header';
+import { SidebarComponent } from '../sidebar/sidebar';
+import { FooterComponent } from '../footer/footer';
 import { RouterOutlet } from "@angular/router";
+import { ToastComponent } from '../toast/toast';
 
 @Component({
   selector: 'app-main-layout',
@@ -17,7 +13,8 @@ import { RouterOutlet } from "@angular/router";
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    RouterOutlet
+    RouterOutlet,
+    ToastComponent
 ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css'

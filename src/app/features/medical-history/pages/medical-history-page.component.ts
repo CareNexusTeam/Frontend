@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. ChangeDetectorRef imported
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'; // 1. ChangeDetectorRef imported
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { MedicalHistory } from '../models/medical-history.model';
 import { MedicalHistoryService } from '../services/medical-history.service';
 import { PatientService } from '../../patients/services/patient.service';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-medical-history-page',
@@ -28,6 +29,8 @@ export class MedicalHistoryPageComponent implements OnInit {
   selectedRecordToEdit: MedicalHistory | null = null;
 
   statusOptions: string[] = ['Active', 'Resolved'];
+
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -77,7 +80,7 @@ export class MedicalHistoryPageComponent implements OnInit {
 
     this.medicalHistoryService.addMedicalHistory(patientId, historyData as any).subscribe({
       next: (responseMessage) => {
-        alert(responseMessage || 'Medical History record added successfully!');
+        this.toastService.showToast('success', 'Record Added', responseMessage || 'Medical History record added successfully!');
         this.medicalHistoryForm.reset({ status: 'Active' });
         this.isSaving = false;
 
@@ -92,7 +95,7 @@ export class MedicalHistoryPageComponent implements OnInit {
         } else if (err.error?.message) {
           detailedMsg = err.error.message;
         }
-        alert(`Backend Error: ${detailedMsg}`);
+        this.toastService.showToast('error', 'Action Failed', `Backend Error: ${detailedMsg}`);
         this.isSaving = false;
         this.cdr.detectChanges();
       }
@@ -185,7 +188,7 @@ export class MedicalHistoryPageComponent implements OnInit {
 
     this.medicalHistoryService.updateHistoryStatus(historyId, updatedStatus).subscribe({
       next: () => {
-        alert('Medical Record status updated successfully!');
+        this.toastService.showToast('success', 'Status Updated', 'Medical Record status updated successfully!');
         this.isUpdating = false;
         this.closeEditModal();
 
@@ -195,7 +198,7 @@ export class MedicalHistoryPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating record status:', err);
-        alert('Failed to update record status!');
+        this.toastService.showToast('error', 'Update Failed', 'Failed to update record status!');
         this.isUpdating = false;
         this.cdr.detectChanges();
       }

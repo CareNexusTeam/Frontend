@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -12,6 +12,7 @@ import { EmrTabsComponent } from '../components/emr-tabs';
 
 import { PrescriptionService } from '../../emr/prescription/services/prescription.service';
 import { Prescription } from '../../emr/prescription/models/prescription.model';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-prescription-page',
@@ -37,6 +38,8 @@ export class PrescriptionPageComponent implements OnInit {
   isEditMode = false;
 
   selectedPrescriptionId: number | null = null;
+
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -96,24 +99,13 @@ export class PrescriptionPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Prescription Created Successfully'
-          );
-
+          this.toastService.showToast('success', 'Prescription Created', 'Prescription Created Successfully');
           this.clearForm();
-
           this.loadPrescriptions();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Create Error',
-            error
-          );
-
+          console.error('Create Error', error);
+          this.toastService.showToast('error', 'Creation Failed', 'Could not create prescription.');
         }
 
       });
@@ -176,29 +168,15 @@ export class PrescriptionPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Prescription Updated Successfully'
-          );
-
+          this.toastService.showToast('success', 'Prescription Updated', 'Prescription Updated Successfully');
           this.isEditMode = false;
-
-          this.selectedPrescriptionId =
-            null;
-
+          this.selectedPrescriptionId = null;
           this.clearForm();
-
           this.loadPrescriptions();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
-
+          console.error('Update Error', error);
+          this.toastService.showToast('error', 'Update Failed', 'Could not update prescription.');
         }
 
       });
@@ -222,22 +200,12 @@ export class PrescriptionPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Prescription Deleted Successfully'
-          );
-
+          this.toastService.showToast('success', 'Prescription Deleted', 'Prescription Deleted Successfully');
           this.loadPrescriptions();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Delete Error',
-            error
-          );
-
+          console.error('Delete Error', error);
+          this.toastService.showToast('error', 'Delete Failed', 'Could not delete prescription.');
         }
 
       });
@@ -267,16 +235,8 @@ export class PrescriptionPageComponent implements OnInit {
         },
 
         error: (error) => {
-
-          console.error(
-            'Search Error',
-            error
-          );
-
-          alert(
-            'Prescription Not Found'
-          );
-
+          console.error('Search Error', error);
+          this.toastService.showToast('error', 'Not Found', 'Prescription Not Found');
         }
 
       });

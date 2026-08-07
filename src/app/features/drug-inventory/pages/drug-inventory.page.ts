@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, NgZone } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -10,12 +10,14 @@ import { Drug } from '../model/drug-inventory.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MainLayoutComponent],
   templateUrl: './drug-inventory.page.html',
-  styleUrls: ['./drug-inventory.component.css']
+  styleUrls: ['./Drug-inventory.component.css']
 })
 export class DrugInventoryPageComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private drugService = inject(DrugInventoryService);
+  private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
   drugs: Drug[] = [];
   loading = false;
   drugForm = this.fb.group({
@@ -91,13 +93,7 @@ export class DrugInventoryPageComponent implements OnInit {
     });
   }
 
-  applyFilter(): void {
-    if (!this.filterCategory && !this.filterStatus) { this.loadDrugs(); return; }
-    this.drugService.filterDrugs(this.filterCategory, this.filterStatus).subscribe({
-      next: (data) => { this.drugs = data; this.loading = false; },
-      error: (error) => { console.error('Error filtering drugs', error); this.loading = false; }
-    });
-  }
+
 
   showLowStock(): void {
     this.drugService.getLowStock().subscribe({
@@ -173,18 +169,30 @@ export class DrugInventoryPageComponent implements OnInit {
   triggerToast(type: 'success' | 'error' | 'info', title: string, message: string): void {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
-    this.toastType = type;
-    this.toastTitle = title;
-    this.toastMessage = message;
-    this.showToast = true;
+
+    this.ngZone.run(() => {
+      this.toastType = type;
+      this.toastTitle = title;
+      this.toastMessage = message;
+      this.showToast = true;
+      this.cdr.detectChanges();
+    });
 
     this.toastTimeout = setTimeout(() => {
       this.closeToast();
-    }, 500);
+    }, 3500);
   }
 
   closeToast(): void {
-    this.showToast = false;
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this.ngZone.run(() => {
+      this.showToast = false;
+      this.cdr.detectChanges();
+    });
   }
 }

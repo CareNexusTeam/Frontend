@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -12,6 +12,7 @@ import { EmrTabsComponent } from '../components/emr-tabs';
 
 import { Consultation } from '../../emr/consultation/models/consultation.model';
 import { ConsultationService } from '../../emr/consultation/services/consultation.service';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-consultation-page',
@@ -39,6 +40,8 @@ implements OnInit {
 
   selectedConsultationId:
     number | null = null;
+
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -117,24 +120,13 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Consultation Created Successfully'
-          );
-
+          this.toastService.showToast('success', 'Consultation Created', 'Consultation Created Successfully');
           this.clearForm();
-
           this.loadConsultations();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Create Error',
-            error
-          );
-
+          console.error('Create Error', error);
+          this.toastService.showToast('error', 'Creation Failed', 'Could not create consultation.');
         }
 
       });
@@ -203,29 +195,15 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Consultation Updated Successfully'
-          );
-
+          this.toastService.showToast('success', 'Consultation Updated', 'Consultation Updated Successfully');
           this.isEditMode = false;
-
-          this.selectedConsultationId =
-            null;
-
+          this.selectedConsultationId = null;
           this.clearForm();
-
           this.loadConsultations();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Update Error',
-            error
-          );
-
+          console.error('Update Error', error);
+          this.toastService.showToast('error', 'Update Failed', 'Could not update consultation.');
         }
 
       });
@@ -249,22 +227,12 @@ implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Consultation Deleted Successfully'
-          );
-
+          this.toastService.showToast('success', 'Consultation Deleted', 'Consultation Deleted Successfully');
           this.loadConsultations();
-
         },
-
         error: (error) => {
-
-          console.error(
-            'Delete Error',
-            error
-          );
-
+          console.error('Delete Error', error);
+          this.toastService.showToast('error', 'Delete Failed', 'Could not delete consultation.');
         }
 
       });
@@ -298,16 +266,8 @@ implements OnInit {
         },
 
         error: (error) => {
-
-          console.error(
-            'Search Error',
-            error
-          );
-
-          alert(
-            'Consultation Not Found'
-          );
-
+          console.error('Search Error', error);
+          this.toastService.showToast('error', 'Not Found', 'Consultation Not Found');
         }
 
       });

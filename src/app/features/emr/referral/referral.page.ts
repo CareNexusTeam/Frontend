@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -13,6 +13,7 @@ import { EmrTabsComponent } from '../components/emr-tabs';
 
 import { ReferralService } from '../referral/services/referral.service';
 import { Referral } from '../referral/models/referral.model';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-referral-page',
@@ -40,6 +41,7 @@ export class ReferralPageComponent implements OnInit {
   loading = false;
 
   searchId = '';
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -122,19 +124,14 @@ export class ReferralPageComponent implements OnInit {
         .subscribe({
 
           next: () => {
-
-            alert(
-              'Referral Updated Successfully'
-            );
-
+            this.toastService.showToast('success', 'Referral Updated', 'Referral Updated Successfully');
             this.resetForm();
-
             this.loadReferrals();
-
           },
-
-          error: (err: any) =>
-            console.error(err)
+          error: (err: any) => {
+            console.error(err);
+            this.toastService.showToast('error', 'Update Failed', 'Could not update referral.');
+          }
 
         });
 
@@ -145,19 +142,14 @@ export class ReferralPageComponent implements OnInit {
         .subscribe({
 
           next: () => {
-
-            alert(
-              'Referral Created Successfully'
-            );
-
+            this.toastService.showToast('success', 'Referral Created', 'Referral Created Successfully');
             this.resetForm();
-
             this.loadReferrals();
-
           },
-
-          error: (err: any) =>
-            console.error(err)
+          error: (err: any) => {
+            console.error(err);
+            this.toastService.showToast('error', 'Creation Failed', 'Could not create referral.');
+          }
 
         });
 
@@ -204,18 +196,13 @@ export class ReferralPageComponent implements OnInit {
       .subscribe({
 
         next: () => {
-
-          alert(
-            'Referral Deleted Successfully'
-          );
-
+          this.toastService.showToast('success', 'Referral Deleted', 'Referral Deleted Successfully');
           this.loadReferrals();
-
         },
-
-        error: (err: any) =>
-
-          console.error(err)
+        error: (err: any) => {
+          console.error(err);
+          this.toastService.showToast('error', 'Delete Failed', 'Could not delete referral.');
+        }
 
       });
 
@@ -248,13 +235,8 @@ export class ReferralPageComponent implements OnInit {
         },
 
         error: (err: any) => {
-
           console.error(err);
-
-          alert(
-            'Referral Not Found'
-          );
-
+          this.toastService.showToast('error', 'Not Found', 'Referral Not Found');
         }
 
       });

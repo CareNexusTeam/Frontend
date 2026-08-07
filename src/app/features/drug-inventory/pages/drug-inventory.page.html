@@ -62,65 +62,53 @@
       </form>
     </section>
 
-<!--    search Filter-->
-    <section class="card card-padding">
-      <div class="filter-toolbar">
-        <div class="field-group">
-          <label class="field-label">Search</label>
-          <input
-            [(ngModel)]="searchKeyword"
-            [ngModelOptions]="{standalone:true}"
-            placeholder="Drug name or category"
-            class="form-control input-w-52" />
-        </div>
-
-        <button type="button" (click)="searchDrugs()" class="btn btn-primary">
-          Search
-        </button>
-
-        <div class="field-group">
-          <label class="field-label">Category</label>
-          <input
-            [(ngModel)]="filterCategory"
-            [ngModelOptions]="{standalone:true}"
-            placeholder="Category"
-            class="form-control input-w-40" />
-        </div>
-
-        <div class="field-group">
-          <label class="field-label">Status</label>
-          <select
-            [(ngModel)]="filterStatus"
-            [ngModelOptions]="{standalone:true}"
-            class="form-control">
-            <option value="">Any</option>
-            <option value="Available">Available</option>
-            <option value="OutOfStock">Out Of Stock</option>
-          </select>
-        </div>
-
-        <button type="button" (click)="applyFilter()" class="btn btn-secondary">
-          Filter
-        </button>
-
-        <button type="button" (click)="showLowStock()" class="btn btn-accent">
-          Low Stock
-        </button>
-
-        <button type="button" (click)="showExpiring()" class="btn btn-accent">
-          Expiring Soon
-        </button>
-
-        <button type="button" (click)="showAll()" class="btn btn-secondary">
-          Refresh
-        </button>
-      </div>
-    </section>
-
     <!-- Table -->
     <section class="card table-card">
       <div class="table-header">
         <h2>Inventory Records</h2>
+
+        <div class="filter-toolbar">
+          <input
+            [(ngModel)]="searchKeyword"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Search drug or category..."
+            class="header-input search-input-md" />
+
+          <button type="button" (click)="searchDrugs()" class="header-btn">
+            Search
+          </button>
+
+          <!-- <input
+            [(ngModel)]="filterCategory"
+            [ngModelOptions]="{standalone:true}"
+            placeholder="Category..."
+            class="header-input search-input-sm" />
+
+          <select
+            [(ngModel)]="filterStatus"
+            [ngModelOptions]="{standalone:true}"
+            class="header-select">
+            <option value="">All Statuses</option>
+            <option value="Available">Available</option>
+            <option value="OutOfStock">Out Of Stock</option>
+          </select>
+
+          <button type="button" (click)="applyFilter()" class="header-btn">
+            Filter
+          </button> -->
+
+          <button type="button" (click)="showLowStock()" class="header-btn">
+            Low Stock
+          </button>
+
+          <button type="button" (click)="showExpiring()" class="header-btn">
+            Expiring Soon
+          </button>
+
+          <button type="button" (click)="showAll()" class="header-btn">
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div class="table-scroll">
@@ -226,5 +214,6 @@
     <button type="button" (click)="closeToast()" class="toast-close-btn">
       &times;
     </button>
+    <div class="toast-progress-bar"></div>
   </div>
 </app-main-layout>

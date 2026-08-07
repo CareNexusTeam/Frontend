@@ -10,7 +10,8 @@ import { AuthService } from '../../../core/auth/auth-service';
     CommonModule,
     MainLayoutComponent
   ],
-  templateUrl: './dashboard-page.component.html'
+  templateUrl: './dashboard-page.component.html',
+  styleUrls: ['./dashboard-page.component.css']
 })
 export class DashboardPageComponent {
   private authService = inject(AuthService);

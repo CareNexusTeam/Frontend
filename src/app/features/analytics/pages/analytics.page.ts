@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
 import { ClinicalReport, RevenueMetrics, AppointmentStats, PrescriptionMetric, DepartmentPerformanceMetric, AnalyticsSummary } from '../models/analytics.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { ToastService } from '../../../layout/toast/toast.service';
 
 @Component({
   selector: 'app-analytics-page',
@@ -47,6 +48,7 @@ export class AnalyticsPageComponent implements OnInit {
 
   reportForm: FormGroup;
   showForm: boolean = false;
+  private toastService = inject(ToastService);
 
   constructor(
     private fb: FormBuilder,
@@ -166,13 +168,13 @@ export class AnalyticsPageComponent implements OnInit {
         }
         this.showForm = false;
         this.isLoading = false;
-        alert('Clinical Report generated successfully from live DB metrics!');
+        this.toastService.showToast('success', 'Report Generated', 'Clinical Report generated successfully from live DB metrics!');
       },
       error: (err) => {
         console.error('Error generating report:', err);
         this.showForm = false;
         this.isLoading = false;
-        alert('Failed to generate report. Please verify database connectivity.');
+        this.toastService.showToast('error', 'Generation Failed', 'Failed to generate report. Please verify database connectivity.');
       }
     });
   }

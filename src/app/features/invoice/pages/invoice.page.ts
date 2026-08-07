@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, NgZone } from '@angular/core';
+import { Component, OnInit, inject, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout';
@@ -17,6 +17,7 @@ export class InvoicesPageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private invoiceService = inject(InvoiceService);
   private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
 
   invoices: Invoice[] = [];
   loading = false;
@@ -141,21 +142,30 @@ export class InvoicesPageComponent implements OnInit {
   triggerToast(type: 'success' | 'error' | 'info', title: string, message: string): void {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
 
-    this.toastType = type;
-    this.toastTitle = title;
-    this.toastMessage = message;
-    this.showToast = true;
+    this.ngZone.run(() => {
+      this.toastType = type;
+      this.toastTitle = title;
+      this.toastMessage = message;
+      this.showToast = true;
+      this.cdr.detectChanges();
+    });
 
     this.toastTimeout = setTimeout(() => {
-      this.ngZone.run(() => {
-        this.closeToast();
-      });
-    }, 4000);
+      this.closeToast();
+    }, 3500);
   }
 
   closeToast(): void {
-    this.showToast = false;
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this.ngZone.run(() => {
+      this.showToast = false;
+      this.cdr.detectChanges();
+    });
   }
 }

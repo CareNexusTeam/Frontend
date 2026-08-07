@@ -59,32 +59,26 @@
       </form>
     </section>
 
-    <!-- Filter Section -->
-    <section class="card card-padding">
-      <div class="filter-toolbar">
-        <div class="field-group">
-          <label class="field-label">Invoice ID</label>
-          <input
-            [(ngModel)]="lookupInvoiceId"
-            [ngModelOptions]="{ standalone: true }"
-            placeholder="Enter Invoice ID"
-            class="form-control input-w-48" />
-        </div>
-
-        <button type="button" (click)="lookupByInvoice()" class="btn btn-accent">
-          Lookup Claim
-        </button>
-
-        <button type="button" (click)="showAll()" class="btn btn-secondary">
-          Refresh
-        </button>
-      </div>
-    </section>
-
     <!-- Claims Table -->
     <section class="card table-card">
       <div class="table-header">
         <h2>Insurance Claim Records</h2>
+
+        <div class="filter-toolbar">
+          <input
+            [(ngModel)]="lookupInvoiceId"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Search Invoice ID..."
+            class="header-input search-input-md" />
+
+          <button type="button" (click)="lookupByInvoice()" class="header-btn">
+            Lookup Claim
+          </button>
+
+          <button type="button" (click)="showAll()" class="header-btn">
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div class="table-scroll">
@@ -142,37 +136,38 @@
       </div>
     </section>
 
-  </div>
-
-  <!-- FLOATING TOAST NOTIFICATION -->
-  <div
-    *ngIf="showToast"
-    class="toast-notification"
-    [ngClass]="{
-      'toast-success': toastType === 'success',
-      'toast-error': toastType === 'error',
-      'toast-info': toastType === 'info'
-    }">
-
+    <!-- FLOATING TOAST NOTIFICATION -->
     <div
-      class="toast-badge"
+      *ngIf="showToast"
+      class="toast-notification"
       [ngClass]="{
-        'badge-success': toastType === 'success',
-        'badge-error': toastType === 'error',
-        'badge-info': toastType === 'info'
+        'toast-success': toastType === 'success',
+        'toast-error': toastType === 'error',
+        'toast-info': toastType === 'info'
       }">
-      <span *ngIf="toastType === 'success'">✓</span>
-      <span *ngIf="toastType === 'error'">✕</span>
-      <span *ngIf="toastType === 'info'">ℹ</span>
+
+      <div
+        class="toast-badge"
+        [ngClass]="{
+          'badge-success': toastType === 'success',
+          'badge-error': toastType === 'error',
+          'badge-info': toastType === 'info'
+        }">
+        <span *ngIf="toastType === 'success'">✓</span>
+        <span *ngIf="toastType === 'error'">✕</span>
+        <span *ngIf="toastType === 'info'">ℹ</span>
+      </div>
+
+      <div class="toast-content">
+        <h4 class="toast-title">{{ toastTitle }}</h4>
+        <p class="toast-message">{{ toastMessage }}</p>
+      </div>
+
+      <button type="button" (click)="closeToast()" class="toast-close-btn">
+      &times;
+      </button>
+      <div class="toast-progress-bar"></div>
     </div>
 
-    <div class="toast-content">
-      <h4 class="toast-title">{{ toastTitle }}</h4>
-      <p class="toast-message">{{ toastMessage }}</p>
-    </div>
-
-    <button type="button" (click)="closeToast()" class="toast-close-btn">
-    &times;
-    </button>
   </div>
 </app-main-layout>
